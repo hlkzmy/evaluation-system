@@ -1,0 +1,15 @@
+evaluation_common:
+    resource: "@EvaluationCommonBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+
+
+
+
+
+
+
+
+
+

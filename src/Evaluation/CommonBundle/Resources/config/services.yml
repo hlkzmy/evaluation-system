@@ -1,0 +1,7 @@
+parameters:
+#    evaluation_common.example.class: Evaluation\CommonBundle\Example
+
+services:
+#    evaluation_common.example:
+#        class: %evaluation_common.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
