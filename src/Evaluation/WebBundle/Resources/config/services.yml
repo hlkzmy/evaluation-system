@@ -1,0 +1,7 @@
+parameters:
+#    evaluation_web.example.class: Evaluation\WebBundle\Example
+
+services:
+#    evaluation_web.example:
+#        class: %evaluation_web.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
