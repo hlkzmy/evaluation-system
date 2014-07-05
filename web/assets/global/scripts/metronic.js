@@ -676,6 +676,10 @@ var Metronic = function () {
         getAssetsPath: function () {
             return assetsPath;
         },
+        
+        setGlobalImgPath:function(path){
+        	globalImgPath = path;
+        },
 
         getGlobalImgPath: function () {
             return globalImgPath;
