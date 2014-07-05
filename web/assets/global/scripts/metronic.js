@@ -11,12 +11,11 @@ var Metronic = function () {
 
     var resizeHandlers = [];
 
-    var assetsPath = '../../assets/';
+    var assetsPath = '/evaluation-system/web/assets/';
 
     var globalImgPath = assetsPath + 'global/img/';
 
     // theme layout color set
-
     var brandColors = {
         'blue': '#89C4F4',
         'red': '#F3565D',
@@ -672,15 +671,11 @@ var Metronic = function () {
         isRTL: function () {
             return isRTL;
         },
-
+        
         getAssetsPath: function () {
             return assetsPath;
         },
         
-        setGlobalImgPath:function(path){
-        	globalImgPath = path;
-        },
-
         getGlobalImgPath: function () {
             return globalImgPath;
         },

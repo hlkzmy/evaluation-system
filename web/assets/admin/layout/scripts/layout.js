@@ -1,13 +1,12 @@
 /**
 Core script to handle the entire theme and core functions
 **/
-var Layout = function () {
+var Layout = function (layoutPath) {
+	
+	var layoutImgPath = layoutPath + 'admin/layout/img/';
+	var layoutCssPath = layoutPath + 'admin/layout/css/';
 
-    var layoutImgPath = Metronic.getAssetsPath() + 'admin/layout/img/';
-
-    var layoutCssPath = Metronic.getAssetsPath() + 'admin/layout/css/';
-
-    //* BEGIN:CORE HANDLERS *//
+	//* BEGIN:CORE HANDLERS *//
     // this function handles responsive layout on screen size resize or mobile device rotate.
 
     // Set proper height for sidebar and content. The content and sidebar height must be synced always.
@@ -630,10 +629,10 @@ var Layout = function () {
         fixContentHeight: function () {
             handleSidebarAndContentHeight();
         },
-
+        
         getLayoutImgPath: function () {
             return layoutImgPath;
         }
     };
 
-}();
+}(Metronic.getAssetsPath());
