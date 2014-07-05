@@ -9,6 +9,7 @@ class EvaluateController extends Controller
     
     public function readAction(){
     	
+    	$phpExcelReader = new \PHPExcel_Reader_Excel5();
     	
     	
     	
