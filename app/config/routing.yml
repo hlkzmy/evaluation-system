@@ -1,9 +1,9 @@
-evaluation_admin:
-    resource: "@EvaluationAdminBundle/Resources/config/routing.yml"
-    prefix:   /
-
 evaluation_web:
     resource: "@EvaluationWebBundle/Resources/config/routing.yml"
+    prefix:   /
+
+evaluation_admin:
+    resource: "@EvaluationAdminBundle/Resources/config/routing.yml"
     prefix:   /
 
 evaluation_common:

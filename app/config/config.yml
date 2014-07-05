@@ -55,6 +55,7 @@ doctrine:
                 user:     "%default_database_user%"
                 password: "%default_database_password%"
                 charset:  UTF8
+    
     orm:
         default_entity_manager: default
         entity_managers:
