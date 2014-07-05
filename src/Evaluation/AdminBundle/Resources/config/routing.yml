@@ -1,3 +1,19 @@
-evaluation_admin_homepage:
+evaluation_admin_console:
     pattern:  /console
     defaults: { _controller: EvaluationAdminBundle:Layout:console}
+    
+evaluation_evaluate_read:
+    pattern:  /evaluate/read
+    defaults: { _controller: EvaluationAdminBundle:Evaluate:read}
+    
+evaluation_evaluate_create:
+    pattern:  /evaluate/create
+    defaults: { _controller: EvaluationAdminBundle:Evaluate:create}
+    
+evaluation_user_read:
+    pattern:  /evaluate/read
+    defaults: { _controller: EvaluationAdminBundle:User:read}
+    
+evaluation_user_create:
+    pattern:  /evaluate/create
+    defaults: { _controller: EvaluationAdminBundle:User:create}

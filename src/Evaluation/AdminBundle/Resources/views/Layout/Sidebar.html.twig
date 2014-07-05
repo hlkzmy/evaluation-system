@@ -19,98 +19,34 @@
 		<!-- END RESPONSIVE QUICK SEARCH FORM -->
 	</li>
 	<li class="start">
-		<a class="ajaxify start" href="layout_ajax_content_1.html">
-		<i class="fa fa-home"></i>
-		<span class="title">
-		Dashboard </span>
-		<span class="selected">
-		</span>
-		</a>
-	</li>
-	<li>
 		<a href="javascript:;">
-		<i class="fa fa-cogs"></i>
-		<span class="title">
-		Ajax Submenu 1 </span>
-		<span class="selected">
-		</span>
-		<span class="arrow open">
-		</span>
+			<i class="fa fa-cogs"></i>
+			<span class="title">民主评价管理</span>
+			<span class="selected"></span>
+			<span class="arrow open"></span>
 		</a>
 		<ul class="sub-menu">
 			<li>
-				<a class="ajaxify" href="layout_ajax_content_2.html">
-				Ajax Link Sample 1 </a>
+				<a class="ajaxify start" href="{{ path('evaluation_evaluate_read')}}">评价列表</a>
 			</li>
 			<li>
-				<a class="ajaxify" href="layout_ajax_content_3.html">
-				Ajax Link Sample 2 </a>
-			</li>
-			<li>
-				<a class="ajaxify" href="layout_ajax_content_2.html">
-				Ajax Link Sample 3 </a>
-			</li>
-			<li>
-				<a class="ajaxify" href="layout_ajax_content_3.html">
-				Ajax Link Sample 4 </a>
-			</li>
-		</ul>
-	</li>
-	<li>
-		<a href="javascript:;">
-		<i class="fa fa-cogs"></i>
-		<span class="title">
-		Ajax Submenu 2 </span>
-		<span class="selected">
-		</span>
-		<span class="arrow">
-		</span>
-		</a>
-		<ul class="sub-menu">
-			<li>
-				<a class="ajaxify" href="layout_ajax_content_2.html">
-				Ajax Link Sample 1 </a>
-			</li>
-			<li>
-				<a class="ajaxify" href="layout_ajax_content_3.html">
-				Ajax Link Sample 2 </a>
-			</li>
-			<li>
-				<a class="ajaxify" href="layout_ajax_content_2.html">
-				Ajax Link Sample 3 </a>
-			</li>
-			<li>
-				<a class="ajaxify" href="layout_ajax_content_3.html">
-				Ajax Link Sample 4 </a>
+				<a class="ajaxify" href="{{ path('evaluation_evaluate_create')}}">创建评价</a>
 			</li>
 		</ul>
 	</li>
 	<li class="last">
 		<a href="javascript:;">
-		<i class="fa fa-cogs"></i>
-		<span class="title">
-		Ajax Submenu 3 </span>
-		<span class="selected">
-		</span>
-		<span class="arrow">
-		</span>
+			<i class="fa fa-cogs"></i>
+			<span class="title">用户管理</span>
+			<span class="selected"></span>
+			<span class="arrow"></span>
 		</a>
 		<ul class="sub-menu">
 			<li>
-				<a class="ajaxify" href="layout_ajax_content_2.html">
-				Ajax Link Sample 1 </a>
+				<a class="ajaxify" href="{{ path('evaluation_user_read')}}">管理员列表</a>
 			</li>
 			<li>
-				<a class="ajaxify" href="layout_ajax_content_3.html">
-				Ajax Link Sample 2 </a>
-			</li>
-			<li>
-				<a class="ajaxify" href="layout_ajax_content_2.html">
-				Ajax Link Sample 3 </a>
-			</li>
-			<li>
-				<a class="ajaxify" href="layout_ajax_content_3.html">
-				Ajax Link Sample 4 </a>
+				<a class="ajaxify" href="{{ path('evaluation_user_create')}}">添加管理员</a>
 			</li>
 		</ul>
 	</li>

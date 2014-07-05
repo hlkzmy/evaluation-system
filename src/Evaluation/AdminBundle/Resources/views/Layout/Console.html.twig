@@ -28,7 +28,7 @@
 <link href="{{ asset('assets/global/css/component.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/css/plugins.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/layout.css')}}" rel="stylesheet" type="text/css"/>
-<link id="style_color" href="{{ asset('assets/admin/layout/css/themes/default.css')}}" rel="stylesheet" type="text/css"/>
+<link id="style_color" href="{{ asset('assets/admin/layout/css/themes/light.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/custom.css')}}" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
@@ -186,7 +186,7 @@ $(document).ready(function() {
     Metronic.init(); // init metronic core components
     Layout.init(); // init current layout
 	QuickSidebar.init(); // init quick sidebar
-    //$('.page-sidebar .ajaxify.start').click(); // load the content for the dashboard page.
+    $('.page-sidebar .ajaxify.start').click(); // load the content for the dashboard page.
 });
 </script>
 <!-- END JAVASCRIPTS -->
