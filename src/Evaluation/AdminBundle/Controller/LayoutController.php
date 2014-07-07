@@ -16,6 +16,17 @@ class LayoutController extends Controller
     }
     
     
+    
+    public function loginAction(){
+    
+    	
+    
+    
+    
+    
+    
+    	return $this->render('EvaluationAdminBundle:Layout:Login.html.twig');
+    }
    
     
     
