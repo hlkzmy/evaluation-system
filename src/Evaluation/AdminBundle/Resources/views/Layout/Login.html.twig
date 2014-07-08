@@ -8,7 +8,7 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
 <meta charset="utf-8"/>
-<title>Metronic | Page Layouts - Content Loading via Ajax</title>
+<title>东西湖教育局-民主评价系统</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="" name="description"/>
@@ -18,7 +18,6 @@
 <link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/layout.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/themes/light.css')}}" rel="stylesheet" type="text/css"/>
-
 <!--[if lt IE 9]>
 <script src="{{ asset('assets/global/plugins/bootstrap/js/html5.js')}}"></script> 
 <script src="{{ asset('assets/global/plugins/bootstrap/js/respond.min.js')}}"></script>
@@ -29,8 +28,6 @@
 <link href="{{ asset('assets/global/css/component.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/css/plugins.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/custom.css')}}" rel="stylesheet" type="text/css"/>
-<link href="{{ asset('assets/admin/pages/css/admin-layout-login.css')}}" rel="stylesheet" type="text/css"/>
-
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
 </head>
@@ -57,9 +54,12 @@
 <div class="page-container">
 	<div class="page-content">
 		<div class="page-content-body">
-			<div class='container'>
+			<div class='container' >
 				<div class='row'>
-					<div  class='col-md-offset-4 col-md-4 well'>
+					<div  style='height:160px;'></div>
+				</div>
+			 <div class='row'>
+					<div  class='col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-offset-1 col-xs-10 well'>
 						<form  action="#" method="post" novalidate="novalidate">
 						<h3 class="form-title text-center">登录民主评价系统后台</h3>
 						<div class="alert alert-danger display-hide">
@@ -98,7 +98,7 @@
 	</div><!-- page-content end -->
 </div><!-- page-container end -->
 <!-- BEGIN FOOTER -->
-<div class="page-footer page-footer-fixed">
+<div class="page-footer">
 	<div class="center-block text-center">2014&nbsp;&copy;&nbsp;湖北武汉市东西湖教育局</div>
 </div>
 <!-- END FOOTER -->
@@ -108,14 +108,6 @@
 
 <script src="{{ asset('assets/global/plugins/jquery-1.11.0.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
-<script src="{{ asset('assets/global/scripts/metronic.js')}}" type="text/javascript"></script>
-<script src="{{ asset('assets/admin/layout/scripts/layout.js')}}" type="text/javascript"></script>
-<script type="text/javascript">
-$(document).ready(function() {    
-    Metronic.init(); // init metronic core components
-    Layout.init(); // init current layout
-});
-</script>
 <!-- END JAVASCRIPTS -->
 </html>
                                
