@@ -5955,8 +5955,9 @@ button.close {
 }
 .center-block {
   display: block;
-  margin-right: auto;
-  margin-left: auto;
+	margin:0px auto;
+/*  margin-right: auto;
+  margin-left: auto;*/
 }
 .pull-right {
   float: right !important;
