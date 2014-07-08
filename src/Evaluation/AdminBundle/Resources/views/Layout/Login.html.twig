@@ -17,7 +17,8 @@
 <link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/layout.css')}}" rel="stylesheet" type="text/css"/>
-<link id="style_color" href="{{ asset('assets/admin/layout/css/themes/light.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/admin/layout/css/themes/light.css')}}" rel="stylesheet" type="text/css"/>
+
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/global/plugins/select2/select2.css')}}"/>
@@ -27,27 +28,21 @@
 <link href="{{ asset('assets/global/css/plugins.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/custom.css')}}" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
+
+<link href="{{ asset('assets/admin/pages/css/admin-layout-login.css')}}" rel="stylesheet" type="text/css"/>
+
 <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
-<!-- DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices -->
-<!-- DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default -->
-<!-- DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle -->
-<!-- DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle -->
-<!-- DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle -->
-<!-- DOC: Apply "page-sidebar-fixed" class to have fixed sidebar -->
-<!-- DOC: Apply "page-footer-fixed" class to the body element to have fixed footer -->
-<!-- DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side -->
-<!-- DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu -->
-<body class="page-header-fixed">
+<body class="page-full-width page-header-fixed">
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
 	<!-- BEGIN HEADER INNER -->
 	<div class="page-header-inner">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<a href="index.html">
+			<a href="javascript:;">
 			<img src="{{ asset('assets/admin/layout/img/logo.png')}}" alt="logo" class="logo-default"/>
 			</a>
 		</div>
@@ -59,16 +54,46 @@
 <div class="clearfix"></div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-		<div class="page-content">
-			<div class="page-content-body">
-				
-			</div>
-		</div>
-		
-</div>
-<!-- END CONTAINER -->
+	<div class="page-content">
+		<div class="page-content-body">
+			<div class='container'>
+				<form id='admin-layout-login-form'  class='center-block well' action="#" method="post" novalidate="novalidate">
+					<h3 class="form-title text-center">登录民主评价系统后台</h3>
+					<div class="alert alert-danger display-hide">
+						<button class="close" data-close="alert"></button>
+						<span>Enter any username and password. </span>
+					</div>
+					<div class="form-group">
+						<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+						<label class="control-label visible-ie8 visible-ie9">账号</label>
+						<div class="input-icon">
+							<i class="fa fa-user"></i>
+							<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入您的账号" name="username">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label visible-ie8 visible-ie9">密码</label>
+						<div class="input-icon">
+							<i class="fa fa-lock"></i>
+							<input class="form-control" type="password" autocomplete="off" placeholder="请输入您的密码" name="password">
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class='row'>
+							<div class="col-md-offset-4 col-md-4 text-center">
+								<button type="submit" class="btn green">
+									登录<i class="m-icon-swapright m-icon-white"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div><!-- container end -->	
+		</div><!-- page-content-body end -->
+	</div><!-- page-content end -->
+</div><!-- page-container end -->
 <!-- BEGIN FOOTER -->
-<div class="page-footer">
+<div class="page-footer page-footer-fixed">
 	<div class="center-block text-center">2014&nbsp;&copy;&nbsp;湖北武汉市东西湖教育局</div>
 </div>
 <!-- END FOOTER -->

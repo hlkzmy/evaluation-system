@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+#admin-layout-login-form
+{
+	width:400px;
+	min-width:400px;
+    margin-top: 20px;
+}
+
+.profile-img
+{
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
