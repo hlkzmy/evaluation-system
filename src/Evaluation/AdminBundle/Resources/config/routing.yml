@@ -19,8 +19,6 @@ evaluation_evaluate_update:
     pattern:  /evaluation/update
     defaults: { _controller: EvaluationAdminBundle:Evaluation:update}    
     
-    
-  
 #民主测评中的测评单位
 evaluation_evaluate_school_read:
     pattern:  /evaluate-school/read
@@ -29,6 +27,14 @@ evaluation_evaluate_school_read:
 evaluation_evaluate_school_create:
     pattern:  /evaluate-school/create
     defaults: { _controller: EvaluationAdminBundle:EvaluateSchool:create}
+    
+evaluation_evaluate_school_delete:
+    pattern:  /evaluate-school/create
+    defaults: { _controller: EvaluationAdminBundle:EvaluateSchool:delete}
+    
+evaluation_evaluate_school_update:
+    pattern:  /evaluate-school/create
+    defaults: { _controller: EvaluationAdminBundle:EvaluateSchool:update}
     
 #民主测评中的测评对象 
 evaluation_evaluated_person_read:
