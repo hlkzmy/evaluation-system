@@ -1,72 +1,113 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" >
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"/>
+<title>东西湖教育局-民主评价系统</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>民主评价系统</title>
-<!-- Bootstrap -->
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="{{ asset('assets/global/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/layout.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('assets/admin/layout/css/themes/light.css')}}" rel="stylesheet" type="text/css"/>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap/js/html5.js')}}"></script> 
+<script src="{{ asset('assets/global/plugins/bootstrap/js/respond.min.js')}}"></script>
 <![endif]-->
-</head>
-<body class='page-full-width page-header-fixed page-footer-fixed'>
-	<div class="page-header navbar navbar-fixed-top">
-		<div class="page-header-inner"><!-- BEGIN HEADER INNER -->
-			<div class="page-logo"><!-- BEGIN LOGO -->
-				<a href="javascript:;">
-				<img src="{{ asset('assets/admin/layout/img/logo.png')}}" alt="logo" class="logo-default"/>
-				</a>
-				
-			</div><!-- END LOGO -->
-		</div><!-- END HEADER INNER -->
-</div><!-- END HEADER -->
-<div class='page-container'>
-	<div class="page-content-wrapper">
-		<div class="page-content">
-			<div class="page-content-body">
-				<div class="row">
-		    		<div class='col-xs-4'>
-				    	<h2 class="page-header">区域一</h2>
-				 		<p>Bootstrap has a few easy ways to quickly get started, each one appealing to a different skill level and use case. Read through to see what suits your particular needs.</p>
-				 	</div>
-				</div><!-- row end-->
-			</div>
-		</div>
-		<!-- BEGIN CONTENT -->
-	</div>
 
-	
-</div><!-- page-container end-->
+<!-- END GLOBAL MANDATORY STYLES -->
+<!-- BEGIN THEME STYLES -->
+<link href="{{ asset('assets/global/css/component.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/global/css/plugins.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/admin/layout/css/custom.css')}}" rel="stylesheet" type="text/css"/>
+<!-- END THEME STYLES -->
+<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-full-width page-header-fixed page-footer-fixed">
+<!-- BEGIN HEADER -->
+<div class="page-header navbar navbar-fixed-top">
+	<!-- BEGIN HEADER INNER -->
+	<div class="page-header-inner">
+		<!-- BEGIN LOGO -->
+		<div class="page-logo">
+			<a href="javascript:;">
+			<img src="{{ asset('assets/admin/layout/img/logo.png')}}" alt="logo" class="logo-default"/>
+			</a>
+		</div>
+		<!-- END LOGO -->
+	</div>
+	<!-- END HEADER INNER -->
+</div>
+<!-- END HEADER -->
+<div class="clearfix"></div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+	<div class="page-content">
+		<div class="page-content-body">
+			<div class='container' >
+				<div class='row'>
+					<div  style='height:160px;'></div>
+				</div>
+			 <div class='row'>
+					<div  class='col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-offset-1 col-xs-10 well'>
+						<form  action="#" method="post" novalidate="novalidate">
+						<h3 class="form-title text-center">登录民主评价系统后台</h3>
+						<div class="alert alert-danger display-hide">
+							<button class="close" data-close="alert"></button>
+							<span>Enter any username and password. </span>
+						</div>
+						<div class="form-group">
+							<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+							<label class="control-label visible-ie8 visible-ie9">账号</label>
+							<div class="input-icon">
+								<i class="fa fa-user"></i>
+								<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入您的账号" name="username">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label visible-ie8 visible-ie9">密码</label>
+							<div class="input-icon">
+								<i class="fa fa-lock"></i>
+								<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="请输入您的密码" name="password">
+							</div>
+						</div>
+						<div class="form-actions">
+							<div class='row'>
+								<div class="col-md-offset-4 col-md-4 text-center">
+									<button type="submit" class="btn green">
+										登录<i class="m-icon-swapright m-icon-white"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			 </div>	
+			</div><!-- container end -->	
+		</div><!-- page-content-body end -->
+	</div><!-- page-content end -->
+</div><!-- page-container end -->
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
-		<div class="page-footer-inner">
-			 2014 &copy; 湖北省武汉市东西湖教育局
-		</div>
-		<div class="page-footer-tools">
-			<span class="go-top">
-			<i class="fa fa-angle-up"></i>
-			</span>
-		</div>
+	<div class="center-block text-center">2014&nbsp;&copy;&nbsp;湖北武汉市东西湖教育局</div>
 </div>
 <!-- END FOOTER -->
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
-<script src="{{ asset('assets/global/scripts/metronic.js')}}" type="text/javascript"></script>
-<script src="{{ asset('assets/admin/layout/scripts/layout.js')}}" type="text/javascript"></script>
-<script type="text/javascript">
-$(document).ready(function() {    
-    Metronic.init(); // init metronic core components
-    Layout.init(); // init current layout
-});
-</script>
 </body>
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+
+<script src="{{ asset('assets/global/plugins/jquery-1.11.0.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
+<!-- END JAVASCRIPTS -->
 </html>
+                               
