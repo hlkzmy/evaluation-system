@@ -62,3 +62,10 @@ evaluation_admin_user_create:
     pattern:  /admin-user/create
     defaults: { _controller: EvaluationAdminBundle:AdminUser:create}
     
+evaluation_admin_user_update:
+    pattern:  /admin-user/create
+    defaults: { _controller: EvaluationAdminBundle:AdminUser:update}
+    
+evaluation_admin_user_delete:
+    pattern:  /admin-user/create
+    defaults: { _controller: EvaluationAdminBundle:AdminUser:delete}

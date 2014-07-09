@@ -2,13 +2,13 @@
 	<div class="span12">
         <ul class="breadcrumb"><!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <li>
-                  <a href="#">网站热力图</a>
+                  <a href="#">民主评价系统</a>
                </li>
                <li>
-                   <a href="#">页面管理</a>
+                   <a href="#">用户管理</a>
                </li>
                <li>
-                   <a href="#">页面列表</a>
+                   <a href="#">管理员列表</a>
                </li>
         </ul><!-- END PAGE TITLE & BREADCRUMB-->
     </div><!-- END span12-->
@@ -19,29 +19,22 @@
 		     <thead>
 		        <tr>
 		            <th>编号</th>
-		            <th>点击图名称</th>
-		            <th>页面url</th>
+		            <th>姓名</th>
+		            <th>账号</th>
 		            <th>创建日期</th>
 		            <th>操作</th>
 		        </tr>
 		     </thead>
-		     <tbody id="data_table_1_tbody">
-		     	{%for item in page%}
+		     <tbody>
+		     	{%for item in adminUser%}
 					<tr>
 		                <td>{{item.id}}</td>
-		                <td>{{item.name}}</td>
-		                <td>{{item.url}}</td>
+		                <td>{{item.realname}}</td>
+		                <td>{{item.username}}</td>
 		                <td>{{item.createTime|date('Y-m-d H:i:s')}}</td>
 		                <td>
-		                    <a type="button" class="btn red btn-xs ajaxify"  href="{{ path('common_page_view',{'id':item.id})}}">
-		                                                查看热点图
-		                    </a>
-		                    <a type="button" class="btn green btn-xs"  data-toggle="modal" href="#large">
-		                    	查看JS代码
-		                    </a>
-		                    <a type="button" class="btn red btn-xs" href="{{ path('common_page_view',{'id':item.id})}}">
-		                       	删除
-		                    </a>
+		                    <a type="button" class="btn red btn-xs ajaxify"  href="{{ path('evaluation_admin_user_delete',{'id':item.id})}}">删除</a>
+		                    <a type="button" class="btn green btn-xs" href="{{ path('evaluation_admin_user_update',{'id':item.id})}}">编辑</a>
 		                </td>
 		            </tr>
 				{%endfor%}
