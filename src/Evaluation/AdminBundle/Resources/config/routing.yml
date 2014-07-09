@@ -43,7 +43,15 @@ evaluation_evaluated_person_read:
     
 evaluation_evaluated_person_create:
     pattern:  /evaluated-person/create
-    defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:create} 
+    defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:create}
+    
+evaluation_evaluated_person_update:
+    pattern:  /evaluated-person/update
+    defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:update} 
+    
+evaluation_evaluated_person_delete:
+    pattern:  /evaluated-person/delete
+    defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:delete} 
   
 #系统管理员测评相关    
 evaluation_admin_user_read:
