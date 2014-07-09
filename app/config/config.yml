@@ -61,7 +61,10 @@ doctrine:
         entity_managers:
             default:
                 connection: default
-                mappings:      
+                mappings: 
+                     EvaluationAdminBundle: ~
+                     EvaluationCommonBundle: ~
+                     EvaluationWebBundle: ~
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
