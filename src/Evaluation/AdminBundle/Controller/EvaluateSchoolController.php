@@ -9,10 +9,15 @@ class EvaluateSchoolController extends Controller
     
 	public function readAction(){
 		 
-		 
-		 
-		 
-		return $this->render('EvaluationAdminBundle:EvaluateSchool:Read.html.twig');
+		//第二部分:查询数据形成列表
+		$defaultEntityManager = $this->getDoctrine()->getManager ('default');
+		$evaluateSchoolRepository = $defaultEntityManager->getRepository('EvaluationCommonBundle:EvaluateSchool');
+		$evaluateSchool = $evaluateSchoolRepository->findAll();
+			
+			
+			
+		return $this->render('EvaluationAdminBundle:EvaluateSchool:Read.html.twig',array('evaluateSchool'=>$evaluateSchool));
+		
 	}
 	
 	public function createAction(){

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * EvaluatedPerson
  *
  * @ORM\Table(name="evaluated_person")
- * @ORM\Entity(repositoryClass="Evaluation\CommonBundle\Entity\EvaluatedPersonRepository")
+ * @ORM\Entity
  */
 class EvaluatedPerson
 {
@@ -31,23 +31,23 @@ class EvaluatedPerson
     /**
      * @var string
      *
-     * @ORM\Column(name="position", type="string", length=255, nullable=true)
+     * @ORM\Column(name="position", type="string", length=255, nullable=false)
      */
-    private $position;
+    private $position = '';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="school_id", type="integer", nullable=false)
+     */
+    private $schoolId = '0';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="school_id", type="string", length=255, nullable=true)
+     * @ORM\Column(name="create_admin_user", type="string", length=255, nullable=false)
      */
-    private $schoolId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="create_admin_user", type="string", length=255, nullable=true)
-     */
-    private $createAdminUser;
+    private $createAdminUser = '';
 
     /**
      * @var \DateTime
@@ -117,7 +117,7 @@ class EvaluatedPerson
     /**
      * Set schoolId
      *
-     * @param string $schoolId
+     * @param integer $schoolId
      * @return EvaluatedPerson
      */
     public function setSchoolId($schoolId)
@@ -130,7 +130,7 @@ class EvaluatedPerson
     /**
      * Get schoolId
      *
-     * @return string 
+     * @return integer 
      */
     public function getSchoolId()
     {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * EvaluateSchool
  *
  * @ORM\Table(name="evaluate_school")
- * @ORM\Entity(repositoryClass="Evaluation\CommonBundle\Entity\EvaluateSchoolRepository")
+ * @ORM\Entity
  */
 class EvaluateSchool
 {
