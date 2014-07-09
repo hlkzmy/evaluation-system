@@ -4,7 +4,7 @@ namespace Evaluation\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class EvaluateController extends Controller
+class EvaluationController extends Controller
 {
     
     public function readAction(){
@@ -14,7 +14,7 @@ class EvaluateController extends Controller
     	
     	
     	
-    	return $this->render('EvaluationAdminBundle:Evaluate:Read.html.twig');
+    	return $this->render('EvaluationAdminBundle:Evaluation:Read.html.twig');
     }
     
     public function createAction(){
@@ -24,7 +24,7 @@ class EvaluateController extends Controller
     	
     	 
     	 
-    	return $this->render('EvaluationAdminBundle:Evaluate:Create.html.twig');
+    	return $this->render('EvaluationAdminBundle:Evaluation:Create.html.twig');
     }
    
     

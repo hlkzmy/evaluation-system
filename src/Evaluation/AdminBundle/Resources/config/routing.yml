@@ -3,13 +3,13 @@ evaluation_admin_console:
     defaults: { _controller: EvaluationAdminBundle:Layout:console}
 
 #民主测评相关   
-evaluation_evaluate_read:
+evaluation_evaluation_read:
     pattern:  /evaluate/read
-    defaults: { _controller: EvaluationAdminBundle:Evaluate:read}
+    defaults: { _controller: EvaluationAdminBundle:Evaluation:read}
     
-evaluation_evaluate_create:
+evaluation_evaluation_create:
     pattern:  /evaluate/create
-    defaults: { _controller: EvaluationAdminBundle:Evaluate:create}
+    defaults: { _controller: EvaluationAdminBundle:Evaluation:create}
   
 #民主测评中的测评单位
 evaluation_evaluate_school_read:
@@ -30,11 +30,11 @@ evaluation_evaluated_person_create:
     defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:create} 
   
 #系统管理员测评相关    
-evaluation_user_read:
-    pattern:  /user/read
-    defaults: { _controller: EvaluationAdminBundle:User:read}
+evaluation_admin_user_read:
+    pattern:  /admin-user/read
+    defaults: { _controller: EvaluationAdminBundle:AdminUser:read}
     
-evaluation_user_create:
-    pattern:  /user/create
-    defaults: { _controller: EvaluationAdminBundle:User:create}
+evaluation_admin_user_create:
+    pattern:  /admin-user/create
+    defaults: { _controller: EvaluationAdminBundle:AdminUser:create}
     

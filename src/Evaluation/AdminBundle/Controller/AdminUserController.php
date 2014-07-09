@@ -4,7 +4,7 @@ namespace Evaluation\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class UserController extends Controller
+class AdminUserController extends Controller
 {
 	
 	
@@ -16,7 +16,7 @@ class UserController extends Controller
 		 
 		 
 		 
-		return $this->render('EvaluationAdminBundle:User:Read.html.twig');
+		return $this->render('EvaluationAdminBundle:AdminUser:Read.html.twig');
 	}
 	
 	public function createAction(){
@@ -24,7 +24,7 @@ class UserController extends Controller
 	
 	
 	
-		return $this->render('EvaluationAdminBundle:User:Create.html.twig');
+		return $this->render('EvaluationAdminBundle:AdminUser:Create.html.twig');
 	}
     
     
