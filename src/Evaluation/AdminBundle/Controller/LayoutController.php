@@ -4,7 +4,7 @@ namespace Evaluation\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Evaluation\AdminBundle\Controller\BaseController;
 
-class LayoutController extends BaseController
+class LayoutController extends Controller
 {
     
     public function consoleAction(){

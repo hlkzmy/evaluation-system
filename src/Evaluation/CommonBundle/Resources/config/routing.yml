@@ -3,6 +3,6 @@ evaluation_common_homepage:
     pattern:  /
     defaults: { _controller: EvaluationWebBundle:User:login }
     
-evaluation_admin_homepage:
+evaluation_admin_login:
     pattern:  /admin
     defaults: { _controller: EvaluationAdminBundle:Layout:login }
