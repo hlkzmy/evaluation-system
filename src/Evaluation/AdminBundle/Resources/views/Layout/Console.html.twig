@@ -64,25 +64,9 @@
 		<!-- BEGIN TOP NAVIGATION MENU -->
 		<div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
-				<!-- BEGIN NOTIFICATION DROPDOWN -->
-					{{ include('EvaluationAdminBundle:Layout:NotificationDropdown.html.twig')}}
-				<!-- END NOTIFICATION DROPDOWN -->
-				<!-- BEGIN INBOX DROPDOWN -->
-					{{ include('EvaluationAdminBundle:Layout:InboxDropdown.html.twig')}}
-				<!-- END INBOX DROPDOWN -->
-				<!-- BEGIN TODO DROPDOWN -->
-					{{ include('EvaluationAdminBundle:Layout:TodoDropdown.html.twig')}}
-				<!-- END TODO DROPDOWN -->
 				<!-- BEGIN USER LOGIN DROPDOWN -->
 					{{ include('EvaluationAdminBundle:Layout:UserLoginDropdown.html.twig')}}
 				<!-- END USER LOGIN DROPDOWN -->
-				<!-- BEGIN QUICK SIDEBAR TOGGLER -->
-				<li class="dropdown dropdown-quick-sidebar-toggler">
-					<a href="javascript:;" class="dropdown-toggle">
-					<i class="icon-logout"></i>
-					</a>
-				</li>
-				<!-- END QUICK SIDEBAR TOGGLER -->
 			</ul>
 		</div>
 		<!-- END TOP NAVIGATION MENU -->
@@ -139,9 +123,6 @@
 		<!-- BEGIN CONTENT -->
 	</div>
 	<!-- END CONTENT -->
-	<!-- BEGIN QUICK SIDEBAR -->
-			{{ include('EvaluationAdminBundle:Layout:QuickSidebar.html.twig')}}
-	<!-- END QUICK SIDEBAR -->
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->

@@ -56,7 +56,7 @@
 	</div>
 	<div class='row'>
 		<div  class='col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-offset-1 col-xs-10 well'>
-				<form  action="#" method="post" novalidate="novalidate">
+				<form  action="{{ path('evaluation_admin_login_check')}}" method="post" novalidate="novalidate">
 				<h3 class="form-title text-center">登录民主评价系统后台</h3>
 				<div class="alert alert-danger display-hide">
 					<button class="close" data-close="alert"></button>
@@ -67,16 +67,19 @@
 					<label class="control-label visible-ie8 visible-ie9">账号</label>
 					<div class="input-icon">
 						<i class="fa fa-user"></i>
-						<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入您的账号" name="username">
+						<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入您的账号" name="_username">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label visible-ie8 visible-ie9">密码</label>
 					<div class="input-icon">
 						<i class="fa fa-lock"></i>
-						<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="请输入您的密码" name="password">
+						<input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="请输入您的密码" name="_password">
 					</div>
 				</div>
+				{% if error %}
+					<h3>{{ error.message }}</h3>
+				{% endif %}
 				<div class="form-actions">
 					<div class='row'>
 						<div class="col-md-offset-4 col-md-4 text-center">

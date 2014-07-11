@@ -1,13 +1,21 @@
 security:
      firewalls:
-        secured_area:
+        admin_secured_area:
             pattern: ^/
             anonymous: ~
-            form_login: ~
-               
+            form_login: 
+                login_path: evaluation_admin_login
+                check_path: evaluation_admin_login_check
+                always_use_default_target_path: true
+                default_target_path: evaluation_admin_console
+            logout:
+                path: evaluation_admin_logout
+                target: evaluation_admin_login
+            
      access_control: 
+                 - { path: ^/admin$, roles:  IS_AUTHENTICATED_ANONYMOUSLY }
                  - { path: ^/admin/, roles: ROLE_ADMIN }
-
+                 
      providers:
        in_memory:
           memory:
