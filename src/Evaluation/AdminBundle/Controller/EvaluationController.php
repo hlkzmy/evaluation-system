@@ -3,6 +3,7 @@
 namespace Evaluation\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EvaluationController extends Controller
 {
@@ -32,7 +33,15 @@ class EvaluationController extends Controller
     }
    
     
+    /**
+     * 检测并验证数据对象添加的方法，由表单提交
+     */
+    public function checkCreateAction(){
     
+    
+    
+    	return new JsonResponse();
+    }
     
     
     
