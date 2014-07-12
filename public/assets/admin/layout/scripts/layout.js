@@ -647,6 +647,78 @@ var Layout = function (layoutPath) {
     }//function handlePagerForm() end
     
     
+    /**
+     * 专门用来处理datatable中的常见操作的按钮
+     */
+    var handleDataTableOperation = function () {
+
+        function handLeAjaxTodoCallback(eventElement){
+        //ajaxTodo类型的请求回调的函数，主要是无刷新的对表格进行一些操作
+
+            if(eventElement.attr('operation')=='delete'){
+                eventElement.parents('tr').remove();
+            }
+            else if(eventElement.hasClass('status')){
+
+                var text = eventElement.text().trim();
+                if(text=='启用'){
+                    eventElement.text('禁用');
+                    eventElement.parents('td').prev('td').find('span.label').text('已启用').removeClass('label-warning').addClass('label-success');
+                }
+                else if(text=='禁用'){
+                    eventElement.text('启用');
+                    eventElement.parents('td').prev('td').find('span.label').text('已禁用').removeClass('label-success').addClass('label-warning');
+                }
+            }
+        }
+
+        function handleAjaxTodoRequest(eventElement){//针对于删除、设置状态所做的处理
+
+            var e = window.event || e;
+            e.preventDefault();
+            
+            Metronic.startPageLoading();
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: eventElement.attr('href'),
+                dataType: "json",
+                success: function(msg)
+                {
+                	Metronic.stopPageLoading();
+                	
+                    if(msg.statusCode=='200'){
+                    	handLeAjaxTodoCallback(eventElement);
+                        alert(msg.message);
+                    }
+                    else{
+                        alert(msg.message);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError)
+                {
+                	alert('服务器内部错误，请联系网站程序员');
+                    Metronic.stopPageLoading();
+                },
+                async: false
+            });//ajax end
+
+
+        }//function handleAjaxTodoRequest(e) end
+
+        $('table.datatable').find('a.ajaxTodo').live('click',function(){
+
+               var eventElement = $(this);
+
+               handleAjaxTodoRequest(eventElement);
+            
+        
+        });
+
+
+    }//function handlePortletButton end
+    
+    
 
     //* END:CORE HANDLERS *//
 
@@ -667,6 +739,7 @@ var Layout = function (layoutPath) {
             handleTheme(); // handles style customer tool
 
             handlePostDataForm();//处理表单的提交问题
+            handleDataTableOperation();//处理datatable上的删除 状态等按钮
             
             // reinitialize the layout on window resize
             Metronic.addResizeHandler(handleSidebarAndContentHeight); // recalculate sidebar & content height on window resize
