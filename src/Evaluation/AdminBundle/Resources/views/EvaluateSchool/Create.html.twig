@@ -27,7 +27,7 @@
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form role="form">
+				<form role="form" class='post-data-form' action='{{ path('evaluation_evaluate_school_check_create')}}' >
 					<div class="form-body">
 						<div class="form-group">
 							<label for="exampleInputEmail1">单位名称</label>
@@ -45,7 +45,7 @@
 						</div>
 					</div>
 					<div class="form-actions text-center">
-							<button type="button" class="btn blue">提交</button>
+							<button type="button" class="btn blue form-submit-button">提交</button>
 							<button type="reset"  class="btn default">重置</button>
 					</div>
 				</form>

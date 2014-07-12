@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * EvaluateResult
  *
  * @ORM\Table(name="evaluate_result")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Evaluation\CommonBundle\Entity\EvaluateResultRepository")
  */
 class EvaluateResult
 {

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * EvaluateSchool
  *
  * @ORM\Table(name="evaluate_school")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Evaluation\CommonBundle\Entity\EvaluateSchoolRepository")
  */
 class EvaluateSchool
 {
@@ -29,9 +29,16 @@ class EvaluateSchool
     private $name;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="create_admin_user", type="integer", nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=false)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="create_admin_user", type="string", length=20, nullable=true)
      */
     private $createAdminUser = '0';
 
@@ -75,6 +82,29 @@ class EvaluateSchool
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return EvaluateSchool
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**

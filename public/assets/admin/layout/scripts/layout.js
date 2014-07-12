@@ -600,6 +600,53 @@ var Layout = function (layoutPath) {
             setColor($.cookie('style_color'));
         }
     }
+    
+    /*专门用来处理页面上的表单提交的功能,比如说选择完角色的然后提交表单这样的功能*/
+    var handlePostDataForm = function(){
+
+        $("form.post-data-form").find('button.form-submit-button').live('click',function(){
+        //处理表单中的submit的按钮事件
+        		
+        	var pageContent = $('.page-content');
+
+            var $pagerForm = $(this).parents('form.post-data-form');
+
+            var $postUrl  = $pagerForm.attr('action');
+            //得到表单提交上传的地址
+
+            var $postData = $pagerForm.serializeArray();
+
+            Metronic.startPageLoading();            
+
+            $.ajax({
+                type: "POST",
+                data:$postData,
+                cache: false,
+                url: $postUrl,
+                dataType: "json",
+                success: function(data)
+                {
+                	Metronic.stopPageLoading();
+                    if(data.statusCode=='200'){
+                    	alert(data.message);
+                    }
+                    else{
+                        alert(data.message);
+                    }
+                    
+                },
+                error: function(xhr, ajaxOptions, thrownError)
+                {
+                	Metronic.stopPageLoading();
+                    alert("服务器内部错误，请联系网站程序员");
+                },
+                async: false
+            });//ajax end
+
+        });
+    }//function handlePagerForm() end
+    
+    
 
     //* END:CORE HANDLERS *//
 
@@ -619,6 +666,8 @@ var Layout = function (layoutPath) {
             handleTabs(); // handle bootstrah tabs
             handleTheme(); // handles style customer tool
 
+            handlePostDataForm();//处理表单的提交问题
+            
             // reinitialize the layout on window resize
             Metronic.addResizeHandler(handleSidebarAndContentHeight); // recalculate sidebar & content height on window resize
             Metronic.addResizeHandler(handleFixedSidebar); // reinitialize fixed sidebar on window resize

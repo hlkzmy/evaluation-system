@@ -17,17 +17,24 @@ evaluation_admin_logout:
 evaluation_evaluate_read:
     pattern:  /evaluation/read
     defaults: { _controller: EvaluationAdminBundle:Evaluation:read}
-    
+
+#民主测评的创建相关    
 evaluation_evaluate_create:
     pattern:  /evaluation/create
     defaults: { _controller: EvaluationAdminBundle:Evaluation:create}
-    
+
+evaluation_evaluate_check_create:
+    pattern:  /evaluation/check-create
+    defaults: { _controller: EvaluationAdminBundle:Evaluation:checkCreate}   
+
+#民主测评的删除相关    
 evaluation_evaluate_delete:
-    pattern:  /evaluation/delete
+    pattern:  /evaluation/delete/{id}
     defaults: { _controller: EvaluationAdminBundle:Evaluation:delete}
-    
+
+#民主测评的编辑相关       
 evaluation_evaluate_update:
-    pattern:  /evaluation/update
+    pattern:  /evaluation/update/{id}
     defaults: { _controller: EvaluationAdminBundle:Evaluation:update}    
     
 #民主测评中的测评单位
@@ -39,12 +46,19 @@ evaluation_evaluate_school_create:
     pattern:  /evaluate-school/create
     defaults: { _controller: EvaluationAdminBundle:EvaluateSchool:create}
     
-evaluation_evaluate_school_delete:
-    pattern:  /evaluate-school/create
-    defaults: { _controller: EvaluationAdminBundle:EvaluateSchool:delete}
+evaluation_evaluate_school_check_create:
+    pattern:  /evaluate-school/check-create
+    defaults: { _controller: EvaluationAdminBundle:EvaluateSchool:checkCreate}    
     
+    
+#民主测评中的测评单位删除相关
+evaluation_evaluate_school_delete:
+    pattern:  /evaluate-school/delete/{id}
+    defaults: { _controller: EvaluationAdminBundle:EvaluateSchool:delete}
+
+#民主测评中的测评单位编辑相关    
 evaluation_evaluate_school_update:
-    pattern:  /evaluate-school/create
+    pattern:  /evaluate-school/update/{id}
     defaults: { _controller: EvaluationAdminBundle:EvaluateSchool:update}
     
 #民主测评中的测评对象 

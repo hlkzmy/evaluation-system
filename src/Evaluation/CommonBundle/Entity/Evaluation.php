@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Evaluation
  *
  * @ORM\Table(name="evaluation")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Evaluation\CommonBundle\Entity\EvaluationRepository")
  */
 class Evaluation
 {
@@ -69,6 +69,13 @@ class Evaluation
      * @ORM\Column(name="evaluate_user_count", type="string", length=255, nullable=true)
      */
     private $evaluateUserCount;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
 
     /**
      * @var string
@@ -248,6 +255,29 @@ class Evaluation
     public function getEvaluateUserCount()
     {
         return $this->evaluateUserCount;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Evaluation
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
