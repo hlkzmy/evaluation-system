@@ -1,8 +1,10 @@
 Evaluation\CommonBundle\Entity\EvaluatedPerson:
-   getters:
-       passwordLegal:
-           - "True": { message: "The password cannot match your first name" }
-   properties:
+  constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+              fields: [schoolId,realname]
+              errorPath: realname
+              message: '该测评单位中已经存在该用户姓名'
+  properties:
        realname:
            - NotBlank: { message:'真实姓名不能为空'}
            

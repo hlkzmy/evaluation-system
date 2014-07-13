@@ -51,8 +51,17 @@ class EvaluatedPersonController extends Controller
 		$form = $this->createForm('evaluated_person_form');
 		$form->handleRequest($this->getRequest());
 		
+		
 		if(!$form->isValid()){
-			echo $form->getErrorsAsString();
+			
+			//print_r(  $form->getErrorsAsString() );
+			
+			foreach($form->getErrors() as $errors ){
+				print_r(  $errors->getMessageParameters() );
+			}
+			
+			
+			return new JsonResponse(array('statusCode'=>300,'message'=>'添加用户失败'));
 		}
 			
 		//1.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
