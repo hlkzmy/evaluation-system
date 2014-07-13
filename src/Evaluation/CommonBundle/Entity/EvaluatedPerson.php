@@ -180,6 +180,13 @@ class EvaluatedPerson
      */
     public function getInsertTime()
     {
-        return $this->insertTime;
+    	return $this->insertTime;
     }
+    
+    public function isPasswordLegal(){
+    	return false;
+    }
+    
+    
+    
 }

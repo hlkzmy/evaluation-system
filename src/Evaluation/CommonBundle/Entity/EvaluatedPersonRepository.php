@@ -12,4 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class EvaluatedPersonRepository extends EntityRepository
 {
+	
+	public function isPasswordLegal(){
+		return false;
+	}
 }

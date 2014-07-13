@@ -1,4 +1,8 @@
 Evaluation\CommonBundle\Entity\EvaluatedPerson:
+   getters:
+       passwordLegal:
+           - "True": { message: "The password cannot match your first name" }
    properties:
-         realname:
-           - NotBlank: { 'message':'真实姓名不能为空'}
+       realname:
+           - NotBlank: { message:'真实姓名不能为空'}
+           
