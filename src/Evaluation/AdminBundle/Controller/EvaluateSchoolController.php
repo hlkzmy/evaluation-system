@@ -15,7 +15,7 @@ class EvaluateSchoolController extends Controller
 	public function readAction(){
 		 
 		//第二部分:查询数据形成列表
-		$defaultEntityManager = $this->getDoctrine()->getEntityManager();
+		$defaultEntityManager = $this->getDoctrine()->getManager();
 		$evaluateSchoolRepository = $defaultEntityManager->getRepository('EvaluationCommonBundle:EvaluateSchool');
 		$evaluateSchool = $evaluateSchoolRepository->findAll();
 			
@@ -40,7 +40,7 @@ class EvaluateSchoolController extends Controller
 			return new JsonResponse(array('message'=>'该对象已经被删除，请刷新页面','statusCode'=>300));
 		}
 
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$em->remove($school);
     	$em->flush();
 		
@@ -74,7 +74,7 @@ class EvaluateSchoolController extends Controller
 		
 		//第三步:向数据库中插入数据
 		$doctrine = $this->getDoctrine();
-		$em = $doctrine->getEntityManager();
+		$em = $doctrine->getManager();
 		$evaluateSchoolRespository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
 		
 		$em->getConnection()->beginTransaction();

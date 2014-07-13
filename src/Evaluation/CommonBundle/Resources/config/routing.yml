@@ -1,7 +1,7 @@
 #默认的路由，如果在网站地址什么都不输入，就直接跳到用户的登陆页
 evaluation_common_homepage:
     path:  /
-    defaults: { _controller: EvaluationWebBundle:User:login }
+    defaults: { _controller: EvaluationWebBundle:Layout:login }
    
 #网站后台的登录界面路由    
 evaluation_admin_login:

@@ -20,7 +20,7 @@ class EvaluatedPersonType extends AbstractType
 		$builder->setMethod('post');
 		
 		//第二步:对于choice模块这种需要装载选项的元素,通过依赖注入的方法填充数据
-		$entityManager = $this->doctrine->getEntityManager();
+		$entityManager = $this->doctrine->getManager();
 		
 		$evaluateSchoolRespository = $entityManager->getRepository('EvaluationCommonBundle:EvaluateSchool');
 		$evaluateSchoolList = $evaluateSchoolRespository->findAll();

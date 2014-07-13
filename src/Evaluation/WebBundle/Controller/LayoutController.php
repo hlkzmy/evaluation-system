@@ -4,7 +4,7 @@ namespace Evaluation\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class UserController extends Controller
+class LayoutController extends Controller
 {
 	
 	
@@ -20,7 +20,7 @@ class UserController extends Controller
     	
     	
     	
-        return $this->render('EvaluationWebBundle:User:login.html.twig');
+        return $this->render('EvaluationWebBundle:Layout:Login.html.twig');
     }
     
 }

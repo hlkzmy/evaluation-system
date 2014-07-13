@@ -10,7 +10,6 @@ use Evaluation\CommonBundle\Entity\EvaluatedPerson;
 
 
 
-
 class EvaluatedPersonController extends Controller
 {
     
@@ -35,6 +34,7 @@ class EvaluatedPersonController extends Controller
 							 'attr'=>array('class'=>'post-data-form'),
 							 'action' => $this->generateUrl('evaluation_evaluated_person_check_create'),
 						);
+		
 		
 		$form = $this->createForm('evaluated_person_form',null,$formOptions);
 		$formView = $form->createView();
@@ -66,7 +66,7 @@ class EvaluatedPersonController extends Controller
 		
 		//2.得到数据库对象，然后插入数据
 		$doctrine = $this->getDoctrine();
-		$em = $doctrine->getEntityManager();
+		$em = $doctrine->getManager();
 		
 		//3.单张数据表的操作不需要事务操作
 		try{
@@ -74,7 +74,7 @@ class EvaluatedPersonController extends Controller
 			$em->flush();
 		}
 		catch (\Exception $e){
-			echo $e->getMessage();
+			return new JsonResponse(array('statusCode'=>300,'message'=>$e->getMessage()));
 		}
 			
 		return new JsonResponse(array('statusCode'=>200,'message'=>'添加测评对象成功'));
@@ -83,12 +83,6 @@ class EvaluatedPersonController extends Controller
     
     
    
-    
-    
-    
-    
-    
-    
     
     
 }
