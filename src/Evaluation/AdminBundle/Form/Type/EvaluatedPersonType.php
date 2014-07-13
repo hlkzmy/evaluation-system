@@ -39,7 +39,7 @@ class EvaluatedPersonType extends AbstractType
 		//第二步：使用build的add方法向表单中添加元素
 		$builder->add('school_id','choice',array(
 												  'attr'=>array(
-														'class'=>'form-control'		
+														'class'=>'form-control select2me'
 												   ),//attr end
 												  'choices'   => $schoolChoiceOptions,
 					));
