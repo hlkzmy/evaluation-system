@@ -28,7 +28,6 @@
 			</div>
 			<div class="portlet-body form">
 				{{ form_start(formView) }}
-				<form role="form">
 					<div class="form-body">
 						<div class="form-group">
 							<label>评价单位</label>
@@ -54,16 +53,17 @@
 								<span class="input-group-addon">
 								<i class="fa fa-envelope"></i>
 								</span>
-								<input type="text" name='position' class="form-control" placeholder="请填写测评对象的职位，长度不要超过10个字">
+								{{ form_widget(formView.position)}}
 							</div>
 						</div>
-						
 					</div>
 					<div class="form-actions text-center">
-							<button type="button" class="btn blue">提交</button>
+							{{ form_widget(formView._token)}}
+							<button type="button" class="btn blue form-submit-button">提交</button>
 							<button type="reset"  class="btn default">重置</button>
 					</div>
-				</form>
+					</form>
+					
 			</div>
 		</div><!-- END SAMPLE FORM PORTLET-->
 	</div><!-- col-md-12 end -->
