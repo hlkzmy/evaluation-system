@@ -658,7 +658,7 @@ var Layout = function (layoutPath) {
             if(eventElement.attr('operation')=='delete'){
                 eventElement.parents('tr').remove();
             }
-            else if(eventElement.hasClass('status')){
+            else if(eventElement.attr('operation')=='status'){
 
                 var text = eventElement.text().trim();
                 if(text=='启用'){

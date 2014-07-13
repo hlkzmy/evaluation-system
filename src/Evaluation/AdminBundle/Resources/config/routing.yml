@@ -65,10 +65,15 @@ evaluation_evaluate_school_update:
 evaluation_evaluated_person_read:
     pattern:  /evaluated-person/read
     defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:read}
-    
+   
+#民主测评中的创建相关 
 evaluation_evaluated_person_create:
     pattern:  /evaluated-person/create
     defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:create}
+evaluation_evaluated_person_check_create:
+    pattern:  /evaluated-person/check-create
+    defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:checkCreate}   
+    
     
 evaluation_evaluated_person_update:
     pattern:  /evaluated-person/update

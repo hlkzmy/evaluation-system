@@ -5,6 +5,10 @@ namespace Evaluation\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+//加载相应的实体
+use Evaluation\CommonBundle\Entity\EvaluatedPerson;
+
+
 class EvaluatedPersonController extends Controller
 {
     
@@ -24,10 +28,28 @@ class EvaluatedPersonController extends Controller
 	
 	public function createAction(){
 	
-	
-	
-	
-		return $this->render('EvaluationAdminBundle:EvaluatedPerson:Create.html.twig');
+		$evaluatedPerson = new EvaluatedPerson();
+		$evaluatedPerson->setPosition('教导主任');
+		
+		
+		
+		
+		
+		//第二部分:创建表单
+		$formOptions = array(
+							'attr'=>array(
+									'class'  => 'post-data-form'
+							),		
+						    'action' => $this->generateUrl('evaluation_evaluated_person_check_create'),
+							'method' => 'post',
+						);
+		
+		$form = $this->createForm('evaluated_person_form',$evaluatedPerson,$formOptions);
+		
+		$formView = $form->createView();
+		
+
+		return $this->render('EvaluationAdminBundle:EvaluatedPerson:Create.html.twig',array('formView'=>$formView));
 	}
 	
 	
@@ -36,7 +58,9 @@ class EvaluatedPersonController extends Controller
 	 */
 	public function checkCreateAction(){
 	
-	
+		
+		
+		
 	
 		return new JsonResponse();
 	}
