@@ -1,0 +1,4 @@
+Evaluation\CommonBundle\Entity\EvaluatedPerson:
+   properties:
+         realname:
+           - NotBlank: { 'message':'真实姓名不能为空'}
