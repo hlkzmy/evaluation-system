@@ -37,11 +37,7 @@ class EvaluatedPersonController extends Controller
 		
 		//第二部分:创建表单
 		$formOptions = array(
-							'attr'=>array(
-									'class'  => 'post-data-form'
-							),		
-						    'action' => $this->generateUrl('evaluation_evaluated_person_check_create'),
-							'method' => 'post',
+							'action' => $this->generateUrl('evaluation_evaluated_person_check_create'),
 						);
 		
 		$form = $this->createForm('evaluated_person_form',$evaluatedPerson,$formOptions);
