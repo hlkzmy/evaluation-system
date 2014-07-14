@@ -2,8 +2,13 @@ parameters:
 #    evaluation_admin.example.class: Evaluation\AdminBundle\Example
 
 services:
-   common_bundle.form.type.evaluated_person:
+   admin_bundle.form.type.evaluated_person:
        class: Evaluation\AdminBundle\Form\Type\EvaluatedPersonType
        arguments: [@doctrine]
        tags:
            - { name: form.type, alias: evaluated_person_form }
+           
+   admin_bundle.form.type.admin_user:
+       class: Evaluation\AdminBundle\Form\Type\AdminUserType
+       tags:
+           - { name: form.type, alias: admin_user_form }

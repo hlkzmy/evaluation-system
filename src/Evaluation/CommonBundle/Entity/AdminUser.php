@@ -50,6 +50,36 @@ class AdminUser implements UserInterface,\Serializable
      * @ORM\Column(name="realname", type="string", length=255, nullable=true)
      */
     private $realname;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="insert_time", type="datetime", nullable=false)
+     */
+    private $insertTime = '0000-00-00 00:00:00';
+    
+    /**
+     * Set insertTime
+     *
+     * @param \DateTime $insertTime
+     * @return EvaluatedPerson
+     */
+    public function setInsertTime($insertTime)
+    {
+    	$this->insertTime = $insertTime;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get insertTime
+     *
+     * @return \DateTime
+     */
+    public function getInsertTime()
+    {
+    	return $this->insertTime;
+    }
 
 
 

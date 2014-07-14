@@ -7,4 +7,17 @@ Evaluation\CommonBundle\Entity\EvaluatedPerson:
   properties:
        realname:
            - NotBlank: { message:'真实姓名不能为空'}
+  
+#系统管理员的相关实体的约束         
+Evaluation\CommonBundle\Entity\AdminUser:
+  constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+              fields: [realname]
+              message: '该用户的真实姓名已经存在'
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+              fields: [username]
+              message: '该用户的登录账号已经存在'
+  properties:
+       realname:
+           - NotBlank: { message:'真实姓名不能为空'}
            

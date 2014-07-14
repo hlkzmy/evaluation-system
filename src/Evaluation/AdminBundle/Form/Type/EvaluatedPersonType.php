@@ -4,7 +4,6 @@ namespace Evaluation\AdminBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class EvaluatedPersonType extends AbstractType
 {
@@ -69,17 +68,11 @@ class EvaluatedPersonType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 				'data_class' => 'Evaluation\CommonBundle\Entity\EvaluatedPerson',
-				'constraints'=> array(
-									new Assert\Callback(array(array($this, 'test')))
-								)//constraints end
 		));
 	}
 	
 	
-	public function test(){
-		
-		
-	}
+	
 	
 	
 

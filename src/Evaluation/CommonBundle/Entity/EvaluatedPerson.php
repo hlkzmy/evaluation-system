@@ -183,10 +183,6 @@ class EvaluatedPerson
     	return $this->insertTime;
     }
     
-    public function isPasswordLegal(){
-    	return false;
-    }
-    
     
     
 }
