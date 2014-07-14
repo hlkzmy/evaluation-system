@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 //加载相关的实体
 use Evaluation\CommonBundle\Entity\Evaluation;
+use Evaluation\CommonBundle\Entity\EvaluateUser;
 
 class EvaluationController extends Controller
 {
@@ -117,19 +118,59 @@ class EvaluationController extends Controller
     	$em = $doctrine->getManager();
     	
     	//2.因为涉及多张数据表，所以需要开启数据库事务操作
+    	$em->getConnection()->beginTransaction();
     	try{
     		
-    		
-    		
-    		
-    		
+    		//插入民主评价的数据表
     		$em->persist($evaluation);
     		$em->flush();
+    		
+    		
+    		//插入前台用户的数据表
+    		$evaluateUserCount = intval( $evaluation->getEvaluateUserCount());
+    		$evaluationId = $evaluation->getId();
+    		
+    		//生成账号规则的评价编号部分,取3位数字，最做为999
+    		$evaluationIdPart = '000000'.$evaluationId;
+    		$evaluationIdPart = substr($evaluationIdPart,strlen($evaluationIdPart)-3);
+    		
+    		//生成账号规则的学校部分,取3位数字，最做为999
+    		$schoolId 	  = '000000'.$evaluation->getSchoolId();
+    		$schoolIdPart = substr($schoolId,strlen($schoolId)-3);
+    		
+    		for($i=0;$i<$evaluateUserCount;$i++){
+    			$user = new EvaluateUser();
+    			$user->setEvaluationId($evaluationId);
+    			
+    			//生成账号规则的用户Id部分,取3位数字，最做为999
+    			$userId 	= '000000'.$i;
+    			$userIdPart = substr($userId,strlen($userId)-3);
+    			
+    			//设置账号
+    			$username = sprintf('%s%s%s',$schoolIdPart,$evaluationIdPart,$userIdPart);
+    			$user->setUsername($username);
+    			
+    			//设置密码
+    			$password = md5( sha1($schoolIdPart).md5($evaluationIdPart).sha1($userIdPart) );
+    			$passwordLength = strlen($password);//得到长度
+    			$rand = rand(0,$passwordLength-7);//得到开始范围
+    			$password = substr($password,$rand,6);//随机从中取出6位数字
+    			$user->setPassword($password);
+    			$em->persist($user);
+    		}
+    		
+    		$em->flush();
+    	
     	}
     	catch (\Exception $e){
+    		$em->getConnection()->rollback();
+    		$em->getConnection()->close();
     		return new JsonResponse(array('statusCode'=>300,'message'=>$e->getMessage()));
     	}
-    		
+    	
+    	$em->getConnection()->commit();
+    	$em->getConnection()->close();
+    	
     	return new JsonResponse(array('statusCode'=>200,'message'=>'创建民主评价成功'));
     
     }//function checkCreateAction() end
