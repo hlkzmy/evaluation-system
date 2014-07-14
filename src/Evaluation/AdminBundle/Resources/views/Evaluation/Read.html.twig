@@ -38,12 +38,7 @@
 		                <td>{{item.startTime|date('Y-m-d H:i:s')}}</td>
 		                <td>{{item.endTime|date('Y-m-d H:i:s')}}</td>
 		                <td>
-		                    <a type="button" class="btn red btn-xs ajaxify"  href="{{ path('evaluation_evaluate_delete',{'id':item.id})}}">
-		                       	删除
-		                    </a>
-		                    <a type="button" class="btn green btn-xs" href="{{ path('evaluation_evaluate_update',{'id':item.id})}}">
-		                       	编辑
-		                    </a>
+		                    <a type="button" class="btn red btn-xs ajaxTodo" operation='delete'  href="{{ path('evaluation_evaluate_delete',{'id':item.id})}}">删除</a>
 		                </td>
 		            </tr>
 				{%endfor%}

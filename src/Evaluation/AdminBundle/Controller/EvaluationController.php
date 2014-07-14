@@ -5,6 +5,9 @@ namespace Evaluation\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+//加载相关的实体
+use Evaluation\CommonBundle\Entity\Evaluation;
+
 class EvaluationController extends Controller
 {
     
@@ -21,6 +24,40 @@ class EvaluationController extends Controller
     	return $this->render('EvaluationAdminBundle:Evaluation:Read.html.twig',array('evaluation'=>$evaluation));
     	
     }
+    
+    /**
+     * 删除数据对象
+     * @param int $id
+     */
+    public function deleteAction(Evaluation $evaluation){
+    
+    	//第一步:对于民主评价是否已经删除进行判断
+    	if (!$evaluation) {
+    		return new JsonResponse(array('message'=>'该对象已经被删除，请刷新页面','statusCode'=>300));
+    	}
+    	
+    	//第二步:民主评价处于进行中和已结束两个状态都不允许删除
+    	$startTimestamp =  $evaluation->getStartTime()->getTimestamp();
+    	$endTimestamp   =  $evaluation->getEndTime()->getTimestamp();
+    	
+    	//1.进行之中的判断
+    	if($startTimestamp<= time() && $endTimestamp >= time()){
+    		return new JsonResponse(array('message'=>'处于进行之中的民主评价无法被删除,否则会引起错误','statusCode'=>300));
+    	}
+    	
+    	//2.已经结束的判断
+    	if($endTimestamp< time()){
+    		return new JsonResponse(array('message'=>'处于已结束状态的民主评价无法删除,请在后台中查看相关结果','statusCode'=>300));
+    	}
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	$em->remove($evaluation);
+    	$em->flush();
+    
+    	return new JsonResponse(array('message'=>'删除民主评价成功','statusCode'=>200));
+    		
+    }//function deleteAction() end
+    
     
     public function createAction(){
     	 

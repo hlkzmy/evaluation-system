@@ -83,7 +83,7 @@ evaluation_evaluated_person_delete:
     pattern:  /evaluated-person/delete/{id}
     defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:delete} 
   
-#系统管理员测评相关    
+#系统管理员列表    
 evaluation_admin_user_read:
     path:  /admin-user/read
     defaults: { _controller: EvaluationAdminBundle:AdminUser:read}

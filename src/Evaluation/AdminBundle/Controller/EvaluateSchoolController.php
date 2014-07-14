@@ -78,7 +78,7 @@ class EvaluateSchoolController extends Controller
 		//1.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
 		$evaluatSchool = $form->getData();
 		$evaluatSchool->setInsertTime(new \DateTime());
-		$evaluatSchool->setCreateAdminUser($this->getUser()->getRealname());
+		$evaluatSchool->setCreateAdminUser(method_exists($this->getUser(),'getRealname')? $this->getUser()->getRealname() : $this->getUser()->getUsername() );
 		
 		
 		//2.得到数据库对象，然后插入数据

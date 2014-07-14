@@ -81,7 +81,7 @@ class EvaluatedPersonController extends Controller
 		//1.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
 		$evaluatePerson = $form->getData();
 		$evaluatePerson->setInsertTime(new \DateTime());
-		$evaluatePerson->setCreateAdminUser($this->getUser()->getRealname());
+		$evaluatePerson->setCreateAdminUser( method_exists($this->getUser(),'getRealname')? $this->getUser()->getRealname() : $this->getUser()->getUsername() );
 		
 		//2.得到数据库对象，然后插入数据
 		$doctrine = $this->getDoctrine();
