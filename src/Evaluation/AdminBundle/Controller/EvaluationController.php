@@ -24,12 +24,18 @@ class EvaluationController extends Controller
     
     public function createAction(){
     	 
-    	 
+    	//第二部分:创建表单
+    	$formOptions = array(
+    			'attr'=>array('class'=>'post-data-form'),
+    			'action' => $this->generateUrl('evaluation_evaluate_check_create'),
+    	);
     	
     	
-    	 
-    	 
-    	return $this->render('EvaluationAdminBundle:Evaluation:Create.html.twig');
+    	$form = $this->createForm('evaluation_form',null,$formOptions);
+    	$formView = $form->createView();
+    	
+    	return $this->render('EvaluationAdminBundle:Evaluation:Create.html.twig',array('formView'=>$formView));
+    
     }
    
     

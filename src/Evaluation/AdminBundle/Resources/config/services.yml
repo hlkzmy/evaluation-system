@@ -17,3 +17,9 @@ services:
        class: Evaluation\AdminBundle\Form\Type\EvaluateSchoolType
        tags:
            - { name: form.type, alias: evaluate_school_form }
+           
+   admin_bundle.form.type.evaluation:
+       class: Evaluation\AdminBundle\Form\Type\EvaluationType
+       arguments: [@doctrine]
+       tags:
+           - { name: form.type, alias: evaluation_form }

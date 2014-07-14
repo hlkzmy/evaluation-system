@@ -5,30 +5,94 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EvaluateSchoolType extends AbstractType
+class EvaluationType extends AbstractType
 {
+	
+	public function __construct($doctrine){
+		$this->doctrine = $doctrine;
+	}
+	
 	
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		//第一步：设置表单的基本属性,从控制器中中设置变成在这里设置
 		$builder->setMethod('post');
 		
+		//第二步:对于choice模块这种需要装载选项的元素,通过依赖注入的方法填充数据
+		$entityManager = $this->doctrine->getManager();
 		
+		//1.得到学校的所有选项
+		$evaluateSchoolRespository = $entityManager->getRepository('EvaluationCommonBundle:EvaluateSchool');
+		$evaluateSchoolList = $evaluateSchoolRespository->findAll();
+		
+		$schoolChoiceOptions = array();
+		foreach($evaluateSchoolList as $school){
+			$schoolChoiceOptions[$school->getId()] = $school->getName();
+		}
+		
+		//2.得到测评对象所有选项
+		$evaluatedPersonRespository = $entityManager->getRepository('EvaluationCommonBundle:EvaluatedPerson');
+		$evaluatedPersonList = $evaluatedPersonRespository->findAll();
+		
+		$personChoiceOptions = array();
+		foreach($evaluatedPersonList as $person){
+			$personChoiceOptions[$person->getId()] = $person->getRealname();
+		}
+		
+		
+		
+		//第三步：设置表单的基本属性,从控制器中中设置变成在这里设置
 		$builder->add('name','text',array(
 												'attr'=>array(
-																'placeholder'=>'请单位测评的名称，长度不要超过20个字',
+																'placeholder'=>'请民主评价的名称，长度不要超过20个字',
 																'class'=>'form-control'
 												 ),//attr end
 												
-										)//realname option end
+										)//name option end
 					 );
 		
+		$builder->add('school_id','choice',array(
+												'attr'=>array(
+														'placeholder'=>'请民主评价的名称，长度不要超过20个字',
+														'class'=>'form-control select2me'
+												),//attr end
+												'choices'   => $schoolChoiceOptions,
+		
+					 						)//name option end
+		);
+		
+		$builder->add('evaluated_person','choice',array(
+														'attr'=>array(
+																'placeholder'=>'请民主评价的名称，长度不要超过20个字',
+																'class'=>'form-control select2me'
+														),//attr end
+														'choices'   => $personChoiceOptions,
+											  )//evaluated_person option end
+		);
+		
+		$builder->add('start_time','text',array(
+													'attr'=>array(
+															'placeholder'=>'请民主评价的名称，长度不要超过20个字',
+															'class'=>'form-control'
+													),//attr end
+										)//start_time option end
+		);
+		
+		$builder->add('duration','text',array(
+													'attr'=>array(
+															'placeholder'=>'请民主评价的名称，长度不要超过20个字',
+															'class'=>'form-control'
+													),//attr end
+										)//duration option end
+		);
+		
+		
 		$builder->add('description','textarea',array(
-											'attr'=>array(
-													'placeholder'=>'请单位测评的相关描述，长度不要超过100个字',
-													'class'=>'form-control'
-											),//attr end
-										)//position option end
+													'attr'=>array(
+															'placeholder'=>'请民主评价的相关描述，长度不要超过100个字',
+															'class'=>'form-control'
+													),//attr end
+										       )//description option end
 					 );
 	
 	}//function buildForm() end
@@ -36,13 +100,13 @@ class EvaluateSchoolType extends AbstractType
 	
 	public function getName()
 	{
-		return 'evaluate_school_form';
+		return 'evaluation_form';
 	}
 	
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
-				'data_class' => 'Evaluation\CommonBundle\Entity\EvaluateSchool',
+				'data_class' => 'Evaluation\CommonBundle\Entity\Evaluation',
 		));
 	}
 	
