@@ -59,22 +59,24 @@
 						</div>
 						<div class="form-group">
 							<label>开始时间</label>
-							<div class="input-group col-md-4">
-								<span class="input-group-addon">
-									<i class="fa fa-envelope"></i>
+							<div class="input-group date form_advance_datetime col-md-4" data-date="2012-12-21T15:25:00Z">
+								<input type="text" size="16" readonly class="form-control">
+								<span class="input-group-btn">
+									<button class="btn default date-reset" type="button"><i class="fa fa-times"></i></button>
+									<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
 								</span>
-								{{ form_widget(formView.start_time)}}
 							</div>
 						</div>
 						<div class="form-group">
-							<label>持续时长</label>
+							<label>结束时间</label>
 							<div class="input-group col-md-4">
 								<span class="input-group-addon">
 									<i class="fa fa-envelope"></i>
 								</span>
-								{{ form_widget(formView.duration)}}
+								{{ form_widget(formView.end_time)}}
 							</div>
 						</div>
+						
 						<div class="form-group">
 							<label>评价的相关描述</label>
 							<div class="input-group col-md-6">
@@ -83,7 +85,7 @@
 						</div>
 					</div>
 					<div class="form-actions text-center">
-							{{ form_widget(formView._token)}}
+							{{ form_widget(formView._token)}} 
 							<button type="button" class="btn blue">提交</button>
 							<button type="reset"  class="btn default">重置</button>
 					</div>
@@ -93,3 +95,18 @@
 	</div><!-- col-md-12 end -->
 </div><!-- row end -->
 <!-- END PAGE CONTENT-->
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+	    $(".form_advance_datetime").datetimepicker({
+            isRTL: Metronic.isRTL(),
+            format: "dd MM yyyy - hh:ii",
+            autoclose: true,
+            todayBtn: true,
+            startDate: "2013-02-14 10:00",
+            pickerPosition: (Metronic.isRTL() ? "bottom-right" : "bottom-left"),
+            minuteStep: 10
+        });
+        
+	});
+</script>

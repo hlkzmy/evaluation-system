@@ -57,13 +57,6 @@ class Evaluation
     private $endTime = '0000-00-00 00:00:00';
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="duration", type="integer", nullable=false)
-     */
-    private $duration = '0';
-
-    /**
      * @var string
      *
      * @ORM\Column(name="evaluate_user_count", type="string", length=255, nullable=true)
@@ -211,28 +204,9 @@ class Evaluation
         return $this->endTime;
     }
 
-    /**
-     * Set duration
-     *
-     * @param integer $duration
-     * @return Evaluation
-     */
-    public function setDuration($duration)
-    {
-        $this->duration = $duration;
+   
 
-        return $this;
-    }
-
-    /**
-     * Get duration
-     *
-     * @return integer 
-     */
-    public function getDuration()
-    {
-        return $this->duration;
-    }
+   
 
     /**
      * Set evaluateUserCount

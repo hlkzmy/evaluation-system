@@ -40,7 +40,6 @@ class EvaluationType extends AbstractType
 		}
 		
 		
-		
 		//第三步：设置表单的基本属性,从控制器中中设置变成在这里设置
 		$builder->add('name','text',array(
 												'attr'=>array(
@@ -63,8 +62,9 @@ class EvaluationType extends AbstractType
 		
 		$builder->add('evaluated_person','choice',array(
 														'attr'=>array(
-																'placeholder'=>'请民主评价的名称，长度不要超过20个字',
-																'class'=>'form-control select2me'
+																'placeholder'=>'请选择该测评单位的测评对象',
+																'class'=>'form-control select2me',
+																'multiple'=>'multiple'
 														),//attr end
 														'choices'   => $personChoiceOptions,
 											  )//evaluated_person option end
@@ -72,18 +72,26 @@ class EvaluationType extends AbstractType
 		
 		$builder->add('start_time','text',array(
 													'attr'=>array(
-															'placeholder'=>'请民主评价的名称，长度不要超过20个字',
+															'placeholder'=>'请选择民主评价的开始时间',
 															'class'=>'form-control'
 													),//attr end
 										)//start_time option end
 		);
 		
-		$builder->add('duration','text',array(
+		$builder->add('end_time','text',array(
 													'attr'=>array(
-															'placeholder'=>'请民主评价的名称，长度不要超过20个字',
+															'placeholder'=>'请选择民主评价的结束时间',
 															'class'=>'form-control'
 													),//attr end
-										)//duration option end
+										)//end_time option end
+		);
+		
+		$builder->add('evaluate_user_count','text',array(
+													'attr'=>array(
+															'placeholder'=>'请填写民主评价的参与人数',
+															'class'=>'form-control'
+													),//attr end
+					 				    )//evaluate_user_count option end
 		);
 		
 		
