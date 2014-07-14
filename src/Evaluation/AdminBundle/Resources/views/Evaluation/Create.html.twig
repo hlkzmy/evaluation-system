@@ -59,10 +59,9 @@
 						</div>
 						<div class="form-group">
 							<label>开始时间</label>
-							<div class="input-group date form_advance_datetime col-md-4" data-date="2012-12-21T15:25:00Z">
-								<input type="text" size="16" readonly class="form-control">
+							<div class="input-group date datetime-picker col-md-4" >
+								<input type="text" size="16" readonly class="form-control" placeholder='请点击按钮选择开始时间'>
 								<span class="input-group-btn">
-									<button class="btn default date-reset" type="button"><i class="fa fa-times"></i></button>
 									<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
 								</span>
 							</div>
@@ -96,17 +95,18 @@
 </div><!-- row end -->
 <!-- END PAGE CONTENT-->
 <script type="text/javascript">
-	$(document).ready(function() {
-	
-	    $(".form_advance_datetime").datetimepicker({
-            isRTL: Metronic.isRTL(),
-            format: "dd MM yyyy - hh:ii",
+$(document).ready(function() {    
+
+  	$("div.datetime-picker").datetimepicker({
+  			language: 'zh-CN',
+  			isRTL: Metronic.isRTL(),
+            format: "yyyy-mm-dd hh:ii",
             autoclose: true,
             todayBtn: true,
-            startDate: "2013-02-14 10:00",
+            weekStart: 1,
             pickerPosition: (Metronic.isRTL() ? "bottom-right" : "bottom-left"),
             minuteStep: 10
-        });
-        
-	});
+    });
+    
+});
 </script>
