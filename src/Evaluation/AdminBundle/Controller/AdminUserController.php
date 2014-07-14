@@ -61,9 +61,8 @@ class AdminUserController extends Controller
 		
 		//2.对于密码做混淆处理
 		$factory = $this->get('security.encoder_factory');
-		
 		$encoder = $factory->getEncoder($adminUser);
-		$password = $encoder->encodePassword('ryanpass', $adminUser->getSalt());
+		$password = $encoder->encodePassword($adminUser->getPassword(), $adminUser->getSalt());
 		$adminUser->setPassword($password);
 		
 		
