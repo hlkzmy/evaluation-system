@@ -90,7 +90,7 @@ class EvaluationType extends AbstractType
 		
 		$builder->add('evaluate_user_count','text',array(
 													'attr'=>array(
-															'placeholder'=>'请填写民主评价的参与人数',
+															'placeholder'=>'请填写民主评价的参与人数,数值为正整数',
 															'class'=>'form-control'
 													),//attr end
 					 				    )//evaluate_user_count option end

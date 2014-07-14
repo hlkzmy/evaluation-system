@@ -76,6 +76,15 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label>参与人数</label>
+							<div class="input-group col-md-4">
+								<span class="input-group-addon">
+								<i class="fa fa-envelope"></i>
+								</span>
+								{{ form_widget(formView.evaluate_user_count)}}
+							</div>
+						</div>
+						<div class="form-group">
 							<label>评价的相关描述</label>
 							<div class="input-group col-md-6">
 								{{ form_widget(formView.description)}}
