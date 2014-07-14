@@ -12,6 +12,18 @@ security:
             logout:
                 path: evaluation_admin_logout
                 target: evaluation_admin_login
+        web_secured_area:
+            provider: evaluation_admin_chain
+            pattern: ^/admin
+            anonymous: ~
+            form_login: 
+                login_path: evaluation_admin_login
+                check_path: evaluation_admin_login_check
+                always_use_default_target_path: true
+                default_target_path: evaluation_admin_console
+            logout:
+                path: evaluation_admin_logout
+                target: evaluation_admin_login        
             
      access_control:
                  - { path: ^/$,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -33,12 +45,22 @@ security:
                chain: 
                   providers: [evaluation_super_admin,evaluation_admin]
                   
+          #登陆网站前台所使用的用户提供者        
+          evaluation_web_user:
+               entity:
+                   class: EvaluationCommonBundle:EvaluateUser
+                   property: username    
+                  
      encoders: 
          Symfony\Component\Security\Core\User\User: plaintext  
          Evaluation\CommonBundle\Entity\AdminUser: 
+               algorithm:            pbkdf2
+               hash_algorithm:       sha512
+               encode_as_base64:     true
+               iterations:           1000
+         Evaluation\CommonBundle\Entity\EvaluateUser: 
                algorithm: bcrypt
-               cost: 15
-             
+               cost: 15    
      
           
      
