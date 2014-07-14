@@ -1,9 +1,9 @@
 Evaluation\CommonBundle\Entity\EvaluatedPerson:
   constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
-              fields: [schoolId,realname]
-              errorPath: realname
-              message: '该测评单位中已经存在该用户姓名'
+             fields: [schoolId,realname]
+             errorPath: realname
+             message: '该测评单位中已经存在该用户姓名'
   properties:
        realname:
            - NotBlank: { message:'真实姓名不能为空'}
@@ -18,6 +18,24 @@ Evaluation\CommonBundle\Entity\AdminUser:
               fields: [username]
               message: '该用户的登录账号已经存在'
   properties:
+       username:
+           - NotBlank: { message:'登陆账号不能为空'}
+           - Length:
+                min: 6
+                max: 10
+                minMessage: "登陆账号的长度为6到10个字符"
+                maxMessage: "登陆账号的长度为6到10个字符"
+       password:
+           - NotBlank: { message:'密码不能为空'}
+           - Length:
+                min: 6
+                max: 20
+                minMessage: "密码的长度为6到20个字符"
+                maxMessage: "密码的长度为6到20个字符"
        realname:
            - NotBlank: { message:'真实姓名不能为空'}
-           
+           - Length:
+                min: 4
+                max: 10
+                minMessage: "真实姓名的长度为2到5个汉字"
+                maxMessage: "真实姓名的长度为2到5个汉字"         

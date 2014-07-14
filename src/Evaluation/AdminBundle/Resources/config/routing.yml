@@ -85,21 +85,23 @@ evaluation_evaluated_person_delete:
   
 #系统管理员测评相关    
 evaluation_admin_user_read:
-    pattern:  /admin-user/read
+    path:  /admin-user/read
     defaults: { _controller: EvaluationAdminBundle:AdminUser:read}
-    
+
+#系统管理员创建相关    
 evaluation_admin_user_create:
-    pattern:  /admin-user/create
+    path:  /admin-user/create
     defaults: { _controller: EvaluationAdminBundle:AdminUser:create}
     
 evaluation_admin_user_check_create:
-    pattern:  /admin-user/check-create
+    path:  /admin-user/check-create
     defaults: { _controller: EvaluationAdminBundle:AdminUser:checkCreate}
     
 evaluation_admin_user_update:
-    pattern:  /admin-user/create
+    pattern:  /admin-user/update
     defaults: { _controller: EvaluationAdminBundle:AdminUser:update}
     
+#系统管理员删除相关    
 evaluation_admin_user_delete:
-    pattern:  /admin-user/create
+    path:  /admin-user/delete/{id}
     defaults: { _controller: EvaluationAdminBundle:AdminUser:delete}

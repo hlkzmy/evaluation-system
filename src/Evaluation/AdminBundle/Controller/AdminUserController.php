@@ -5,6 +5,9 @@ namespace Evaluation\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+//加载相关的实体
+use Evaluation\CommonBundle\Entity\AdminUser;
+
 class AdminUserController extends Controller
 {
 	
@@ -39,10 +42,46 @@ class AdminUserController extends Controller
 	
 	
 	/**
+	 * 删除数据对象
+	 * @param int $id
+	 */
+	public function deleteAction(AdminUser $user){
+	
+		//第一步:只允许username为admin的账号进行操作
+		$sessionUsername = $this->getUser()->getUsername();
+		
+		if($sessionUsername!='admin'){
+			return new JsonResponse(array('statusCode'=>300,'message'=>'只允许账号为admin的超级管理员进行操作'));
+		}
+		
+		//第二步:判断数据对象是否合法
+		if (!$user) {
+			return new JsonResponse(array('message'=>'该对象已经被删除，请刷新页面','statusCode'=>300));
+		}
+	
+		//第三步:操作数据库
+		$em = $this->getDoctrine()->getManager();
+		$em->remove($user);
+		$em->flush();
+	
+		return new JsonResponse(array('message'=>'删除系统管理员成功','statusCode'=>200));
+		 
+	}//function deleteAction() end
+	
+	/**
 	 * 检测并验证数据对象添加的方法，由表单提交
 	 */
 	public function checkCreateAction(){
 	
+		//第一步:只允许username为admin的账号进行操作
+ 		$sessionUsername = $this->getUser()->getUsername();
+		
+		if($sessionUsername!='admin'){
+			return new JsonResponse(array('statusCode'=>300,'message'=>'只允许账号为admin的超级管理员进行操作'));
+		}
+		
+		
+		//第二步:验证数据是否正确
 		$form = $this->createForm('admin_user_form');
 		$form->handleRequest($this->getRequest());
 		
@@ -66,11 +105,12 @@ class AdminUserController extends Controller
 		$adminUser->setPassword($password);
 		
 		
-		//2.得到数据库对象，然后插入数据
+		//第三步:插入数据库
+		//1.得到数据库对象，然后插入数据
 		$doctrine = $this->getDoctrine();
 		$em = $doctrine->getManager();
 		
-		//3.单张数据表的操作不需要事务操作
+		//2.单张数据表的操作不需要事务操作
 		try{
 			$em->persist($adminUser);
 			$em->flush();
