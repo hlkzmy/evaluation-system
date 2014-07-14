@@ -42,6 +42,25 @@ class EvaluatedPersonController extends Controller
 		return $this->render('EvaluationAdminBundle:EvaluatedPerson:Create.html.twig',array('formView'=>$formView));
 	}
 	
+	/**
+	 * 删除数据对象
+	 * @param int $id
+	 */
+	public function deleteAction(EvaluatedPerson $person){
+	
+		if (!$person) {
+			return new JsonResponse(array('message'=>'该对象已经被删除，请刷新页面','statusCode'=>300));
+		}
+	
+		$em = $this->getDoctrine()->getManager();
+		$em->remove($person);
+		$em->flush();
+	
+		return new JsonResponse(array('message'=>'删除评价对象成功','statusCode'=>200));
+		 
+	}//function deleteAction() end
+	
+	
 	
 	/**
 	 * 检测并验证数据对象添加的方法，由表单提交
@@ -62,7 +81,7 @@ class EvaluatedPersonController extends Controller
 		//1.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
 		$evaluatePerson = $form->getData();
 		$evaluatePerson->setInsertTime(new \DateTime());
-		$evaluatePerson->setCreateAdminUser($this->getUser()->getUsername());
+		$evaluatePerson->setCreateAdminUser($this->getUser()->getRealname());
 		
 		//2.得到数据库对象，然后插入数据
 		$doctrine = $this->getDoctrine();

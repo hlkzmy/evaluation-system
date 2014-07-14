@@ -66,13 +66,9 @@ class EvaluateSchoolController extends Controller
 		$name 		= $post->get('name');//得到测评对象的名称 
 		$description= $post->get('description');//得到测频对象的描述
 		
-		//第二步：通过提交的数据验证,包括[数据库重复，输入的数据不符合规定]等内容
 		
 		
-		
-		
-		
-		//第三步:向数据库中插入数据
+		//第二步:向数据库中插入数据
 		$doctrine = $this->getDoctrine();
 		$em = $doctrine->getManager();
 		$evaluateSchoolRespository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
@@ -82,7 +78,7 @@ class EvaluateSchoolController extends Controller
     		$evaluateSchool = new EvaluateSchool();
 			$evaluateSchool->setName($name);
 			$evaluateSchool->setDescription($description);
-			$evaluateSchool->setCreateAdminUser($this->getUser()->getUsername());
+			$evaluateSchool->setCreateAdminUser($this->getUser()->getRealname());
 			$evaluateSchool->setInsertTime(new \DateTime());
 			$em->persist($evaluateSchool);
 			$em->flush();

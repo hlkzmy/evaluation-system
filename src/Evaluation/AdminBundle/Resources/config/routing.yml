@@ -66,7 +66,7 @@ evaluation_evaluated_person_read:
     pattern:  /evaluated-person/read
     defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:read}
    
-#民主测评中的创建相关 
+#民主测评中的测评对象的创建相关 
 evaluation_evaluated_person_create:
     pattern:  /evaluated-person/create
     defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:create}
@@ -80,7 +80,7 @@ evaluation_evaluated_person_update:
     defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:update} 
     
 evaluation_evaluated_person_delete:
-    pattern:  /evaluated-person/delete
+    pattern:  /evaluated-person/delete/{id}
     defaults: { _controller: EvaluationAdminBundle:EvaluatedPerson:delete} 
   
 #系统管理员测评相关    
