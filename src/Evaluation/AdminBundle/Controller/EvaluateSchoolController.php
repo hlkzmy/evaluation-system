@@ -20,14 +20,23 @@ class EvaluateSchoolController extends Controller
 		$evaluateSchool = $evaluateSchoolRepository->findAll();
 			
 			
-			
 		return $this->render('EvaluationAdminBundle:EvaluateSchool:Read.html.twig',array('evaluateSchool'=>$evaluateSchool));
-		
 	}
 	
 	public function createAction(){
 	
-		return $this->render('EvaluationAdminBundle:EvaluateSchool:Create.html.twig');
+		//第二部分:创建表单
+		$formOptions = array(
+				'attr'=>array('class'=>'post-data-form'),
+				'action' => $this->generateUrl('evaluation_evaluate_school_check_create'),
+		);
+		
+		
+		$form = $this->createForm('evaluate_school_form',null,$formOptions);
+		$formView = $form->createView();
+		
+		return $this->render('EvaluationAdminBundle:EvaluateSchool:Create.html.twig',array('formView'=>$formView));
+		
 	}
 	
 	/**
@@ -44,7 +53,7 @@ class EvaluateSchoolController extends Controller
     	$em->remove($school);
     	$em->flush();
 		
-    	return new JsonResponse(array('message'=>'删除成功','statusCode'=>200));
+    	return new JsonResponse(array('message'=>'删除测评单位成功','statusCode'=>200));
     	
 	}//function deleteAction() end
 	
@@ -55,41 +64,36 @@ class EvaluateSchoolController extends Controller
 	 */
 	public function checkCreateAction(){
 		
-		//第一步:处理request对象传递上来的数据，并调用表单对象进行验证
-		$request = $this->getRequest();
-		if(!$request->isXmlHttpRequest()){
-			return new Response('Forbidden',403);
+		$form = $this->createForm('evaluate_school_form');
+		$form->handleRequest($this->getRequest());
+		
+		if(!$form->isValid()){
+			foreach($form as $formElement){
+				foreach($formElement->getErrors() as $error){
+					return new JsonResponse(array('statusCode'=>300,'message'=>$error->getMessage()));
+				}
+			}
 		}
+			
+		//1.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
+		$evaluatSchool = $form->getData();
+		$evaluatSchool->setInsertTime(new \DateTime());
+		$evaluatSchool->setCreateAdminUser($this->getUser()->getRealname());
 		
-		$post = $request->request;
 		
-		$name 		= $post->get('name');//得到测评对象的名称 
-		$description= $post->get('description');//得到测频对象的描述
-		
-		
-		
-		//第二步:向数据库中插入数据
+		//2.得到数据库对象，然后插入数据
 		$doctrine = $this->getDoctrine();
 		$em = $doctrine->getManager();
-		$evaluateSchoolRespository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
 		
-		$em->getConnection()->beginTransaction();
-		try {
-    		$evaluateSchool = new EvaluateSchool();
-			$evaluateSchool->setName($name);
-			$evaluateSchool->setDescription($description);
-			$evaluateSchool->setCreateAdminUser($this->getUser()->getRealname());
-			$evaluateSchool->setInsertTime(new \DateTime());
-			$em->persist($evaluateSchool);
+		//3.单张数据表的操作不需要事务操作
+		try{
+			$em->persist($evaluatSchool);
 			$em->flush();
-		    
-		} catch (\Exception $e) {
-    		$em->getConnection()->rollback();
-    		return new JsonResponse(array('statusCode'=>200,'message'=>$e->getMessage()));
-    	}
-		
-		$em->getConnection()->commit();
-		
+		}
+		catch (\Exception $e){
+			return new JsonResponse(array('statusCode'=>300,'message'=>$e->getMessage()));
+		}
+			
 		return new JsonResponse(array('statusCode'=>200,'message'=>'添加测评单位成功'));
 		
 	}//function checkCreateAction() end

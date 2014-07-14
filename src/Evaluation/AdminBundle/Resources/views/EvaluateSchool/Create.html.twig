@@ -27,7 +27,7 @@
 				</div>
 			</div>
 			<div class="portlet-body form">
-				<form role="form" class='post-data-form' action='{{ path('evaluation_evaluate_school_check_create')}}' >
+				{{form_start(formView)}}
 					<div class="form-body">
 						<div class="form-group">
 							<label for="exampleInputEmail1">单位名称</label>
@@ -35,18 +35,19 @@
 								<span class="input-group-addon">
 								<i class="fa fa-envelope"></i>
 								</span>
-								<input type="text" name='name' class="form-control" placeholder="请单位测评的名称，长度不要超过20个字">
+								{{form_widget(formView.name)}}
 							</div>
 						</div>
 						<div class="form-group">
 							<label>测评单位的相关描述</label>
 							<div class="input-group col-md-6">
-								<textarea class="form-control" name='description' rows="3" placeholder="请单位测评的相关描述，长度不要超过100个字" ></textarea>
+								{{form_widget(formView.description)}}
 								<span class="help-block">描述将显示在民主评价的参与界面</span>
 							</div>
 						</div>
 					</div>
 					<div class="form-actions text-center">
+							{{form_widget(formView._token)}}
 							<button type="button" class="btn blue form-submit-button">提交</button>
 							<button type="reset"  class="btn default">重置</button>
 					</div>

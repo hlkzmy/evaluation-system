@@ -12,3 +12,8 @@ services:
        class: Evaluation\AdminBundle\Form\Type\AdminUserType
        tags:
            - { name: form.type, alias: admin_user_form }
+           
+   admin_bundle.form.type.evaluate_school:
+       class: Evaluation\AdminBundle\Form\Type\EvaluateSchoolType
+       tags:
+           - { name: form.type, alias: evaluate_school_form }
