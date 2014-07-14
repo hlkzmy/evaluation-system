@@ -34,7 +34,11 @@ security:
                   providers: [evaluation_super_admin,evaluation_admin]
                   
      encoders: 
-         Symfony\Component\Security\Core\User\User: plaintext      
+         Symfony\Component\Security\Core\User\User: plaintext  
+         Evaluation\CommonBundle\Entity\AdminUser: 
+               algorithm: bcrypt
+               cost: 15
+             
      
           
      

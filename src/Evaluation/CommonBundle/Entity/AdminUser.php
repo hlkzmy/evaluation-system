@@ -14,6 +14,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class AdminUser implements UserInterface,\Serializable
 {
+	public function __construct()
+	{
+		$this->salt = md5(uniqid(null, true));
+	}
+	
+	
     /**
      * @var integer
      *
@@ -33,14 +39,14 @@ class AdminUser implements UserInterface,\Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=40, nullable=false)
+     * @ORM\Column(name="password", type="string", length=60, nullable=false)
      */
     private $password = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="salt", type="string", length=10, nullable=true)
+     * @ORM\Column(name="salt", type="string", length=32, nullable=true)
      */
     private $salt;
 

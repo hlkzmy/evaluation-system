@@ -55,8 +55,17 @@ class AdminUserController extends Controller
 		}
 			
 		//1.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
-		$evaluatePerson = $form->getData();
-		$evaluatePerson->setInsertTime(new \DateTime());
+		$adminUser = $form->getData();
+		$adminUser->setInsertTime(new \DateTime());
+		
+		
+		//2.对于密码做混淆处理
+		$factory = $this->get('security.encoder_factory');
+		
+		$encoder = $factory->getEncoder($adminUser);
+		$password = $encoder->encodePassword('ryanpass', $adminUser->getSalt());
+		$adminUser->setPassword($password);
+		
 		
 		//2.得到数据库对象，然后插入数据
 		$doctrine = $this->getDoctrine();
@@ -64,7 +73,7 @@ class AdminUserController extends Controller
 		
 		//3.单张数据表的操作不需要事务操作
 		try{
-			$em->persist($evaluatePerson);
+			$em->persist($adminUser);
 			$em->flush();
 		}
 		catch (\Exception $e){
