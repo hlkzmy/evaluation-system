@@ -1,5 +1,6 @@
 security:
      firewalls:
+     #网站管理后台所使用的防火墙
         admin_secured_area:
             provider: evaluation_admin_chain
             pattern: ^/admin
@@ -12,21 +13,23 @@ security:
             logout:
                 path: evaluation_admin_logout
                 target: evaluation_admin_login
+     #网站评价前台所使用的防火墙           
         web_secured_area:
-            provider: evaluation_admin_chain
-            pattern: ^/admin
-            anonymous: ~
+            provider: evaluation_web_user_provider
+            pattern: ^/web
+            #anonymous: ~
             form_login: 
-                login_path: evaluation_admin_login
-                check_path: evaluation_admin_login_check
+                login_path: evaluation_web_login
+                check_path: evaluation_web_login_check
                 always_use_default_target_path: true
-                default_target_path: evaluation_admin_console
+                default_target_path: evaluation_web_evaluation_join
             logout:
-                path: evaluation_admin_logout
-                target: evaluation_admin_login        
+                path:   evaluation_web_logout
+                target: evaluation_web_login        
             
      access_control:
                  - { path: ^/$,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
+                 - { path: ^/web/,   roles: ROLE_WEB_USER }
                  - { path: ^/admin$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
                  - { path: ^/admin/, roles: ROLE_ADMIN_USER }
                  
@@ -36,6 +39,7 @@ security:
             memory:
                 users:
                     admin: { password: admin,roles:ROLE_ADMIN_USER}
+                    
           #登录网站后台所使用的用户提供者
           evaluation_admin:
                entity:
@@ -46,21 +50,20 @@ security:
                   providers: [evaluation_super_admin,evaluation_admin]
                   
           #登陆网站前台所使用的用户提供者        
-          evaluation_web_user:
+          evaluation_web_user_provider:
                entity:
                    class: EvaluationCommonBundle:EvaluateUser
                    property: username    
                   
      encoders: 
-         Symfony\Component\Security\Core\User\User: plaintext  
+         Symfony\Component\Security\Core\User\User: plaintext
+         Evaluation\CommonBundle\Entity\EvaluateUser: plaintext 
          Evaluation\CommonBundle\Entity\AdminUser: 
                algorithm:            pbkdf2
                hash_algorithm:       sha512
                encode_as_base64:     true
                iterations:           1000
-         Evaluation\CommonBundle\Entity\EvaluateUser: 
-               algorithm: bcrypt
-               cost: 15    
+         
      
           
      

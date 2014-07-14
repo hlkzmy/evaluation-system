@@ -2,17 +2,17 @@
 evaluation_admin_login_check:
     pattern:  /authentic
     defaults: { _controller: EvaluationAdminBundle:Layout:authentic }  
-    
+
+#网站后台的退出登陆的页面   
+evaluation_admin_logout:
+    pattern:  /logout
+    defaults: { _controller: EvaluationAdminBundle:Layout:logout}  
+  
 #网站后台的控制台页面
 evaluation_admin_console:
     path:  /console
     defaults: { _controller: EvaluationAdminBundle:Layout:console}
  
-#网站后台的退出登陆的页面   
-evaluation_admin_logout:
-    pattern:  /logout
-    defaults: { _controller: EvaluationAdminBundle:Layout:layout}
-
 #民主测评相关   
 evaluation_evaluate_read:
     pattern:  /evaluation/read

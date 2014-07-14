@@ -1,3 +1,14 @@
-evaluation_web_homepage:
+#民主评价的登陆验证界面
+evaluation_web_login_check:
+    pattern:  /authentic
+    defaults: { _controller: EvaluationWebBundle:Layout:authentic } 
+
+#网站后台的退出登陆的页面   
+evaluation_web_logout:
+    pattern:  /logout
+    defaults: { _controller: EvaluationWebBundle:Layout:logout}
+
+#民主评价的参与页面
+evaluation_web_evaluation_join:
     pattern:  /evaluate/join
     defaults: { _controller: EvaluationWebBundle:Evaluate:join }
