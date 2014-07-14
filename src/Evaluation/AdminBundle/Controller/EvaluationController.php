@@ -44,13 +44,58 @@ class EvaluationController extends Controller
      */
     public function checkCreateAction(){
     
+    	//第一步:得到相关请求
+    	$form = $this->createForm('evaluation_form');
+    	$form->handleRequest($this->getRequest());
+    	
+    	
+    	//第二步:根据validation.yml里面的内容验证表单元素的内容
+    	if(!$form->isValid()){
+    		foreach($form as $formElement){
+    			foreach($formElement->getErrors() as $error){
+    				return new JsonResponse(array('statusCode'=>300,'message'=>$error->getMessage()));
+    			}
+    		}
+    	}
+
+    	//第三步:对于从表单回收的数据进行处理，以便可以存储进数据库
+    	$evaluation = $form->getData();
+    	
+    	//1.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
+    	$evaluation->setCreateAdminUser( method_exists($this->getUser(),'getRealname')? $this->getUser()->getRealname() : $this->getUser()->getUsername()  );
+    	
+    	//2.序列化参与的人员列表,因为是一个评价中包含若干个评价人
+    	$evaluation->setEvaluatedPerson( serialize($evaluation->getEvaluatedPerson()));
+    	
+    	//3.因为从表单收取的数据是字符串，但是插入的时间格式要求是datetime,所以要进行转换
+    	$evaluation->setInsertTime(new \DateTime());
+    	$evaluation->setStartTime( new \DateTime( $evaluation->getStartTime())  );
+    	$evaluation->setEndTime( new \DateTime( $evaluation->getEndTime())  );
     	
     	
     	
+    	//第四步:将经过处理和验证的数据插入数据库
+    	//1.得到数据库对象
+    	$doctrine = $this->getDoctrine();
+    	$em = $doctrine->getManager();
     	
+    	//2.因为涉及多张数据表，所以需要开启数据库事务操作
+    	try{
+    		
+    		
+    		
+    		
+    		
+    		$em->persist($evaluation);
+    		$em->flush();
+    	}
+    	catch (\Exception $e){
+    		return new JsonResponse(array('statusCode'=>300,'message'=>$e->getMessage()));
+    	}
+    		
+    	return new JsonResponse(array('statusCode'=>200,'message'=>'创建民主评价成功'));
     
-    	return new JsonResponse();
-    }
+    }//function checkCreateAction() end
     
     
     

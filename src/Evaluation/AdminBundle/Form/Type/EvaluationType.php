@@ -66,6 +66,7 @@ class EvaluationType extends AbstractType
 																'class'=>'form-control select2me',
 																'multiple'=>'multiple'
 														),//attr end
+														'multiple'=>true,
 														'choices'   => $personChoiceOptions,
 											  )//evaluated_person option end
 		);

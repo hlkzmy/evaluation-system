@@ -69,6 +69,20 @@ class Evaluation
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="create_admin_user", type="string", length=255, nullable=false)
+     */
+    private $createAdminUser = '';
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="insert_time", type="datetime", nullable=false)
+     */
+    private $insertTime = '0000-00-00 00:00:00';
 
     /**
      * @var string
@@ -253,6 +267,53 @@ class Evaluation
     {
         return $this->description;
     }
+    
+    /**
+     * Set createAdminUser
+     *
+     * @param string $createAdminUser
+     * @return EvaluatedPerson
+     */
+    public function setCreateAdminUser($createAdminUser)
+    {
+    	$this->createAdminUser = $createAdminUser;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get createAdminUser
+     *
+     * @return string
+     */
+    public function getCreateAdminUser()
+    {
+    	return $this->createAdminUser;
+    }
+    
+    /**
+     * Set insertTime
+     *
+     * @param \DateTime $insertTime
+     * @return EvaluatedPerson
+     */
+    public function setInsertTime($insertTime)
+    {
+    	$this->insertTime = $insertTime;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get insertTime
+     *
+     * @return \DateTime
+     */
+    public function getInsertTime()
+    {
+    	return $this->insertTime;
+    }
+    
 
     /**
      * Set status
