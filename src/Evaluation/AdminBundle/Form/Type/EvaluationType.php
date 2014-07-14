@@ -73,7 +73,8 @@ class EvaluationType extends AbstractType
 		$builder->add('start_time','text',array(
 													'attr'=>array(
 															'placeholder'=>'请选择民主评价的开始时间',
-															'class'=>'form-control'
+															'class'=>'form-control',
+															'readonly'=>'readonly'
 													),//attr end
 										)//start_time option end
 		);
@@ -81,7 +82,8 @@ class EvaluationType extends AbstractType
 		$builder->add('end_time','text',array(
 													'attr'=>array(
 															'placeholder'=>'请选择民主评价的结束时间',
-															'class'=>'form-control'
+															'class'=>'form-control',
+															'readonly'=>'readonly'
 													),//attr end
 										)//end_time option end
 		);

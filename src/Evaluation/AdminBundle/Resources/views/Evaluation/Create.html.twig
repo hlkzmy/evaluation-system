@@ -60,7 +60,7 @@
 						<div class="form-group">
 							<label>开始时间</label>
 							<div class="input-group date datetime-picker col-md-4" >
-								<input type="text" size="16" readonly class="form-control" placeholder='请点击按钮选择开始时间'>
+								{{ form_widget(formView.start_time)}}
 								<span class="input-group-btn">
 									<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
 								</span>
@@ -68,14 +68,13 @@
 						</div>
 						<div class="form-group">
 							<label>结束时间</label>
-							<div class="input-group col-md-4">
-								<span class="input-group-addon">
-									<i class="fa fa-envelope"></i>
-								</span>
+							<div class="input-group date datetime-picker col-md-4">
 								{{ form_widget(formView.end_time)}}
+								<span class="input-group-btn">
+									<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+								</span>
 							</div>
 						</div>
-						
 						<div class="form-group">
 							<label>评价的相关描述</label>
 							<div class="input-group col-md-6">
@@ -85,7 +84,7 @@
 					</div>
 					<div class="form-actions text-center">
 							{{ form_widget(formView._token)}} 
-							<button type="button" class="btn blue">提交</button>
+							<button type="button" class="btn blue form-submit-button">提交</button>
 							<button type="reset"  class="btn default">重置</button>
 					</div>
 				</form>
@@ -97,6 +96,7 @@
 <script type="text/javascript">
 $(document).ready(function() {    
 
+	//对于本页面的中出现的开始时间和结束时间进行绑定日期控件的选项
   	$("div.datetime-picker").datetimepicker({
   			language: 'zh-CN',
   			isRTL: Metronic.isRTL(),
