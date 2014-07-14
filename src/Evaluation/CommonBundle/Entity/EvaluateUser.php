@@ -3,14 +3,14 @@
 namespace Evaluation\CommonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * EvaluateUser
  *
  * @ORM\Table(name="evaluate_user")
  * @ORM\Entity(repositoryClass="Evaluation\CommonBundle\Entity\EvaluateUserRepository")
  */
-class EvaluateUser
+class EvaluateUser implements UserInterface,\Serializable
 {
     /**
      * @var integer
@@ -122,4 +122,55 @@ class EvaluateUser
     {
         return $this->password;
     }
+    
+    /**
+     * @inheritDoc
+     * 因为现在的逻辑是后台只能有一种用户可以登录，
+     * 所以直接返回一个跟防火墙中配置相同的用户就可以了
+     */
+    public function getRoles()
+    {
+    	return array('ROLE_WEB_USER');
+    	
+    }
+    
+    /**
+     * Get salt
+     *
+     * @return string
+     */
+    public function getSalt()
+    {
+    	
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+    
+    /**
+     * 序列化用户的相关信息,用来把用户的信息存储到session中
+     */
+    public function serialize(){
+    	 
+    	return serialize(array(
+    			$this->id,
+    			$this->username,
+    			$this->password
+    	));
+    }//function serialize() end
+    
+    /**
+     * 反序列化用户的相关信息，从session中得到用户相关信息
+     */
+    
+    public function unserialize($serialized){
+    	 
+    	list ( $this->id,$this->username,$this->password) = unserialize($serialized);
+    	 
+    }//function unserialize() end
+    
 }
