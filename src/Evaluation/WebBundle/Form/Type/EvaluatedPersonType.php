@@ -5,23 +5,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-//加载使用到的子表单
-use Evaluation\WebBundle\Form\Type\EvaluatedPersonType;
-
-//加载使用到的表单元素
-use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
-
-
-class EvaluateJoinType extends AbstractType
+class EvaluatedPersonType extends AbstractType
 {
-	public function __construct($doctrine){
-		$this->doctrine = $doctrine;
-	}
-	
-	
 	
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		
 		//第一步：设置表单的基本属性,从控制器中中设置变成在这里设置
 		$builder->setMethod('post');
 		
@@ -35,10 +24,21 @@ class EvaluateJoinType extends AbstractType
 		$evaluatedPersonIdList = unserialize($evaluatedPerson);
 		
 		
+		//第二步：使用build的add方法向表单中添加元素
+		foreach($evaluatedPersonIdList as $id){
+			
+			$builder->add('evaluated_person','collection',array( ) );
+			
+			
+		}//foreach end
 		
-		$builder->add('name','text',array('type1'=>'sdfsdf'));
 		
 		
+		
+												
+												
+											
+					 
 		
 		
 		

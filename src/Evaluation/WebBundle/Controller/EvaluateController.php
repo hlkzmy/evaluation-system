@@ -35,11 +35,11 @@ class EvaluateController extends Controller
     	 
     	 $evaluationId = $record->getEvaluationId();
     	 //2.通过createForm的第三个参数传递options选项，动态的添加表单元素
-    	 $this->createForm('evaluate_join_form',null,array('attr'=>array('evaluation_id'=>$evaluationId) ) );
+    	 $form = $this->createForm('evaluate_join_form',null,array('attr'=>array('evaluation_id'=>$evaluationId) ) );
+    	 $formView = $form->createView();
     	
     	
     	
-    	
-         return $this->render('EvaluationWebBundle:Evaluate:join.html.twig');
+         return $this->render('EvaluationWebBundle:Evaluate:join.html.twig',array('formView'=>$formView));
     }
 }
