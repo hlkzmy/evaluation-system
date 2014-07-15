@@ -1,7 +1,10 @@
 parameters:
-#    evaluation_web.example.class: Evaluation\WebBundle\Example
+#    evaluation_admin.example.class: Evaluation\AdminBundle\Example
 
 services:
-#    evaluation_web.example:
-#        class: %evaluation_web.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+   web_bundle.form.type.evaluate_join:
+       class: Evaluation\WebBundle\Form\Type\EvaluateJoinType
+       arguments: [@doctrine]
+       tags:
+           - { name: form.type, alias: evaluate_join_form }
+   
