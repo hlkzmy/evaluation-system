@@ -5,6 +5,11 @@ namespace Evaluation\WebBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\BrowserKit\Response;
 
+//加载用到的实体
+use Evaluation\CommonBundle\Entity\Evaluation;
+use Evaluation\CommonBundle\Entity\EvaluatedPersonResult;
+use Evaluation\CommonBundle\Entity\EvaluatedPerson;
+
 class EvaluateController extends Controller
 {
 	
@@ -34,8 +39,24 @@ class EvaluateController extends Controller
     	 }
     	 
     	 $evaluationId = $record->getEvaluationId();
+    	 
+    	 $evaluation = new Evaluation();
+    	 $person1  = new EvaluatedPersonResult();
+    	 $person1->setScore(9);
+    	 
+    	 $person2  = new EvaluatedPersonResult();
+    	 $person2->setScore(12);
+    	 
+    	 $person3  = new EvaluatedPersonResult();
+    	 $person3->setScore(113);
+    	 
+    	 $evaluation->getEvaluatedPersonList()->add($person1);
+    	 $evaluation->getEvaluatedPersonList()->add($person2);
+    	 $evaluation->getEvaluatedPersonList()->add($person3);
+    	 
+    	 
     	 //2.通过createForm的第三个参数传递options选项，动态的添加表单元素
-    	 $form = $this->createForm('evaluate_join_form',null,array('attr'=>array('evaluation_id'=>$evaluationId) ) );
+    	 $form = $this->createForm('evaluate_join_form',$evaluation);
     	 $formView = $form->createView();
     	
     	

@@ -16,3 +16,8 @@
         </ul><!-- END PAGE TITLE & BREADCRUMB-->
     </div><!-- END span12-->
 </div><!-- END PAGE HEADER-->
+
+
+{% for tag in formView.evaluatedPersonList %}
+<li>{{ form_row(tag.score) }}</li>
+{% endfor %}

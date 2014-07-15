@@ -3,6 +3,7 @@
 namespace Evaluation\CommonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Evaluation
@@ -12,6 +13,24 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Evaluation
 {
+	
+	private $evaluatedPersonList;
+	
+	public function __construct(){
+		
+		$this->evaluatedPersonList = new ArrayCollection();
+		
+	}
+	
+	
+	public function getEvaluatedPersonList(){
+		
+		return $this->evaluatedPersonList;
+		
+	}
+	
+	
+	
     /**
      * @var integer
      *
