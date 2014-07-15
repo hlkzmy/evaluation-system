@@ -2,14 +2,14 @@
 
 namespace Evaluation\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Evaluation\AdminBundle\Controller\BaseController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class LayoutController extends Controller
 {
     
-    public function consoleAction(){
+   
+	public function consoleAction(){
     	
     	
     	
@@ -20,10 +20,6 @@ class LayoutController extends Controller
     	if(!$session->has('admin_info')){//如果之前没有登陆过，就跳转到登陆页面
     		//return $this->redirect($this->generateUrl('evaluation_admin_console'),302);
     	}
-    	
-    	
-    	
-    	
     	
     	return $this->render('EvaluationAdminBundle:Layout:Console.html.twig');
     }

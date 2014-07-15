@@ -7,8 +7,6 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class LayoutController extends Controller
 {
-	
-	
 	public function loginAction()
     {
     	$request = $this->getRequest();
@@ -19,9 +17,9 @@ class LayoutController extends Controller
     	 * 这部分的逻辑，是因为安全层委托程序员来实现的，所以程序员可以添加自己想要的逻辑，
     	 * 而不必严格按照手册中的内容进行编写
     	*/
-//     	if($this->get('Security.Context')->isGranted('ROLE_WEB_USER')){
-//     		//return $this->redirect($this->generateUrl('evaluation_web_evaluation_join'));
-//     	}
+    	if($this->get('Security.Context')->isGranted('ROLE_WEB_USER')){
+    		return $this->redirect($this->generateUrl('evaluation_web_console'));
+    	}
     	 
      	//第二步：从安全上下文或者session中取得相关报错信息并返回给登陆页
     	if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
@@ -40,6 +38,17 @@ class LayoutController extends Controller
     			));
     	
     }
+    
+    
+    public function consoleAction(){
+    	
+    	
+    	
+    	return $this->render('EvaluationWebBundle:Layout:Console.html.twig');
+    			
+    }//function consoleAction() end
+    
+    
     
     
     /**

@@ -16,21 +16,22 @@ security:
      #网站评价前台所使用的防火墙           
         web_secured_area:
             provider: evaluation_web_user_provider
-            pattern: ^/web
-            #anonymous: ~
+            pattern: ^/
+            anonymous: ~
             form_login: 
                 login_path: evaluation_web_login
                 check_path: evaluation_web_login_check
                 always_use_default_target_path: true
-                default_target_path: evaluation_web_evaluation_join
+                default_target_path: evaluation_web_console
             logout:
                 path:   evaluation_web_logout
                 target: evaluation_web_login        
             
      access_control:
                  - { path: ^/$,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
-                 - { path: ^/web/,   roles: ROLE_WEB_USER }
+                 - { path: ^/web$,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
                  - { path: ^/admin$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+                 - { path: ^/web/,   roles: ROLE_WEB_USER }
                  - { path: ^/admin/, roles: ROLE_ADMIN_USER }
                  
      providers:
