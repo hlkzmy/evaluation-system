@@ -9,106 +9,117 @@ use Symfony\Component\BrowserKit\Response;
 use Evaluation\CommonBundle\Entity\Evaluation;
 use Evaluation\CommonBundle\Entity\EvaluatedPersonResult;
 use Evaluation\CommonBundle\Entity\EvaluatedPerson;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EvaluateController extends Controller
 {
 	
+	private function checkEvaluationCondition($em){
+		
+		
+		
+	}
 	
-	public function joinAction(){
+	private function getEvalutionForm($em){
+		
+		$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+		$evaluationRepository   = $em->getRepository('EvaluationCommonBundle:Evaluation');
 		
 		
-		$builder = $this->createFormBuilder();
-		$builder->add('name', 'text')
-				->add('description','textarea')
-				->add('list','collection');
-						
-
-		$subBuilder = $this->createFormBuilder();
-		$subform1 = $subBuilder->add('age', 'text')
-						      ->add('score','text');
-						     
+		//1.根据用户名查询所属的教学评价的ID
+		$username     = $this->getUser()->getUsername();//得到用户信息账号
+		$evaluateUser = $evaluateUserRepository->findOneByUsername($username);
+		
+		if(!$evaluateUser){
+			throw new  \Exception('没有查询到关于您的账号所关联的民主评价');
+		}
+		
+		//2.查询得到民主评价的相关信息
+		$evaluationId = $evaluateUser->getEvaluationId();
+		$evaluation = $evaluationRepository->find($evaluationId);
+		
+		if(!$evaluation){
+			return new \Exception('没有查询到关于您的账号所关联的民主评价的详细信息');
+		}
+		
+		//3.根据民主评价的信息得到测评对象的信息
+		$evaluatePerson 	  = $evaluation->getEvaluatedPerson();//得到序列化字段
+		$evaluatePersonIdList = unserialize($evaluatePerson);//得到序列化字段
+		
+		$evaluationEntity = new Evaluation();
+		
+		foreach($evaluatePersonIdList as $personId){
+			$personResult = new EvaluatedPersonResult();
+			$evaluationEntity->getPersonResult()->set($personId,$personResult);
+		}
+		
+		//4.通过已经附加了相关参数的evaluationEntity对象得到表单
+		$formOptions = array('attr'=>array('class'=>'post-data-form'));
+		
+		$form = $this->createForm('evaluate_join_form',$evaluationEntity,$formOptions);
+		
+		return $form;
+	}
+	
+	
+	public function submitAction(){
+		
+		//第一步:得到数据库相关的句柄
+		$em = $this->getDoctrine()->getManager();
 		
 		
-		$subform2 = $subBuilder->add('age', 'text')
-							  ->add('score','text');
-							  
-							  
-		
-		$builder->get('list')->add($subform1);
-		$builder->get('list')->add($subform2);
-		
-		$form = $builder->getForm();
+		//第二步：验证表单的相关数据
+		$evaluationForm = $this->getEvalutionForm($em);
+		$evaluationForm->handleRequest($this->getRequest());
 		
 		
-		$formView = $form->createView();
+		
+		if($evaluationForm->isValid()){
+			echo 'true';
+		}
+		else{
+			
+			echo 'false';
+			echo $evaluationForm->getErrorsAsString();
+		}
 		
 		
-		$this->getUser();
 		
+		
+		//$personResult = $evaluationForm->getData()->getPersonResult();
+		
+		$personResult = $evaluationForm->get('personResult');
+		
+		
+		foreach($personResult as $person){
+			
+// 			echo $person->getErrorsAsString();
+			
+// 			var_dump($person->isValid());
+			
+		}
+		
+		
+		
+		return new JsonResponse(array('statusCode'=>200,'message'=>'提交民主评价成功，感谢您的参与'));
+	}
+	
+	
+	public function joinAction()
+	{
+		
+		//第一步:得到数据库相关的句柄
+		$em = $this->getDoctrine()->getManager();
+		
+		//第二步：形成相关的表单
+		$evaluationForm = $this->getEvalutionForm($em);
+		$formView = $evaluationForm->createView();
+		 
 		return $this->render('EvaluationWebBundle:Evaluate:join.html.twig',array('formView'=>$formView));
-		
 	}
 	
 	
 	
 	
 	
-	public function join1Action()
-    {
-    	//第一步：验证当前用户是否具有权限
-    	
-    	
-		$doctine = $this->getDoctrine();
-		$em = $doctine->getManager();
-    	//第二步：验证当前评价是否处于进行中，如果是未开始或者已结束的状态就显示相应的提示
-    	
-    	//第三步：验证当前用户是否已经提交过数据，如果已经提交过数据，就显示相应的提示
-    	
-    	//第四步：根据当前用户的信息查询民主评价的相关信息，然后形成相关的表单
-    	 //1.根据用户名查询所属的教学评价的ID
-		 $username = $this->getUser()->getUsername();//得到用户信息账号
-    	 $evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
-    	 $evaluateUser = $evaluateUserRepository->findOneByUsername($username);
-    	 
-    	 if(!$evaluateUser){
-    	 	return new Response('没有查询到关于您的账号所关联的民主评价');
-    	 }
-    	 
-    	 //2.查询得到民主评价的相关信息
-    	 $evaluationId = $evaluateUser->getEvaluationId();
-    	 $evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
-    	 $evaluation = $evaluationRepository->find($evaluationId);
-    	 
-    	 if(!$evaluation){
-    	 	return new Response('没有查询到关于您的账号所关联的民主评价的详细信息');
-    	 }
-    	 
-    	 
-    	 //3.根据民主评价的信息得到测评对象的信息
-    	 $evaluatePerson = $evaluation->getEvaluatedPerson();//得到序列化字段
-    	 $evaluatePersonIdList = unserialize($evaluatePerson);//得到序列化字段
-    	 
-    	 $evaluation = new Evaluation();
-    	 
-    	 foreach($evaluatePersonIdList as $personId){
-    	 	
-    	 	//
-    	 	
-    	 	
-    	 	$personResult = new EvaluatedPersonResult();
-    	 	$personResult->setScore(rand(1,9));
-    	 	
-    	 	$evaluation->getPerson()->set($personId,$personResult);
-    	 }
-    	 
-    	 
-    	 
-    	 //2.通过createForm的第三个参数传递options选项，动态的添加表单元素
-    	 $form = $this->createForm('evaluate_join_form',$evaluation);
-    	 $formView = $form->createView();
-    	
-    	
-    	
-         return $this->render('EvaluationWebBundle:Evaluate:join.html.twig',array('formView'=>$formView));
-    }
 }

@@ -31,20 +31,23 @@ class EvaluateJoinType extends AbstractType
 		$this->router = $router;
 	}
 	
-	
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		
 		//第一步：设置表单的基本属性,从控制器中中设置变成在这里设置
 		$builder->setMethod('post');
 		$builder->setAction($this->router->generate('evaluation_evaluate_submit') );
 		
 		
-		//第二步：设置表单的字段
-		$builder->add('person','collection',array(
-													'type'=>new EvaluatedPersonResultType(),
-												    'by_reference'=>'false',
-													'cascade_validation'=>true
-												)
+		//第二步：设置学校的评价结果
+		$builder->add('schoolResult',new EvaluatedSchoolResultType() );
+		
+		
+		//第三步: 设置测评对象的评价结果
+		$builder->add('personResult','collection',array(
+												'type'=>new EvaluatedPersonResultType(),
+												 'by_reference'=>true,
+											)
 					);
 		
 		
@@ -61,6 +64,7 @@ class EvaluateJoinType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			'data_class' => 'Evaluation\CommonBundle\Entity\Evaluation',
+			'cascade_validation'=>true
 		));
 	}
 	

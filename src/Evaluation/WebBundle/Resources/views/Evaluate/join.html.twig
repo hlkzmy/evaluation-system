@@ -17,6 +17,38 @@
     </div><!-- END span12-->
 </div><!-- END PAGE HEADER-->
 
-{{ form(formView)}}
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN SAMPLE FORM PORTLET-->
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-gift"></i> 参与民主评价
+				</div>
+			</div>
+			<div class="portlet-body form">
+				{{form_start(formView)}}
+					<div class="form-body">
+						{% for person in formView.personResult%}
+						<div class="form-group">
+							<div class="input-group col-md-6">
+								{{form_widget(person.score)}}
+								
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					<div class="form-actions text-center">
+							{{form_widget(formView._token)}}
+							<button type="button" class="btn blue form-submit-button">提交</button>
+							<button type="reset"  class="btn default">重置</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- END SAMPLE FORM PORTLET-->
+	</div><!-- col-md-12 end -->
+</div><!-- row end -->
+<!-- END PAGE CONTENT-->
 
 

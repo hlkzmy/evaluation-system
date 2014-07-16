@@ -12,7 +12,7 @@ class EvaluatedSchoolResultType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		
-		$choiceOptions = array('1'=>'优秀','2'=>'称职','3'=>'基本称职','4'=>'不称职');
+		$choiceOptions = array('1'=>'好','2'=>'中','3'=>'查');
 		
 		$builder->add('score','choice',array(
 												'attr'=>array(
@@ -20,10 +20,16 @@ class EvaluatedSchoolResultType extends AbstractType
 												 ),//attr end
 												 
 											'choices'   => $choiceOptions,
-											'empty_value' => '请选择您的评价',
+											'empty_value' => '请选择您对学校的评价',
 											'empty_data'  => null
 					));
 		
+		$builder->add('comment','textarea',array(
+												'attr'=>array(
+															'class'=>'form-control'
+														),//attr end
+											)
+					 );
 		
 		
 		
@@ -32,13 +38,13 @@ class EvaluatedSchoolResultType extends AbstractType
 	
 	public function getName()
 	{
-		return 'evaluated_person_result_form';
+		return 'evaluated_school_result_form';
 	}
 	
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
-			'data_class' => 'Evaluation\CommonBundle\Entity\EvaluatedPersonResult',
+			'data_class' => 'Evaluation\CommonBundle\Entity\EvaluatedSchoolResult',
 		));
 	}
 	

@@ -44,4 +44,4 @@ Evaluation\CommonBundle\Entity\EvaluatedPersonResult:
   properties:
        score:
          - NotBlank: ~
-         - NotNull1: ~  
+         - NotNull: ~  
