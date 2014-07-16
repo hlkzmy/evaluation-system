@@ -5,6 +5,8 @@ namespace Evaluation\CommonBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Evaluation\CommonBundle\Entity\EvaluatedPersonResult;
+
 /**
  * Evaluation
  *
@@ -13,20 +15,32 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Evaluation
 {
+	//存储一个评价人对于多个评价对象的评价结果，一个民主评价对应多个结果
+	private $personResult;
 	
-	private $evaluatedPersonList;
+    //存储一个评价人对于一个学校的唯一评价结果，一个民主评价对应一个结果
+	private $schoolResult;
 	
 	public function __construct(){
-		
-		$this->evaluatedPersonList = new ArrayCollection();
-		
+		$this->personResult = new ArrayCollection();
 	}
 	
+	public function getPersonResult(){
+		return $this->personResult;
+	}
 	
-	public function getEvaluatedPersonList(){
-		
-		return $this->evaluatedPersonList;
-		
+	public function setPersonResult($personResult){
+		$this->personResult = $personResult;
+		return $this;
+	}
+
+	public function getSchoolResult(){
+		return $this->schoolResult;
+	}
+	
+	public function setSchoolResult($schoolResult){
+		$this->schoolResult = $schoolResult;
+		return $this;
 	}
 	
 	

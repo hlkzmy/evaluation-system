@@ -1,0 +1,54 @@
+<div class="row-fluid"><!-- BEGIN PAGE HEADER-->
+	<div class="span12">
+		<h3 class='page-title'>
+			<small>您填写或者选择关于评价单位和评价对象的一些信息，保存提交后便可完成一次民主评价，评价过程全程匿名</small>
+		</h3>
+		<ul class="breadcrumb"><!-- BEGIN PAGE TITLE & BREADCRUMB-->
+               <li>
+                  <a href="#">民主评价系统</a>
+               </li>
+               <li>
+                   <a href="#">评价管理</a>
+               </li>
+               <li>
+                   <a href="#">参与评价</a>
+               </li>
+        </ul><!-- END PAGE TITLE & BREADCRUMB-->
+    </div><!-- END span12-->
+</div><!-- END PAGE HEADER-->
+
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN SAMPLE FORM PORTLET-->
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-gift"></i> 参与民主评价
+				</div>
+			</div>
+			<div class="portlet-body form">
+				{{form_start(formView)}}
+					<div class="form-body">
+						{% for person in formView.person%}
+						<div class="form-group">
+							<div class="input-group col-md-6">
+								{{form_widget(person.score)}}
+								
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					<div class="form-actions text-center">
+							{{form_widget(formView._token)}}
+							<button type="button" class="btn blue form-submit-button">提交</button>
+							<button type="reset"  class="btn default">重置</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- END SAMPLE FORM PORTLET-->
+	</div><!-- col-md-12 end -->
+</div><!-- row end -->
+<!-- END PAGE CONTENT-->
+
+

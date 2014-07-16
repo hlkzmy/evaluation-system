@@ -38,9 +38,9 @@ class EvaluatedPersonResult
     /**
      * @var string
      *
-     * @ORM\Column(name="evaluated_person_realname", type="string", length=100, nullable=true)
+     * @ORM\Column(name="realname", type="string", length=100, nullable=true)
      */
-    private $evaluatedPersonRealname = '';
+    private $realname = '';
 
     /**
      * @var boolean
@@ -108,26 +108,26 @@ class EvaluatedPersonResult
     }
 
     /**
-     * Set evaluatedPersonRealname
+     * Set realname
      *
-     * @param string $evaluatedPersonRealname
+     * @param string $realname
      * @return EvaluatedPersonResult
      */
-    public function setEvaluatedPersonRealname($evaluatedPersonRealname)
+    public function setRealname($realname)
     {
-        $this->evaluatedPersonRealname = $evaluatedPersonRealname;
+        $this->realname = $realname;
 
         return $this;
     }
 
     /**
-     * Get evaluatedPersonRealname
+     * Get Realname
      *
      * @return string 
      */
-    public function getEvaluatedPersonRealname()
+    public function getRealname()
     {
-        return $this->evaluatedPersonRealname;
+        return $this->realname;
     }
 
     /**

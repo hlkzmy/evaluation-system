@@ -4,7 +4,7 @@ parameters:
 services:
    web_bundle.form.type.evaluate_join:
        class: Evaluation\WebBundle\Form\Type\EvaluateJoinType
-       arguments: [@doctrine]
+       arguments: [@doctrine,@router]
        tags:
            - { name: form.type, alias: evaluate_join_form }
    

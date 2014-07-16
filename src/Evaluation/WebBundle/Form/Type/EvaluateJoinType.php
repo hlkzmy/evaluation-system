@@ -5,13 +5,30 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-//加载使用到的子表单
+//加载所使用的学校结果的实体，使用fieldType
+use Evaluation\WebBundle\Form\Type\EvaluatedSchoolResultType;
+
+//加载所使用的评价人的实体,使用colllection
 use Evaluation\WebBundle\Form\Type\EvaluatedPersonResultType;
+
+
+/**
+ * 这个是民主评价的参与表单,提交的结果对应两张数据表
+ * 第一张数据表是evaluated_school_result,一次民主评价对应一行记录
+ * 所以用evaluated_school_result做表单的主体类
+ * 
+ * 第二张数据表是evaluated_person_result,一次民主评价对应多行记录
+ * 在evaluated_school_result下添加一个ArrayCollection,
+ * 不要用add方法添加元素,使用set方法添加元素,set指定的元素就是person的id
+ * 
+ * 
+ */
 
 class EvaluateJoinType extends AbstractType
 {
-	public function __construct($doctrine){
+	public function __construct($doctrine,$router){
 		$this->doctrine = $doctrine;
+		$this->router = $router;
 	}
 	
 	
@@ -19,23 +36,17 @@ class EvaluateJoinType extends AbstractType
 	{
 		//第一步：设置表单的基本属性,从控制器中中设置变成在这里设置
 		$builder->setMethod('post');
-		
-// 		//第二步:查询该民主评价的相关的参与人员列表
-// 		$entityManager = $this->doctrine->getManager();
-// 		$evaluationId = $options['attr']['evaluation_id'];
-// 		$evaluationRespository = $entityManager->getRepository('EvaluationCommonBundle:Evaluation');
-		
-// 		$evaluation = $evaluationRespository->find($evaluationId);
-// 		$evaluatedPerson = $evaluation->getEvaluatedPerson();
-// 		$evaluatedPersonIdList = unserialize($evaluatedPerson);
+		$builder->setAction($this->router->generate('evaluation_evaluate_submit') );
 		
 		
-		$builder->add('evaluatedPersonList','collection',array('type'=>new EvaluatedPersonResultType()));
+		//第二步：设置表单的字段
+		$builder->add('person','collection',array(
+													'type'=>new EvaluatedPersonResultType(),
+												    'by_reference'=>'false',
+													'cascade_validation'=>true
+												)
+					);
 		
-		
-// 		$builder->add('name[1]','text',array('attr'=>array ('name'=>'name[1]') ));
-// // 		$builder->add('name[2]','text');
-// // 		$builder->add('name[3]','text');
 		
 	}//function buildForm() end
 	
@@ -49,7 +60,7 @@ class EvaluateJoinType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
-				'data_class' => 'Evaluation\CommonBundle\Entity\Evaluation',
+			'data_class' => 'Evaluation\CommonBundle\Entity\Evaluation',
 		));
 	}
 	

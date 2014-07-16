@@ -17,4 +17,8 @@ evaluation_web_console:
 evaluation_evaluate_join:
     pattern:  /evaluate/join
     defaults: { _controller: EvaluationWebBundle:Evaluate:join } 
-    
+
+#网站前台的民主评价提交页面    
+evaluation_evaluate_submit:
+    pattern:  /evaluate/submit
+    defaults: { _controller: EvaluationWebBundle:Evaluate:submit } 
