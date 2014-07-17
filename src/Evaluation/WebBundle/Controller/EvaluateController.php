@@ -20,12 +20,17 @@ class EvaluateController extends Controller
 		
 	}
 	
-	private function getEvalutionForm($em){
+	
+	/**
+	 * 得到相关民主评价的相关数据信息，
+	 * 用以在建立表单的时候提供数据支持
+	 * 用以在插入数据库的时候附加相关数据
+	 * @param entityManager $em
+	 */
+	private function getEvaluationRecord($em){
 		
 		$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
 		$evaluationRepository   = $em->getRepository('EvaluationCommonBundle:Evaluation');
-		$evaluatedPersonRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPerson');
-		
 		
 		//1.根据用户名查询所属的教学评价的ID
 		$username     = $this->getUser()->getUsername();//得到用户信息账号
@@ -37,18 +42,32 @@ class EvaluateController extends Controller
 		
 		//2.查询得到民主评价的相关信息
 		$evaluationId = $evaluateUser->getEvaluationId();
-		$evaluation = $evaluationRepository->find($evaluationId);
+		$evaluationRecord = $evaluationRepository->find($evaluationId);
 		
-		if(!$evaluation){
+		if(!$evaluationRecord){
 			return new \Exception('没有查询到关于您的账号所关联的民主评价的详细信息');
 		}
 		
-		//3.根据民主评价的信息得到测评对象的信息
-		$evaluatedPerson 	  = $evaluation->getEvaluatedPerson();//得到序列化字段
+		return $evaluationRecord;
+		
+	}//function getEvaluation() end
+	
+	
+	
+	
+	
+	private function getEvalutionForm($em){
+		
+		$evaluatedPersonRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPerson');
+		
+		$evaluationRecord = $this->getEvaluationRecord($em);
+		
+		//根据民主评价的信息得到测评对象的信息
+		$evaluatedPerson 	   = $evaluationRecord->getEvaluatedPerson();//得到序列化字段
 		$evaluatedPersonIdList = unserialize($evaluatedPerson);//得到序列化字段
 		
 		$evaluationEntity = new Evaluation();
-		$evaluationEntity->setName($evaluation->getName());
+		$evaluationEntity->setName($evaluationRecord->getName());
 		
 		foreach($evaluatedPersonIdList as $personId){
 			
@@ -75,7 +94,8 @@ class EvaluateController extends Controller
 	public function submitAction(){
 		
 		//第一步:得到数据库相关的句柄
-		$em = $this->getDoctrine()->getManager();
+		$doctrine = $this->getDoctrine();
+		$em = $doctrine->getManager();
 		
 		
 		//第二步：验证表单的相关数据
@@ -113,13 +133,45 @@ class EvaluateController extends Controller
 			}//form foreach end
 		}
 		
+		//第三步：从表单接受相关相关数据，然后插入到数据库
+		//1.查询相关数据
+		$evaluateSchoolRepository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
 		
+		$evaluationRecord = $this->getEvaluationRecord($em);
+		$schoolId   = $evaluationRecord->getSchoolId();
+		$evaluateSchoolRecord = $evaluateSchoolRepository->find($schoolId);
 		
+		$evaluationId = $evaluationRecord->getId();
+		$schoolName   = $evaluateSchoolRecord->getName();
 		
+		//2.开启数据库事务，向多个数据库插入数据
 		
+		$em->getConnection()->beginTransaction();
+		try{
 		
-		
-		
+			//插入学校评价的数据表
+			$schoolResult =  $schoolResultForm->getData();
+			$schoolResult->setEvaluationId($evaluationId);
+			$schoolResult->setSchoolName($schoolName);
+			$em->persist($schoolResult);
+			
+			$personResult = $personResultCollection->getData();
+			
+			//插入测评人评价的相关数据
+			foreach($personResult as $person){
+				$person->setEvaluationId($evaluationId);
+				$person->setSchoolName($schoolName);
+				$em->persist($person);
+			}
+			
+			$em->flush();
+			$em->getConnection()->commit();
+		}
+		catch (\Exception $e){
+			$em->getConnection()->rollback();
+			return new JsonResponse(array('statusCode'=>300,'message'=>$e->getMessage()));
+		}
+		 
 		return new JsonResponse(array('statusCode'=>200,'message'=>'提交民主评价成功，感谢您的参与'));
 	}
 	
