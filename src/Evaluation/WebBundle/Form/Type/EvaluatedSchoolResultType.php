@@ -26,8 +26,9 @@ class EvaluatedSchoolResultType extends AbstractType
 		
 		$builder->add('comment','textarea',array(
 												'attr'=>array(
-															'class'=>'form-control'
-														),//attr end
+															'class'=>'form-control',
+															'rows'=> 8
+													),//attr end
 											)
 					 );
 		

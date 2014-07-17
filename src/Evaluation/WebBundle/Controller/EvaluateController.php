@@ -24,6 +24,7 @@ class EvaluateController extends Controller
 		
 		$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
 		$evaluationRepository   = $em->getRepository('EvaluationCommonBundle:Evaluation');
+		$evaluatedPersonRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPerson');
 		
 		
 		//1.根据用户名查询所属的教学评价的ID
@@ -43,18 +44,27 @@ class EvaluateController extends Controller
 		}
 		
 		//3.根据民主评价的信息得到测评对象的信息
-		$evaluatePerson 	  = $evaluation->getEvaluatedPerson();//得到序列化字段
-		$evaluatePersonIdList = unserialize($evaluatePerson);//得到序列化字段
+		$evaluatedPerson 	  = $evaluation->getEvaluatedPerson();//得到序列化字段
+		$evaluatedPersonIdList = unserialize($evaluatedPerson);//得到序列化字段
 		
 		$evaluationEntity = new Evaluation();
+		$evaluationEntity->setName($evaluation->getName());
 		
-		foreach($evaluatePersonIdList as $personId){
+		foreach($evaluatedPersonIdList as $personId){
+			
+			//通过personId得到person的信息
+			$person = $evaluatedPersonRepository->find($personId);
+			
+			//然后得到的真实姓名和职位设置给personResult对象
 			$personResult = new EvaluatedPersonResult();
+			$personResult->setRealname($person->getRealname());
+			$personResult->setPosition($person->getPosition());
+			
 			$evaluationEntity->getPersonResult()->set($personId,$personResult);
 		}
 		
 		//4.通过已经附加了相关参数的evaluationEntity对象得到表单
-		$formOptions = array('attr'=>array('class'=>'post-data-form'));
+		$formOptions = array('attr'=>array('class'=>'post-data-form form-bordered form-horizontal'));
 		
 		$form = $this->createForm('evaluate_join_form',$evaluationEntity,$formOptions);
 		

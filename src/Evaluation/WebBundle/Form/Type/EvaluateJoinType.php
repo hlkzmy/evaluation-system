@@ -40,7 +40,7 @@ class EvaluateJoinType extends AbstractType
 		
 		//第二步：添加表单的相关元素
 		//1.添加民主评价的名称
-		$builder->add('name','text');
+		$builder->add('name','text',array('attr'=>array('readonly'=>'readonly','class'=>'form-control text-center')));
 		
 		//2.添加类型为fieldType的表单元素，是学校评价结果的嵌套表单
 		$builder->add('schoolResult',new EvaluatedSchoolResultType() );

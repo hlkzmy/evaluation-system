@@ -20,33 +20,60 @@
 <!-- BEGIN PAGE CONTENT-->
 <div class="row">
 	<div class="col-md-12">
-		<!-- BEGIN SAMPLE FORM PORTLET-->
+		{{form_start(formView)}}
 		<div class="portlet box blue">
-			<div class="portlet-title">
-				<div class="caption">
-					<i class="fa fa-gift"></i> 参与民主评价
-				</div>
-			</div>
-			<div class="portlet-body form">
-				{{form_start(formView)}}
-					<div class="form-body">
-						{% for person in formView.personResult%}
-						<div class="form-group">
-							<div class="input-group col-md-6">
-								{{form_widget(person.score)}}
-								
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-gift"></i>请对学校进行评价和打分
 							</div>
 						</div>
-						{% endfor %}
+						<div class="portlet-body form">
+							<div class="form-group">
+									<label class='col-md-2 control-label'>评价名称</label>
+									<div class="input-group col-md-6">
+										{{form_widget(formView.name)}}
+									</div>
+							</div>
+							<div class="form-group">
+									<label class='col-md-2 control-label'>学校得分</label>
+									<div class="input-group col-md-4">
+										{{form_widget(formView.schoolResult.score)}}
+									</div>
+							</div>
+							<div class="form-group">
+									<label class='col-md-2 control-label'>您的意见</label>
+									<div class="input-group col-md-6">
+										{{form_widget(formView.schoolResult.comment)}}
+									</div>
+							</div>
+						</div>
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-gift"></i>请对学校领导进行打分
+							</div>
+						</div>
+						<div class="portlet-body form">
+								{% for person in formView.personResult %}
+								<div class="form-group">
+									<div   class="col-md-2 ">
+										<div class="input-group center-block">{{form_widget(person.position)}}</div>
+									</div>
+									<div   class="col-md-2">
+										<div class="input-group center-block">{{form_widget(person.realname)}}</div>
+									</div>
+									<div   class="col-md-4">
+										<div class="input-group center-block">{{form_widget(person.score)}}</div>
+									</div>
+								</div>
+								{% endfor %}
+								<div class="form-actions text-center">
+										<button type="button" class="btn blue form-submit-button">提交</button>
+										<button type="reset"  class="btn default">重置</button>
+										{{form_widget(formView._token)}}
+								</div>
+						</div>
 					</div>
-					<div class="form-actions text-center">
-							{{form_widget(formView._token)}}
-							<button type="button" class="btn blue form-submit-button">提交</button>
-							<button type="reset"  class="btn default">重置</button>
-					</div>
-				</form>
-			</div>
-		</div><!-- END SAMPLE FORM PORTLET-->
+		</form>
 	</div><!-- col-md-12 end -->
 </div><!-- row end -->
 <!-- END PAGE CONTENT-->
