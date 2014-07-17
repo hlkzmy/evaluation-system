@@ -50,9 +50,9 @@ class EvaluatedPersonResult
     private $position = '';
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="score", type="boolean", nullable=true)
+     * @ORM\Column(name="score", type="integer", nullable=true)
      */
     private $score;
 

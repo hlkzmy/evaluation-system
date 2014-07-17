@@ -161,6 +161,7 @@ class EvaluateController extends Controller
 			foreach($personResult as $person){
 				$person->setEvaluationId($evaluationId);
 				$person->setSchoolName($schoolName);
+				
 				$em->persist($person);
 			}
 			

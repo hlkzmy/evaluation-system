@@ -24,7 +24,7 @@ class EvaluatedPersonResultType extends AbstractType
 		
 		$builder->add('score','choice',array(
 												'attr'=>array(
-														'class'=>'form-control select2me center-block'
+														'class'=>'form-control center-block'
 												 ),//attr end
 												 
 											'choices'   => $choiceOptions,

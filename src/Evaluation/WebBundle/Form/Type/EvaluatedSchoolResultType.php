@@ -16,7 +16,7 @@ class EvaluatedSchoolResultType extends AbstractType
 		
 		$builder->add('score','choice',array(
 												'attr'=>array(
-														'class'=>'form-control select2me'
+														'class'=>'form-control'
 												 ),//attr end
 												 
 											'choices'   => $choiceOptions,
