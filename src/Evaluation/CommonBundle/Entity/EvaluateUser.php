@@ -43,9 +43,9 @@ class EvaluateUser implements AdvancedUserInterface,\Serializable
     private $password;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="active", type="boolean")
      */
-    private $isActive;
+    private $active;
 
     /**
      * Get id
@@ -127,6 +127,19 @@ class EvaluateUser implements AdvancedUserInterface,\Serializable
     }
     
     /**
+     * Set username
+     *
+     * @param string $username
+     * @return EvaluateUser
+     */
+    public function setActive($active)
+    {
+    	$this->active = $active;
+    	return $this;
+    }
+    
+    
+    /**
      * @inheritDoc
      * 因为现在的逻辑是后台只能有一种用户可以登录，
      * 所以直接返回一个跟防火墙中配置相同的用户就可以了
@@ -193,6 +206,6 @@ class EvaluateUser implements AdvancedUserInterface,\Serializable
     
     public function isEnabled()
     {
-    	return $this->isActive;
+    	return $this->active;
     }
 }

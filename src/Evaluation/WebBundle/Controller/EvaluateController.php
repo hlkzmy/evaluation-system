@@ -164,6 +164,13 @@ class EvaluateController extends Controller
 				$em->persist($person);
 			}
 			
+			//重置当前账号的isActive状态
+			$username     = $this->getUser()->getUsername();//得到用户信息账号
+			$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+			$evaluateUser = $evaluateUserRepository->findOneByUsername($username);
+			$evaluateUser->setActive(0);
+			
+			
 			$em->flush();
 			$em->getConnection()->commit();
 		}
@@ -172,7 +179,7 @@ class EvaluateController extends Controller
 			return new JsonResponse(array('statusCode'=>300,'message'=>$e->getMessage()));
 		}
 		 
-		return new JsonResponse(array('statusCode'=>200,'message'=>'提交民主评价成功，感谢您的参与'));
+		return new JsonResponse(array('statusCode'=>200,'message'=>'提交民主评价成功,请点击左侧菜单或者刷新页面退出,感谢您的参与!'));
 	}
 	
 	
