@@ -26,8 +26,7 @@ use Evaluation\WebBundle\Form\Type\EvaluatedPersonResultType;
 
 class EvaluateJoinType extends AbstractType
 {
-	public function __construct($doctrine,$router){
-		$this->doctrine = $doctrine;
+	public function __construct($router){
 		$this->router = $router;
 	}
 	
@@ -39,13 +38,16 @@ class EvaluateJoinType extends AbstractType
 		$builder->setAction($this->router->generate('evaluation_evaluate_submit') );
 		
 		
-		//第二步：设置学校的评价结果
+		//第二步：添加表单的相关元素
+		//1.添加民主评价的名称
+		$builder->add('name','text');
+		
+		//2.添加类型为fieldType的表单元素，是学校评价结果的嵌套表单
 		$builder->add('schoolResult',new EvaluatedSchoolResultType() );
 		
-		
-		//第三步: 设置测评对象的评价结果
+		//3.添加类型为collection的表单元素，是测评人对测评对象的嵌套表单
 		$builder->add('personResult','collection',array(
-												'type'=>new EvaluatedPersonResultType(),
+												 'type'=>new EvaluatedPersonResultType(),
 												 'by_reference'=>true,
 											)
 					);

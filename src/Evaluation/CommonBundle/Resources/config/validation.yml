@@ -1,9 +1,0 @@
-Evaluation\CommonBundle\Entity\EvaluatedPersonResult:
-  properties:
-       score:
-         - NotBlank: { message:'密码不能为空'}
-         - Length:
-                min: 6
-                max: 10
-                minMessage: "登陆账号的长度为6到10个字符"
-                maxMessage: "登陆账号的长度为6到10个字符"

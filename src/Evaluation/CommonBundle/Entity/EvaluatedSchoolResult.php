@@ -29,11 +29,11 @@ class EvaluatedSchoolResult
     private $evaluationId;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="school_id", type="integer", nullable=true)
+     * @ORM\Column(name="school_name", type="string", length=100, nullable=true)
      */
-    private $schoolId;
+    private $schoolName;
 
     /**
      * @var boolean
@@ -85,26 +85,26 @@ class EvaluatedSchoolResult
     }
 
     /**
-     * Set schoolId
+     * Set schoolName
      *
-     * @param integer $schoolId
+     * @param string $schoolName
      * @return EvaluatedSchoolResult
      */
-    public function setSchoolId($schoolId)
+    public function setSchoolName($schoolName)
     {
-        $this->schoolId = $schoolId;
+        $this->schoolName = $schoolName;
 
         return $this;
     }
 
     /**
-     * Get schoolId
+     * Get schoolName
      *
-     * @return integer 
+     * @return string 
      */
-    public function getSchoolId()
+    public function getSchoolName()
     {
-        return $this->schoolId;
+        return $this->schoolName;
     }
 
     /**

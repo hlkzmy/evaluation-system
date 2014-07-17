@@ -39,9 +39,3 @@ Evaluation\CommonBundle\Entity\AdminUser:
                 max: 10
                 minMessage: "真实姓名的长度为2到5个汉字"
                 maxMessage: "真实姓名的长度为2到5个汉字"
-                
-Evaluation\CommonBundle\Entity\EvaluatedPersonResult:
-  properties:
-       score:
-         - NotBlank: ~
-         - NotNull: ~  

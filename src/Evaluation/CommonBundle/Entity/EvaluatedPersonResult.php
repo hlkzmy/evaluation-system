@@ -29,11 +29,11 @@ class EvaluatedPersonResult
     private $evaluationId;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="school_id", type="integer", nullable=true)
+     * @ORM\Column(name="school_name", type="string", length=100, nullable=true)
      */
-    private $schoolId;
+    private $schoolName;
 
     /**
      * @var string
@@ -41,6 +41,13 @@ class EvaluatedPersonResult
      * @ORM\Column(name="realname", type="string", length=100, nullable=true)
      */
     private $realname = '';
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="position", type="string", length=100, nullable=true)
+     */
+    private $position = '';
 
     /**
      * @var boolean
@@ -85,27 +92,29 @@ class EvaluatedPersonResult
     }
 
     /**
-     * Set schoolId
+     * Set schoolName
      *
-     * @param integer $schoolId
+     * @param string $schoolName
      * @return EvaluatedPersonResult
      */
-    public function setSchoolId($schoolId)
+    public function setSchoolName($schoolName)
     {
-        $this->schoolId = $schoolId;
+        $this->schoolName = $schoolName;
 
         return $this;
     }
 
     /**
-     * Get schoolId
+     * Get schoolName
      *
-     * @return integer 
+     * @return string 
      */
-    public function getSchoolId()
+    public function getSchoolName()
     {
-        return $this->schoolId;
+        return $this->schoolName;
     }
+    
+
 
     /**
      * Set realname
@@ -128,6 +137,29 @@ class EvaluatedPersonResult
     public function getRealname()
     {
         return $this->realname;
+    }
+    
+    /**
+     * Set position
+     *
+     * @param string $position
+     * @return EvaluatedPersonResult
+     */
+	public function setPosition($position)
+    {
+    	$this->position = $position;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get position
+     *
+     * @return string
+     */
+    public function getPosition()
+    {
+    	return $this->position;
     }
 
     /**
