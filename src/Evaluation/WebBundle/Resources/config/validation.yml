@@ -1,9 +1,18 @@
 Evaluation\CommonBundle\Entity\EvaluatedPersonResult:
   properties:
        score:
-         - NotBlank: { message:'密码不能为空'}
-         - Length:
-                min: 6
-                max: 10
-                minMessage: "登陆账号的长度为6到10个字符"
-                maxMessage: "登陆账号的长度为6到10个字符"
+           - NotBlank: { message:'您必须为每一位测评对象选择相应的评价分数'}
+           - NotNull: { message:'您必须为每一位测评对象选择相应的评价分数'}
+           
+Evaluation\CommonBundle\Entity\EvaluatedSchoolResult:
+  properties:
+       comment:
+           - NotBlank: { message:'您必须填写对于学校的评价'}
+           - Length:
+                min: 20
+                max: 500
+                minMessage: "对于学校的评价的长度为20到500个字符"
+                maxMessage: "对于学校的评价的长度为20到500个字符"            
+       score:
+           - NotBlank: { message:'您必须为学校选择相应的评价分数'}
+           - NotNull:  { message:'您必须为学校选择相应的评价分数'}

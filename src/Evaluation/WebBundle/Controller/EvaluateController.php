@@ -79,35 +79,44 @@ class EvaluateController extends Controller
 		
 		
 		//第二步：验证表单的相关数据
-		$evaluationForm = $this->getEvalutionForm($em);
-		$evaluationForm->handleRequest($this->getRequest());
+		$form = $this->getEvalutionForm($em);
+		$form->handleRequest($this->getRequest());
 		
-		
-		
-		if($evaluationForm->isValid()){
-			echo 'true';
-		}
-		else{
-			
-			echo 'false';
-			echo $evaluationForm->getErrorsAsString();
+		//1.验证表单的数据
+		if(!$form->isValid()){
+			foreach($form as $formElement){
+				foreach($formElement->getErrors() as $error){
+					return new JsonResponse(array('statusCode'=>300,'message'=>$error->getMessage()));
+				}
+			}
 		}
 		
+		//2.验证schoolResult的fieldType的数据
+		$schoolResultForm = $form->get('schoolResult');
+		foreach($schoolResultForm as $column){//循环collection，每一个元素就是一个表单
+			foreach($column->getErrors() as $error){
+				return new JsonResponse(array('statusCode'=>300,'message'=>$error->getMessage()));
+			}
+		}//form foreach end
 		
 		
 		
-		//$personResult = $evaluationForm->getData()->getPersonResult();
-		
-		$personResult = $evaluationForm->get('personResult');
-		
-		
-		foreach($personResult as $person){
-			
-// 			echo $person->getErrorsAsString();
-			
-// 			var_dump($person->isValid());
-			
+		//3.验证personResult的collection的数据
+		$personResultCollection = $form->get('personResult');//得到collection集合
+		if(!$personResultCollection->isValid()){
+			foreach($personResultCollection as $form){//循环collection，每一个元素就是一个表单
+				foreach($form as $column){
+					foreach($column->getErrors() as $error){
+						return new JsonResponse(array('statusCode'=>300,'message'=>$error->getMessage()));
+					}
+				}//column foreach end
+			}//form foreach end
 		}
+		
+		
+		
+		
+		
 		
 		
 		
