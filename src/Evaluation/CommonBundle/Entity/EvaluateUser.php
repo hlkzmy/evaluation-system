@@ -3,14 +3,14 @@
 namespace Evaluation\CommonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * EvaluateUser
  *
  * @ORM\Table(name="evaluate_user")
  * @ORM\Entity(repositoryClass="Evaluation\CommonBundle\Entity\EvaluateUserRepository")
  */
-class EvaluateUser implements AdvancedUserInterface,\Serializable
+class EvaluateUser implements UserInterface,\Serializable
 {
     /**
      * @var integer
@@ -129,13 +129,23 @@ class EvaluateUser implements AdvancedUserInterface,\Serializable
     /**
      * Set username
      *
-     * @param string $username
+     * @param integer $username
      * @return EvaluateUser
      */
     public function setActive($active)
     {
     	$this->active = $active;
     	return $this;
+    }
+    
+    /**
+     * Get Active
+     *
+     * @return integer
+     */
+    public function getActive()
+    {
+    	return $this->active;
     }
     
     
@@ -189,23 +199,5 @@ class EvaluateUser implements AdvancedUserInterface,\Serializable
     	 
     }//function unserialize() end
     
-    public function isAccountNonExpired()
-    {
-    	return true;
-    }
     
-    public function isAccountNonLocked()
-    {
-    	return true;
-    }
-    
-    public function isCredentialsNonExpired()
-    {
-    	return true;
-    }
-    
-    public function isEnabled()
-    {
-    	return $this->active;
-    }
 }

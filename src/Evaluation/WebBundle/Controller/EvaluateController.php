@@ -10,6 +10,7 @@ use Evaluation\CommonBundle\Entity\Evaluation;
 use Evaluation\CommonBundle\Entity\EvaluatedPersonResult;
 use Evaluation\CommonBundle\Entity\EvaluatedPerson;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\PersistentCollection;
 
 class EvaluateController extends Controller
 {
@@ -51,8 +52,6 @@ class EvaluateController extends Controller
 		return $evaluationRecord;
 		
 	}//function getEvaluation() end
-	
-	
 	
 	
 	
@@ -98,7 +97,17 @@ class EvaluateController extends Controller
 		$em = $doctrine->getManager();
 		
 		
-		//第二步：验证表单的相关数据
+		//第二步:验证用户是否已经提交过
+		$username     = $this->getUser()->getUsername();//得到用户信息账号
+		$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+		$evaluateUserRecord = $evaluateUserRepository->findOneByUsername($username);
+
+		if($evaluateUserRecord->getActive()){
+			return new JsonResponse(array('statusCode'=>300,'message'=>'您已经完成评价，不需要重复提交'));
+		}
+		
+		
+		//第三步：验证表单的相关数据
 		$form = $this->getEvalutionForm($em);
 		$form->handleRequest($this->getRequest());
 		
@@ -133,7 +142,7 @@ class EvaluateController extends Controller
 			}//form foreach end
 		}
 		
-		//第三步：从表单接受相关相关数据，然后插入到数据库
+		//第四步：从表单接受相关相关数据，然后插入到数据库
 		//1.查询相关数据
 		$evaluateSchoolRepository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
 		
@@ -165,8 +174,12 @@ class EvaluateController extends Controller
 				$em->persist($person);
 			}
 			
-			
-			
+			//重置当前账号的isActive状态
+			$username     = $this->getUser()->getUsername();//得到用户信息账号
+			$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+			$evaluateUserRecord = $evaluateUserRepository->findOneByUsername($username);
+			$evaluateUserRecord->setActive(1);
+			$em->persist($evaluateUserRecord);
 			
 			$em->flush();
 			$em->getConnection()->commit();
