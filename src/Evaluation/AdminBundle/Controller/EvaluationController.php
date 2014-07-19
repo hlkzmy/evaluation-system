@@ -194,11 +194,7 @@ class EvaluationController extends Controller
     	
     	//第二步:查询跟本次教学评价相关的网站前台用户的信息
     	$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
-    	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
-    	
     	$evaluateUserList = $evaluateUserRepository->findBy(array('evaluationId'=>$id));
-    	$evaluationRecord = $evaluationRepository->find($id);
-    	
     	
     	$evaluateUserArray = array();
     	array_push($evaluateUserArray,array('用户账号','用户密码'));	
@@ -218,6 +214,10 @@ class EvaluationController extends Controller
     	
     	$phpExcelWriter = new \PHPExcel_Writer_Excel5($phpExcel);
     	
+    	//查询相关的信息，组成文件名
+    	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
+    	$evaluationRecord = $evaluationRepository->find($id);
+    	
     	$filename = sprintf('%s-%s.xls',$evaluationRecord->getName(),'用户列表');
     	$filename = urlencode($filename);
     	
@@ -234,6 +234,75 @@ class EvaluationController extends Controller
     	exit();
     	
     }//function userExport() end
+    
+    
+    /**
+     * 得到学校评价的相关数据
+     */
+    
+    private function getSchoolResultData($em){
+    	
+    	
+    	
+    	 
+    	
+    	
+    }//function getSchoolResultData() end
+    
+    
+    public function getPersonResultData($em){
+    	
+    	
+    	
+    }//function 
+    
+    
+    
+    public function resultExportAction($id){
+    	
+    	
+    	//第一步:得到相关的数据库对象
+    	$doctrine = $this->getDoctrine();
+    	$em = $doctrine->getManager();
+    	
+    	
+    	//第二步:到数据库中查询相关信息
+    	
+    	$phpExcelWriter = new \PHPExcel_Reader_Excel5();
+    	$phpExcel = $phpExcelWriter->load('example.xls');
+    	
+    	$array = $phpExcel->getActiveSheet()->toArray();
+    	
+    	print_r($array);
+    	
+    	die();
+    	//第三步: 利用phpexcel输出到excel中
+    	$phpExcel= new \PHPExcel();
+    	$phpExcel->getActiveSheet()->fromArray($evaluateUserArray,null,'A1',true);
+    	$phpExcelWriter = new \PHPExcel_Writer_Excel5($phpExcel);
+    	
+    	
+    	//1.查询相关的信息，组成文件名
+    	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
+    	$evaluationRecord = $evaluationRepository->find($id);
+    	
+    	$filename = sprintf('%s-%s.xls',$evaluationRecord->getName(),'评价结果');
+    	$filename = urlencode($filename);
+    	 
+    	//2.设置header信息
+    	header("Content-Type: application/force-download");
+    	header("Content-Type: application/octet-stream");
+    	header("Content-Type: application/download");
+    	header('Content-Disposition:inline;filename="'.$filename.'"');
+    	header("Content-Transfer-Encoding: binary");
+    	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+    	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    	header("Pragma: no-cache");
+    	$phpExcelWriter->save('php://output');
+    	 
+    	exit();
+    	
+    }
     
     
     
