@@ -31,6 +31,17 @@ evaluation_evaluate_check_create:
 evaluation_evaluate_delete:
     pattern:  /evaluation/delete/{id}
     defaults: { _controller: EvaluationAdminBundle:Evaluation:delete}
+    
+#民主测评的测评结果导出相关
+evaluation_evaluate_result_export:
+    pattern:  /evaluation/result-export/{id}
+    defaults: { _controller: EvaluationAdminBundle:Evaluation:resultExport}
+    
+#民主测评的测评结果导出相关
+evaluation_evaluate_user_export:
+    pattern:  /evaluation/user-export/{id}
+    defaults: { _controller: EvaluationAdminBundle:Evaluation:userExport}
+    
 
 #民主测评的编辑相关       
 evaluation_evaluate_update:
