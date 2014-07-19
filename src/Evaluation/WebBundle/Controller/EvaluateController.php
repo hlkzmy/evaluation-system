@@ -55,8 +55,6 @@ class EvaluateController extends Controller
 	
 	
 	
-	
-	
 	private function getEvalutionForm($em){
 		
 		$evaluatedPersonRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPerson');
@@ -181,6 +179,7 @@ class EvaluateController extends Controller
 			$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
 			$evaluateUserRecord = $evaluateUserRepository->findOneByUsername($username);
 			$evaluateUserRecord->setActive(1);
+			$em->persist($evaluateUserRecord);
 			
 			$em->flush();
 			$em->getConnection()->commit();

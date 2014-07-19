@@ -240,12 +240,87 @@ class EvaluationController extends Controller
      * 得到学校评价的相关数据
      */
     
-    private function getSchoolResultData($em){
+    private function getSchoolResultData($id){
+    	
+    	//第一步:查询相关的数据信息，然后向模版数组中填入数据
+    	$em = $this->getDoctrine()->getManager();
+    	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
+    	$evaluationRecord = $evaluationRepository->find($id);
+    	
+    	//1.查询单位名称
+    	$schoolRepository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
+    	$schoolRecord = $schoolRepository->find($evaluationRecord->getSchoolId());
+    	$schoolName = $schoolRecord->getName();
+    	
+    	//2.查询应到和实到人数
+    	$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+    	$shouldUserCount = $evaluationRecord->getEvaluateUserCount();
+    	$actualUserCount = count($evaluateUserRepository->findBy(array('evaluationId'=>$id,'active'=>1)));
+    	
+    	//3.查询好中差的个数
+    	$evaluatedSchoolResultRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedSchoolResult');
+    	$goodCount   = count($evaluatedSchoolResultRepository->findBy(array('evaluationId'=>$id,'score'=>1)));
+    	$middleCount = count($evaluatedSchoolResultRepository->findBy(array('evaluationId'=>$id,'score'=>2)));
+    	$badCount    = count($evaluatedSchoolResultRepository->findBy(array('evaluationId'=>$id,'score'=>3)));
+    	
+    	//4.查询相关的意见
+    	$schoolResultRecord = $evaluatedSchoolResultRepository->findBy(array('evaluationId'=>$id));
+    	
+    	//第二步:利用之前输出的结果数组形成数据模版
+    	$result = array (
+    			array (
+    					0 => '学校干部民主测评（领导班子）汇总表',
+    					1 => NULL,
+    					2 => NULL,
+    					3 => NULL,
+    					4 => NULL,
+    			),
+    	
+    			array (
+    					0 => '单位名称',
+    					1 => $schoolName,
+    					2 => '测评等次',
+    					3 => NULL,
+    					4 => NULL,
+    			),
+    	
+    			array (
+    					0 => '应参加人数',
+    					1 => '实参加人数',
+    					2 => '好',
+    					3 => '中',
+    					4 => '差',
+    			),
+    	
+    			array (
+    					0 => $shouldUserCount,
+    					1 => $actualUserCount,
+    					2 => $goodCount,
+    					3 => $middleCount,
+    					4 => $badCount,
+    			),
+    			array (
+    					0 => '意见及意见',
+    					1 => NULL,
+    					2 => NULL,
+    					3 => NULL,
+    					4 => NULL,
+    			)
+    	);
+    	
+    	foreach($schoolResultRecord as $element){
+    		$data = array (
+    					0 => $element->getComment(),
+    					1 => NULL,
+    					2 => NULL,
+    					3 => NULL,
+    					4 => NULL,
+    			);
+    		array_push($result,$data);
+    	}
     	
     	
-    	
-    	 
-    	
+    	return $result;
     	
     }//function getSchoolResultData() end
     
@@ -268,19 +343,22 @@ class EvaluationController extends Controller
     	
     	//第二步:到数据库中查询相关信息
     	
-    	$phpExcelWriter = new \PHPExcel_Reader_Excel5();
-    	$phpExcel = $phpExcelWriter->load('example.xls');
+//     	$phpExcelWriter = new \PHPExcel_Reader_Excel5();
+//     	$phpExcel = $phpExcelWriter->load('school-example.xls');
     	
-    	$array = $phpExcel->getActiveSheet()->toArray();
+//     	$array = $phpExcel->getActiveSheet()->toArray();
     	
-    	print_r($array);
+//     	var_export($array);
     	
-    	die();
+    	
     	//第三步: 利用phpexcel输出到excel中
+    	
     	$phpExcel= new \PHPExcel();
-    	$phpExcel->getActiveSheet()->fromArray($evaluateUserArray,null,'A1',true);
     	$phpExcelWriter = new \PHPExcel_Writer_Excel5($phpExcel);
     	
+    	//1.输出学校查询的结果
+    	$schoolResult = $this->getSchoolResultData($id);
+    	$phpExcel->getActiveSheet()->fromArray($schoolResult,null,'A1',true);
     	
     	//1.查询相关的信息，组成文件名
     	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
