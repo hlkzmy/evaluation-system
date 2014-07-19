@@ -165,11 +165,7 @@ class EvaluateController extends Controller
 				$em->persist($person);
 			}
 			
-			//重置当前账号的isActive状态
-			$username     = $this->getUser()->getUsername();//得到用户信息账号
-			$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
-			$evaluateUser = $evaluateUserRepository->findOneByUsername($username);
-			$evaluateUser->setActive(0);
+			
 			
 			
 			$em->flush();

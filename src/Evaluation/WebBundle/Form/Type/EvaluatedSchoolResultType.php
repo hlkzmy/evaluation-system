@@ -12,7 +12,7 @@ class EvaluatedSchoolResultType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		
-		$choiceOptions = array('1'=>'好','2'=>'中','3'=>'查');
+		$choiceOptions = array('1'=>'好','2'=>'中','3'=>'差');
 		
 		$builder->add('score','choice',array(
 												'attr'=>array(
