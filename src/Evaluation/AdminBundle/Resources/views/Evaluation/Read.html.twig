@@ -26,7 +26,7 @@
 		            <th>测评单位</th>
 		            <th>开始时间</th>
 		            <th>结束时间</th>
-		            <th>操作</th>
+		            <th colspan='3'>操作</th>
 		        </tr>
 		     </thead>
 		     <tbody>
@@ -39,6 +39,12 @@
 		                <td>{{item.endTime|date('Y-m-d H:i:s')}}</td>
 		                <td>
 		                    <a type="button" class="btn red btn-xs ajaxTodo" operation='delete'  href="{{ path('evaluation_evaluate_delete',{'id':item.id})}}">删除</a>
+		                </td>
+		                <td>
+		                    <a type="button" class="btn green btn-xs" href="{{ path('evaluation_evaluate_user_export',{'id':item.id})}}">导出用户</a>
+		                </td>
+		                <td>
+		                    <a type="button" class="btn green btn-xs" href="{{ path('evaluation_evaluate_result_export',{'id':item.id})}}">导出结果</a>
 		                </td>
 		            </tr>
 				{%endfor%}
