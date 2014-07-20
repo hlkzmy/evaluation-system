@@ -319,17 +319,82 @@ class EvaluationController extends Controller
     		array_push($result,$data);
     	}
     	
-    	
     	return $result;
     	
     }//function getSchoolResultData() end
     
     
-    public function getPersonResultData($em){
+    public function getPersonResultData($id){
     	
     	
+    	//第一步:查询相关的数据信息，然后向模版数组中填入数据
+    	$em = $this->getDoctrine()->getManager();
+    	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
+    	$evaluationRecord = $evaluationRepository->find($id);
+    	 
+    	//1.查询单位名称
+    	$schoolRepository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
+    	$schoolRecord = $schoolRepository->find($evaluationRecord->getSchoolId());
+    	$schoolName = $schoolRecord->getName();
+    	 
+    	//2.查询应到和实到人数
+    	$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+    	$shouldUserCount = $evaluationRecord->getEvaluateUserCount();
+    	$actualUserCount = count($evaluateUserRepository->findBy(array('evaluationId'=>$id,'active'=>1)));
+    	 
+    	//3.查询每个测评对象的对应的数据结果
     	
-    }//function 
+    	 
+    	//第二步:利用之前输出的结果数组形成数据模版
+    	$result = array (
+			    			array (
+			    					0 => '领导班子成员及后备干部测评汇总表',
+			    					1 => NULL,
+			    					2 => NULL,
+			    					3 => NULL,
+			    					4 => NULL,
+			    					5 => NULL,
+			    			),
+			    			array (
+			    					0 => '单位名称',
+			    					1 => $schoolName,
+			    					2 => '应参加人数',
+			    					3 => NULL,
+			    					4 => '实参数人数',
+			    					5 => NULL,
+			    			),
+			    			array (
+			    					0 => NULL,
+			    					1 => NULL,
+			    					2 => $shouldUserCount,
+			    					3 => NULL,
+			    					4 => $actualUserCount,
+			    					5 => NULL,
+			    			),
+			    			array (
+			    					0 => '姓名',
+			    					1 => '现任职务',
+			    					2 => '测评层次',
+			    					3 => NULL,
+			    					4 => NULL,
+			    					5 => NULL,
+			    			),
+			    			
+			    			array (
+			    					0 => NULL,
+			    					1 => NULL,
+			    					2 => '优秀',
+			    					3 => '称职',
+			    					4 => '基本称职',
+			    					5 => '不称职',
+			    			)
+    	);
+    	 
+    	
+    	return $result;
+    	
+    	
+    }//function getPersonResultData() end
     
     
     
@@ -343,22 +408,21 @@ class EvaluationController extends Controller
     	
     	//第二步:到数据库中查询相关信息
     	
-//     	$phpExcelWriter = new \PHPExcel_Reader_Excel5();
-//     	$phpExcel = $phpExcelWriter->load('school-example.xls');
     	
-//     	$array = $phpExcel->getActiveSheet()->toArray();
     	
-//     	var_export($array);
+    	
     	
     	
     	//第三步: 利用phpexcel输出到excel中
-    	
     	$phpExcel= new \PHPExcel();
     	$phpExcelWriter = new \PHPExcel_Writer_Excel5($phpExcel);
     	
     	//1.输出学校查询的结果
     	$schoolResult = $this->getSchoolResultData($id);
-    	$phpExcel->getActiveSheet()->fromArray($schoolResult,null,'A1',true);
+    	$phpExcel->getActiveSheet()->fromArray($schoolResult,null,'A1',false);
+    	
+    	//2.数据测评对象结果
+    	
     	
     	//1.查询相关的信息，组成文件名
     	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
