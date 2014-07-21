@@ -12,4 +12,36 @@ use Doctrine\ORM\EntityRepository;
  */
 class EvaluatedPersonResultRepository extends EntityRepository
 {
+	
+	/**
+	 * 得到民主评价的关于测评对象的评价结果数据
+	 * @param integer $id
+	 */
+	
+	public function getEvaluatedPersonResult($id){
+		
+		$em = $this->getEntityManager();
+		
+		
+		$result = $em->createQuery(
+				
+					    "SELECT p.realname,p.position,p.score,count(p.score) AS total
+						 FROM EvaluationCommonBundle:EvaluatedPersonResult p
+				         WHERE p.evaluationId = :id
+				         GROUP BY p.realname, p.score"
+						 
+						)->setParameter('id', $id)
+				  		 ->getArrayResult();
+		
+		foreach($result as $key=>$value){
+			$result[$key]['hash'] = md5($value['realname'].$value['position']);
+		}
+		
+		return $result;
+		
+	}
+	
+	
+	
+	
 }

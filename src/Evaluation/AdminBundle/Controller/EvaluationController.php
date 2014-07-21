@@ -22,7 +22,7 @@ class EvaluationController extends Controller
     	//第二部分:查询数据形成列表
     	$defaultEntityManager = $this->getDoctrine()->getManager ('default');
     	$evaluationRepository = $defaultEntityManager->getRepository('EvaluationCommonBundle:Evaluation');
-    	$evaluation = $evaluationRepository->findAll();
+     	$evaluation = $evaluationRepository->findAll();
     		
     		
     		
@@ -406,28 +406,123 @@ class EvaluationController extends Controller
     	$em = $doctrine->getManager();
     	
     	
-    	//第二步:到数据库中查询相关信息
-    	
-    	
-    	
-    	
     	
     	
     	//第三步: 利用phpexcel输出到excel中
-    	$phpExcel= new \PHPExcel();
-    	$phpExcelWriter = new \PHPExcel_Writer_Excel5($phpExcel);
+    	/**
+			因为之前才用fromArray读取excel数据表，得到的合并单元格的内容为null
+			但是还原的时候使用toArray却不能争取的还原
+			所以从excel中读取单元格的格式作为模版，然后再填充数值，
+			但是保存的时候不save到文件中，而是save到php://output里面
+			
+    	 */
     	
-    	//1.输出学校查询的结果
-    	$schoolResult = $this->getSchoolResultData($id);
-    	$phpExcel->getActiveSheet()->fromArray($schoolResult,null,'A1',false);
     	
-    	//2.数据测评对象结果
+    	
+    	
+    	$phpExcelReader = new \PHPExcel_Reader_Excel5();
+    	
+    	$personExcel = $phpExcelReader->load('excel-template/person.xls');
+    	
+    	$personSheet = $personExcel->getSheet(0);
+    	
+    	//1.B2是所参加的学校名称
+    	$personSheet->getCell('B2')->setValue('3333');
+    	
+    	//2.C3的位置是测评对象的应到人数
+    	$personSheet->getCell('C3')->setValue('3333');
+    	
+    	//3.E3是测评对象的实到人数
+    	$personSheet->getCell('E3')->setValue('3333');
+    	
+    	//第三步:查询每个测评对象的所得到的各种分数
+    	//1.得到数据库对象
+    	$evaluationRepository      = $em->getRepository('EvaluationCommonBundle:Evaluation');
+    	$evaluatedPersonRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPerson');
+    	
+    	//2.查询结果
+    	$evaluationRecord = $evaluationRepository->find($id);
+    	$schoolId = $evaluationRecord->getSchoolId();
+    	$evaluatedPersonIdList  = unserialize( $evaluationRecord->getEvaluatedPerson() );
+    	
+    	//3.建立标准容器
+    	$standardArrayContainer = array();
+    	
+    	foreach($evaluatedPersonIdList as $personId){
+
+    		$evaluatedPersonRecord = $evaluatedPersonRepository->findOneBy(array('id'=>$personId,'schoolId'=>$schoolId));
+    		
+    		$array = array();
+    		$array['realname'] = $evaluatedPersonRecord->getRealname();
+    		$array['position'] = $evaluatedPersonRecord->getPosition();
+    		//分别对应四个等级
+    		$array['score1']   = 0;
+    		$array['score2']   = 0;
+    		$array['score3']   = 0;
+    		$array['score4']   = 0;
+    		
+    		$hash = md5($array['realname'].$array['position']);
+    		
+    		
+    		$standardArrayContainer[$hash] = $array;
+    		
+    	}//foreach end
+    	
+    	//print_r($standardArrayContainer);
+    	
+    	
+    	
+    	
+    	/**
+			因为现在还不知道doctrine里面怎么样实现group by
+			所以还是使用repository里面定义一个custom method，然后用DQL查询数据的方法
+    	 */
+    	$evaluatedPersonResultRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPersonResult');
+    	$evaluatedPersonResult = $evaluatedPersonResultRepository->getEvaluatedPersonResult($id);
+    	
+    	//print_r($evaluatedPersonResult);
+    	
+    	//4.拼接数组
+    	foreach($evaluatedPersonResult as $value){
+    		$hash = $value['hash'];
+    		$scoreKey = 'score'.$value['score'];
+    		$standardArrayContainer[$hash][$scoreKey] = $value['total'];
+    	}
+    	
+    	$standardArrayContainer = array_values($standardArrayContainer);
+    	
+    	//5.写入phpexcel对象
+    	for($i=0;$i<sizeof($standardArrayContainer);$i++){
+    		$row = $i+6;
+    		$personSheet->getCell( 'A'.$row )->setValue($standardArrayContainer[$i]['realname']);
+    		$personSheet->getCell( 'B'.$row )->setValue($standardArrayContainer[$i]['position']);
+    		$personSheet->getCell( 'C'.$row )->setValue($standardArrayContainer[$i]['score1']);
+    		$personSheet->getCell( 'D'.$row )->setValue($standardArrayContainer[$i]['score2']);
+    		$personSheet->getCell( 'E'.$row )->setValue($standardArrayContainer[$i]['score3']);
+    		$personSheet->getCell( 'F'.$row )->setValue($standardArrayContainer[$i]['score4']);
+    	}
+    	
+    	//$personSheet->setCodeName('test');
+    	
+    	
+    	$phpExcel = new \PHPExcel();
+    	$phpExcel->removeSheetByIndex('0');
+    	$phpExcel->addSheet($personSheet,'hengleike');
+    	
+    	
+    	//$phpExcel->removeSheetByIndex('0');
+    	//$phpExcel->removeSheetByIndex('1');
+    	//$phpExcel->removeSheetByIndex(2);
+    	
+    	//$phpExcel->addSheet($personSheet,'1');
+//     	$phpExcel->addSheet($personSheet,1);
+     	//$phpExcel->addSheet($personSheet,'2');
+    	 
+    	 
+    	$phpExcelWriter = new \PHPExcel_Writer_Excel5($personExcel);
     	
     	
     	//1.查询相关的信息，组成文件名
-    	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
-    	$evaluationRecord = $evaluationRepository->find($id);
-    	
     	$filename = sprintf('%s-%s.xls',$evaluationRecord->getName(),'评价结果');
     	$filename = urlencode($filename);
     	 
