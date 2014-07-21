@@ -240,7 +240,7 @@ class EvaluationController extends Controller
      * 得到学校评价的相关数据
      */
     
-    private function getSchoolResultData($id){
+    private function setSchoolSheet(\PHPExcel $phpExcel,$id){
     	
     	//第一步:查询相关的数据信息，然后向模版数组中填入数据
     	$em = $this->getDoctrine()->getManager();
@@ -266,60 +266,28 @@ class EvaluationController extends Controller
     	//4.查询相关的意见
     	$schoolResultRecord = $evaluatedSchoolResultRepository->findBy(array('evaluationId'=>$id));
     	
-    	//第二步:利用之前输出的结果数组形成数据模版
-    	$result = array (
-    			array (
-    					0 => '学校干部民主测评（领导班子）汇总表',
-    					1 => NULL,
-    					2 => NULL,
-    					3 => NULL,
-    					4 => NULL,
-    			),
     	
-    			array (
-    					0 => '单位名称',
-    					1 => $schoolName,
-    					2 => '测评等次',
-    					3 => NULL,
-    					4 => NULL,
-    			),
+    	//5.设置phpexcel
+    	$schoolSheet = $phpExcel->getSheet(0);
     	
-    			array (
-    					0 => '应参加人数',
-    					1 => '实参加人数',
-    					2 => '好',
-    					3 => '中',
-    					4 => '差',
-    			),
+    	$schoolSheet->getCell('B2')->setValue($schoolName);
+    	$schoolSheet->getCell('A4')->setValue($shouldUserCount);
+    	$schoolSheet->getCell('B4')->setValue($actualUserCount);
+    	$schoolSheet->getCell('C4')->setValue($goodCount);
+    	$schoolSheet->getCell('D4')->setValue($middleCount);
+    	$schoolSheet->getCell('E4')->setValue($badCount);
     	
-    			array (
-    					0 => $shouldUserCount,
-    					1 => $actualUserCount,
-    					2 => $goodCount,
-    					3 => $middleCount,
-    					4 => $badCount,
-    			),
-    			array (
-    					0 => '意见及意见',
-    					1 => NULL,
-    					2 => NULL,
-    					3 => NULL,
-    					4 => NULL,
-    			)
-    	);
-    	
+    	$count = 6;
     	foreach($schoolResultRecord as $element){
-    		$data = array (
-    					0 => $element->getComment(),
-    					1 => NULL,
-    					2 => NULL,
-    					3 => NULL,
-    					4 => NULL,
-    			);
-    		array_push($result,$data);
-    	}
     	
-    	return $result;
+    		$mergeStartCell = 'A'.$count;
+    		$mergeEndCell   = 'E'.$count;
+    		
+    		$schoolSheet->mergeCells($mergeStartCell.':'.$mergeEndCell);
+    		$schoolSheet->getCell($mergeStartCell)->setValue($element->getComment());
+    		
+    		++$count;
+    	}
     	
     }//function getSchoolResultData() end
     
@@ -434,8 +402,9 @@ class EvaluationController extends Controller
     	 */
     	
     	$phpExcelReader = new \PHPExcel_Reader_Excel5();
-    	$phpExcel = $phpExcelReader->load('excel-template/person.xls');
-    	$this->setPersonSheet($phpExcel, $id);//设置测评对象的sheet
+    	$phpExcel = $phpExcelReader->load('excel-template/school.xls');
+    	//$this->setPersonSheet($phpExcel, $id);//设置测评对象的sheet
+    	$this->setSchoolSheet($phpExcel, $id);  //设置学校对象的sheet
     	
     	
     	
@@ -455,7 +424,7 @@ class EvaluationController extends Controller
     	header('Content-Disposition:inline;filename="'.$filename.'"');
     	header("Content-Transfer-Encoding: binary");
     	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    	header("Cache-Control: must-revalidate, post-check=0, s-check=0");
     	header("Pragma: no-cache");
     	$phpExcelWriter->save('php://output');
     	 
