@@ -1,5 +1,5 @@
 imports:
-    - { resource: parameters.local.yml }
+    - { resource: parameters.remote.yml }
     - { resource: security.yml }
 
 framework:

@@ -101,12 +101,30 @@ class EvaluationController extends Controller
     	}
 
     	//第三步:对于从表单回收的数据进行处理，以便可以存储进数据库
+    	//1.得到数据库对象
+    	$doctrine = $this->getDoctrine();
+    	$em = $doctrine->getManager();
+    	
     	$evaluation = $form->getData();
     	
-    	//1.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
+    	//2.根据表单回收的实体对象的基础上再根据逻辑添加其他数据项的取值
     	$evaluation->setCreateAdminUser( method_exists($this->getUser(),'getRealname')? $this->getUser()->getRealname() : $this->getUser()->getUsername()  );
     	
-    	//2.序列化参与的人员列表,因为是一个评价中包含若干个评价人
+    	//3.序列化参与的人员列表,因为是一个评价中包含若干个评价人
+    	$evaluatedPersonRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPerson');
+    	
+    	foreach($evaluation->getEvaluatedPerson() as $personId){
+    		
+    		$personRecord   = $evaluatedPersonRepository->find($personId);
+    		$personSchoolId =  $personRecord->getSchoolId();
+    		
+    		if(intval($personSchoolId)!=intval($evaluation->getSchoolId())){
+    			$message = sprintf('民主评价只能选择本单位的领导,而%s不是',$personRecord->getRealname());
+    			return new JsonResponse(array('statusCode'=>300,'message'=>$message));
+    		}
+    		
+    	}//foreach end
+    	
     	$evaluation->setEvaluatedPerson( serialize($evaluation->getEvaluatedPerson()));
     	
     	//3.因为从表单收取的数据是字符串，但是插入的时间格式要求是datetime,所以要进行转换
@@ -117,9 +135,7 @@ class EvaluationController extends Controller
     	
     	
     	//第四步:将经过处理和验证的数据插入数据库
-    	//1.得到数据库对象
-    	$doctrine = $this->getDoctrine();
-    	$em = $doctrine->getManager();
+    	
     	
     	//2.因为涉及多张数据表，所以需要开启数据库事务操作
     	$em->getConnection()->beginTransaction();
@@ -165,16 +181,15 @@ class EvaluationController extends Controller
     		}
     		
     		$em->flush();
-    	
+    		$em->getConnection()->commit();
     	}
     	catch (\Exception $e){
     		$em->getConnection()->rollback();
-    		$em->getConnection()->close();
     		return new JsonResponse(array('statusCode'=>300,'message'=>$e->getMessage()));
     	}
     	
-    	$em->getConnection()->commit();
-    	$em->getConnection()->close();
+    	
+    	
     	
     	return new JsonResponse(array('statusCode'=>200,'message'=>'创建民主评价成功'));
     
@@ -312,7 +327,7 @@ class EvaluationController extends Controller
     	$actualUserCount = count($evaluateUserRepository->findBy(array('evaluationId'=>$id,'active'=>1)));
     	 
     	//第二步:查询每个测评对象的对应的数据结果
-    	$personSheet = $phpExcel->getSheet(0);
+    	$personSheet = $phpExcel->getSheet(1);
     	
     	//1.B2是所参加的学校名称
     	$personSheet->getCell('B2')->setValue($schoolName);
@@ -335,6 +350,10 @@ class EvaluationController extends Controller
     	
     		$evaluatedPersonRecord = $evaluatedPersonRepository->findOneBy(array('id'=>$personId,'schoolId'=>$schoolId));
     	
+    		if(is_null($evaluatedPersonRecord)){
+    			continue;
+    		}
+    		
     		$array = array();
     		$array['realname'] = $evaluatedPersonRecord->getRealname();
     		$array['position'] = $evaluatedPersonRecord->getPosition();
@@ -345,11 +364,10 @@ class EvaluationController extends Controller
     		$array['score4']   = 0;
     	
     		$hash = md5($array['realname'].$array['position']);
-    	
-    	
     		$standardArrayContainer[$hash] = $array;
     	
     	}//foreach end
+    	
     	 
     	  
     	/**
@@ -359,8 +377,7 @@ class EvaluationController extends Controller
     	$evaluatedPersonResultRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPersonResult');
     	$evaluatedPersonResult = $evaluatedPersonResultRepository->getEvaluatedPersonResult($id);
     	 
-    	//print_r($evaluatedPersonResult);
-    	 
+    	
     	//4.拼接数组
     	foreach($evaluatedPersonResult as $value){
     		$hash = $value['hash'];
@@ -402,14 +419,11 @@ class EvaluationController extends Controller
     	 */
     	
     	$phpExcelReader = new \PHPExcel_Reader_Excel5();
-    	$phpExcel = $phpExcelReader->load('excel-template/school.xls');
-    	//$this->setPersonSheet($phpExcel, $id);//设置测评对象的sheet
-    	$this->setSchoolSheet($phpExcel, $id);  //设置学校对象的sheet
-    	
-    	
+    	$phpExcel = $phpExcelReader->load('excel-template/result.xls');
+    	$this->setSchoolSheet($phpExcel, $id);//设置学校对象的sheet
+    	$this->setPersonSheet($phpExcel, $id);//设置测评对象的sheet
     	
     	$phpExcelWriter = new \PHPExcel_Writer_Excel5($phpExcel);
-    	
     	
     	//1.查询相关的信息，组成文件名
     	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
@@ -428,8 +442,8 @@ class EvaluationController extends Controller
     	header("Pragma: no-cache");
     	$phpExcelWriter->save('php://output');
     	 
-    	exit();
     	
+    	exit();
     }
     
     
