@@ -36,7 +36,7 @@ class EvaluationType extends AbstractType
 		
 		$personChoiceOptions = array();
 		foreach($evaluatedPersonList as $person){
-			$personChoiceOptions[$person['id']] = sprintf('%s-%s',$person['name'],$person['realname']);
+			$personChoiceOptions[$person['id']] = sprintf('%s-%s',$person['schoolName'],$person['realname']);
 		}
 		
 		//第三步：设置表单的基本属性,从控制器中中设置变成在这里设置

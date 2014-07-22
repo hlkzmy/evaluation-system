@@ -20,7 +20,8 @@ class EvaluatedPersonRepository extends EntityRepository
 	public function getPersonList(){
 		
 		$result = $this->getEntityManager()->createQuery(
-													"SELECT p.id,p.realname,s.name
+													"SELECT p.id,p.realname,p.position,p.insertTime,
+															s.name as schoolName
 													 FROM EvaluationCommonBundle:EvaluatedPerson p,
 													 	  EvaluationCommonBundle:EvaluateSchool s
 													 WHERE  p.schoolId = s.id"

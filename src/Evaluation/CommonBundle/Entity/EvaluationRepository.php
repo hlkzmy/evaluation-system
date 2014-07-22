@@ -14,7 +14,7 @@ class EvaluationRepository extends EntityRepository
 {
 	
 	/**
-	 * 为了方便在选择评价对象的时候的操作，在评价对象的真实姓名之前附加学校的名称
+	 * JOIN 查询，查询学校名称
 	 */
 	
 	public function getEvaluationList(){
