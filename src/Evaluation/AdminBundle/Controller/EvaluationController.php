@@ -440,6 +440,8 @@ class EvaluationController extends Controller
     	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
     	header("Cache-Control: must-revalidate, post-check=0, s-check=0");
     	header("Pragma: no-cache");
+    	
+        //3.phpExcel将对象保存到缓存之中
     	$phpExcelWriter->save('php://output');
     	 
     	

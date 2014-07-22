@@ -32,13 +32,12 @@ class EvaluationType extends AbstractType
 		
 		//2.得到测评对象所有选项
 		$evaluatedPersonRespository = $entityManager->getRepository('EvaluationCommonBundle:EvaluatedPerson');
-		$evaluatedPersonList = $evaluatedPersonRespository->findAll();
+		$evaluatedPersonList = $evaluatedPersonRespository->getPersonList();
 		
 		$personChoiceOptions = array();
 		foreach($evaluatedPersonList as $person){
-			$personChoiceOptions[$person->getId()] = $person->getRealname();
+			$personChoiceOptions[$person['id']] = sprintf('%s-%s',$person['name'],$person['realname']);
 		}
-		
 		
 		//第三步：设置表单的基本属性,从控制器中中设置变成在这里设置
 		$builder->add('name','text',array(
