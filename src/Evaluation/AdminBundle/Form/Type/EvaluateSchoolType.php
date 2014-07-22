@@ -16,7 +16,7 @@ class EvaluateSchoolType extends AbstractType
 		
 		$builder->add('name','text',array(
 												'attr'=>array(
-																'placeholder'=>'请单位测评的名称，长度不要超过20个字',
+																'placeholder'=>'请单位测评的名称，长度为6到20个汉字',
 																'class'=>'form-control'
 												 ),//attr end
 												
@@ -25,7 +25,7 @@ class EvaluateSchoolType extends AbstractType
 		
 		$builder->add('description','textarea',array(
 											'attr'=>array(
-													'placeholder'=>'请单位测评的相关描述，长度不要超过100个字',
+													'placeholder'=>'请单位测评的相关描述，长度为20到100个汉字',
 													'class'=>'form-control'
 											),//attr end
 										)//position option end
