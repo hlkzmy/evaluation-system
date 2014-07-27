@@ -1,4 +1,4 @@
-#测评对象的相关试题的描述 
+#测评对象的相关实体的描述 
 Evaluation\CommonBundle\Entity\EvaluatedPerson:
   constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
@@ -9,23 +9,23 @@ Evaluation\CommonBundle\Entity\EvaluatedPerson:
        realname:
            - NotBlank: { message:'真实姓名不能为空'}
            
-#测评学校的相关试题的越苏 
+#测评学校的相关实体的描述
 Evaluation\CommonBundle\Entity\EvaluateSchool:
   properties:
        name:
            - NotBlank: { message:'学校名称不能为空'}
            - Length:
-                min: 6
-                max: 20
-                minMessage: "学校名称的长度为6到20个字符"
-                maxMessage: "学校名称的长度为6到20个字符"
+                min: 4
+                max: 10
+                minMessage: "学校名称的长度为4到10个字符"
+                maxMessage: "学校名称的长度为4到10个字符"
        description:
            - NotBlank: { message:'学校描述不能为空'}
            - Length:
-                min: 20
+                min: 10
                 max: 100
-                minMessage: "学校描述的长度为20到100个字符"
-                maxMessage: "学校描述的长度为20到100个字符"
+                minMessage: "学校描述的长度为10到100个字符"
+                maxMessage: "学校描述的长度为10到100个字符"
                  
   
 #系统管理员的相关实体的约束         

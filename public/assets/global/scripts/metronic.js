@@ -280,6 +280,19 @@ var Metronic = function () {
             });
         }
     }
+    
+    //这是hlk自己为了避免在页面上反复书写非常复杂的datatable的初始化代码
+    var handleDataTable = function(){
+    	
+    	if(jQuery().dataTable){//如果存在jQuery的datatable插件
+    		$('table.datatable').dataTable({});
+        }//if end
+    	else{
+    		//alert('jquery plugin dataTable undefined'); 
+    	}
+    	
+    };//function handleDataTable() end
+    
 
     // Fix input placeholder issue for IE8 and IE9
     var handleFixInputPlaceholderForIE = function () {
@@ -347,6 +360,7 @@ var Metronic = function () {
 
             // Hacks
             handleFixInputPlaceholderForIE(); //IE8 & IE9 input placeholder issue fix
+            handleDataTable();//对页面中的数据表格进行初始化
         },
 
         //main function to initiate core javascript after ajax complete
@@ -359,7 +373,8 @@ var Metronic = function () {
             handleAccordions(); //handles accordions 
             handleUniform(); // hanfle custom radio & checkboxes     
             handleBootstrapSwitch(); // handle bootstrap switch plugin
-            handleDropdownHover() // handles dropdown hover       
+            handleDropdownHover() // handles dropdown hover
+            handleDataTable();//对页面中的数据表格进行初始化
         },
         
         //public function to remember last opened popover that needs to be closed on click
