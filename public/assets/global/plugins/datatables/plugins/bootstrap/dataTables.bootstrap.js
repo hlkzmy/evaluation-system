@@ -3,7 +3,9 @@ $.extend(true, $.fn.dataTable.defaults, {
     "dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
     //"Dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // datatable layout without  horizobtal scroll
     "language": {
-        "lengthMenu": " _MENU_ records ",
+        "lengthMenu": " _MENU_ 条记录 ",
+        "info": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+        "infoEmpty": "共0条",
         "paginate": {
             "previous": '<i class="fa fa-angle-left"></i>',
             "next": '<i class="fa fa-angle-right"></i>'
