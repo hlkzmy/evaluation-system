@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+#login-form-container{
+	width:500px;	
+	height:341px;
+	background:url(../media/login-form-container-bg.jpg) no-repeat;
+	margin:0px auto;
+	padding-top:120px;
+}

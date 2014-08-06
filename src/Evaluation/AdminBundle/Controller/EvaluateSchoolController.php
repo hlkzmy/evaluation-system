@@ -58,7 +58,6 @@ class EvaluateSchoolController extends Controller
 	}//function deleteAction() end
 	
     
-	
 	/**
 	 * 检测并验证数据对象添加的方法，由表单提交
 	 */

@@ -26,25 +26,27 @@ class EvaluationFieldSubscriber implements EventSubscriberInterface {
 		
 		return array (
 				FormEvents::PRE_SET_DATA => 'preSetData',
-				FormEvents::PRE_SUBMIT=>'submit'
+				FormEvents::PRE_SUBMIT   => 'preSubmit'
 		);
 	}
 	
-	public function submit(FormEvent $event){
+	public function preSubmit(FormEvent $event){
 		
 		$form       = $event->getForm();
+		$evaluation = $form->getData();
 		
-		$form->remove('school_id');
-		$form->remove('name');
-		$form->remove('evaluate_user_count');
+		if ( $evaluation && !is_null( $evaluation->getId ()) ) {
+			$form->remove('school_id');
+			$form->remove('name');
+			$form->remove('evaluate_user_count');
+		}
 		
 	}
 	
 	public function preSetData(FormEvent $event) {
 		
-		$evaluation = $event->getData();
 		$form       = $event->getForm();
-		
+		$evaluation = $event->getData();
 		
 		//表单元素中公共部分的options
 		$nameOptions = array(
@@ -67,7 +69,7 @@ class EvaluationFieldSubscriber implements EventSubscriberInterface {
 												'placeholder'=>'请填写民主评价的参与人数,数值为正整数',
 												'class'=>'form-control'
 										),//attr end
-					 			  );//evaluate_user_count option end
+					 		);//evaluate_user_count option end
 		
 		
 		if ( $evaluation && !is_null( $evaluation->getId ()) ) {
