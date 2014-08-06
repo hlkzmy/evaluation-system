@@ -25,8 +25,19 @@ class EvaluationFieldSubscriber implements EventSubscriberInterface {
 	public static function getSubscribedEvents() {
 		
 		return array (
-				FormEvents::PRE_SET_DATA => 'preSetData'
+				FormEvents::PRE_SET_DATA => 'preSetData',
+				FormEvents::PRE_SUBMIT=>'submit'
 		);
+	}
+	
+	public function submit(FormEvent $event){
+		
+		$form       = $event->getForm();
+		
+		$form->remove('school_id');
+		$form->remove('name');
+		$form->remove('evaluate_user_count');
+		
 	}
 	
 	public function preSetData(FormEvent $event) {

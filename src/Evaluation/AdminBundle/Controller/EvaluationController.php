@@ -214,12 +214,6 @@ class EvaluationController extends Controller
     
     	//第一步:得到相关请求
     	$form = $this->createForm('evaluation_form',$evaluation);
-    	
-    	//删除掉三个表单元素，防止网站专业人员进行修改
-    	$form->remove('school_id');
-    	$form->remove('name');
-    	$form->remove('evaluate_user_count');
-    	
     	$form->handleRequest($this->getRequest());
     	 
     	
@@ -232,18 +226,12 @@ class EvaluationController extends Controller
     		}
     	}
     	
-    	
-    
     	//第三步:对于从表单回收的数据进行处理，以便可以存储进数据库
     	//1.得到数据库对象
     	$doctrine = $this->getDoctrine();
     	$em 	  = $doctrine->getManager();
     	$evaluation = $form->getData();
     	 
-    	 
-    	//2.因为从表单收取的数据是字符串，但是插入的时间格式要求是datetime,所以要进行转换
-    	//$evaluation->setStartTime( new \DateTime( $evaluation->getStartTime())  );
-    	//$evaluation->setEndTime( new \DateTime( $evaluation->getEndTime())  );
     	 
     	//第四步:将经过处理和验证的数据更新到数据库
     	try{
