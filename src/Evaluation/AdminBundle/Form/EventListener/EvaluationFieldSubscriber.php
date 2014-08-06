@@ -25,7 +25,7 @@ class EvaluationFieldSubscriber implements EventSubscriberInterface {
 	public static function getSubscribedEvents() {
 		
 		return array (
-				FormEvents::PRE_SET_DATA => 'preSetData' 
+				FormEvents::PRE_SET_DATA => 'preSetData'
 		);
 	}
 	
@@ -62,10 +62,10 @@ class EvaluationFieldSubscriber implements EventSubscriberInterface {
 		if ( $evaluation && !is_null( $evaluation->getId ()) ) {
 		//编辑教学评价的时候
 		
-			$nameOptions['attr']['disabled'] = 'disabled';
-			$schoolIdOptions['attr']['disabled'] = 'disabled';
+ 			$nameOptions['attr']['disabled'] = 'disabled';
+ 			$schoolIdOptions['attr']['disabled'] = 'disabled';
 			$evaluateUserCountOptions['attr']['disabled'] = 'disabled';
-			
+
 		}//if end
 		else{//创建教学评价的时候
 			
