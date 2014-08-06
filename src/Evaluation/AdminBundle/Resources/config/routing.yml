@@ -25,8 +25,21 @@ evaluation_evaluate_create:
 
 evaluation_evaluate_check_create:
     pattern:  /evaluation/check-create
-    defaults: { _controller: EvaluationAdminBundle:Evaluation:checkCreate}   
+    defaults: { _controller: EvaluationAdminBundle:Evaluation:checkCreate}
+    
+#民主测评的编辑相关    
+evaluation_evaluate_update:
+    pattern:  /evaluation/update/{id}
+    defaults: { _controller: EvaluationAdminBundle:Evaluation:update}
+    requirements: 
+           id: \d+
 
+evaluation_evaluate_check_update:
+    pattern:  /evaluation/check-update/{id}
+    defaults: { _controller: EvaluationAdminBundle:Evaluation:checkUpdate}    
+    requirements: 
+           id: \d+
+           
 #民主测评的删除相关    
 evaluation_evaluate_delete:
     pattern:  /evaluation/delete/{id}

@@ -1,0 +1,111 @@
+<div class="row-fluid"><!-- BEGIN PAGE HEADER-->
+	<div class="span12">
+		<h3 class='page-title'>
+			<small>您填写或者选择关于民主评价的一些基本信息，然后就可以创建一个民主评价</small>
+		</h3>
+		<ul class="breadcrumb"><!-- BEGIN PAGE TITLE & BREADCRUMB-->
+               <li>
+                  <a href="#">民主评价系统</a>
+               </li>
+               <li>
+                   <a href="#">评价管理</a>
+               </li>
+               <li>
+                   <a href="#">编辑评价</a>
+               </li>
+        </ul><!-- END PAGE TITLE & BREADCRUMB-->
+    </div><!-- END span12-->
+</div><!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN SAMPLE FORM PORTLET-->
+		<div class="portlet box blue">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-gift"></i> 编辑评价
+				</div>
+			</div>
+			<div class="portlet-body form">
+				{{ form_start(formView)}}
+					<div class="form-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1">评价名称</label>
+							<div class="input-group col-md-4">
+								<span class="input-group-addon">
+								<i class="fa fa-envelope"></i>
+								</span>
+								{{ form_widget(formView.name)}}
+							</div>
+						</div>
+						<div class="form-group">
+							<label>评价单位</label>
+							<div class="input-group col-md-4">
+								<span class="input-group-addon">
+									<i class="fa fa-envelope"></i>
+								</span>
+								{{ form_widget(formView.school_id)}}
+							</div>
+						</div>
+						<div class="form-group">
+							<label>开始时间</label>
+							<div class="input-group date datetime-picker col-md-4" >
+								{{ form_widget(formView.start_time)}}
+								<span class="input-group-btn">
+									<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>结束时间</label>
+							<div class="input-group date datetime-picker col-md-4">
+								{{ form_widget(formView.end_time)}}
+								<span class="input-group-btn">
+									<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label>参与人数</label>
+							<div class="input-group col-md-4">
+								<span class="input-group-addon">
+								<i class="fa fa-envelope"></i>
+								</span>
+								{{ form_widget(formView.evaluate_user_count)}}
+							</div>
+						</div>
+						<div class="form-group">
+							<label>评价的相关描述</label>
+							<div class="input-group col-md-6">
+								{{ form_widget(formView.description)}}
+							</div>
+						</div>
+					</div>
+					<div class="form-actions text-center">
+							{{ form_widget(formView._token)}} 
+							<button type="button" class="btn blue form-submit-button">提交</button>
+							<button type="reset"  class="btn default">重置</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- END SAMPLE FORM PORTLET-->
+	</div><!-- col-md-12 end -->
+</div><!-- row end -->
+<!-- END PAGE CONTENT-->
+<script type="text/javascript">
+$(document).ready(function() {    
+
+	//对于本页面的中出现的开始时间和结束时间进行绑定日期控件的选项
+  	$("div.datetime-picker").datetimepicker({
+  			language: 'zh-CN',
+  			isRTL: Metronic.isRTL(),
+            format: "yyyy-mm-dd hh:ii",
+            autoclose: true,
+            todayBtn: true,
+            weekStart: 1,
+            pickerPosition: (Metronic.isRTL() ? "bottom-right" : "bottom-left"),
+            minuteStep: 10
+    });
+    
+});
+</script>

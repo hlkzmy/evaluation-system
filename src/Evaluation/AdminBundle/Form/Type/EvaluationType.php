@@ -5,13 +5,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+//加载决定表单元素组成的类
+use Evaluation\AdminBundle\Form\EventListener\EvaluationFieldSubscriber;
+
+//加载数据类型转换的类
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+
+
 class EvaluationType extends AbstractType
 {
 	
 	public function __construct($doctrine){
 		$this->doctrine = $doctrine;
 	}
-	
 	
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
@@ -40,60 +48,39 @@ class EvaluationType extends AbstractType
 		}
 		
 		//第三步：设置表单的基本属性,从控制器中中设置变成在这里设置
-		$builder->add('name','text',array(
-												'attr'=>array(
-																'placeholder'=>'请民主评价的名称，长度不要超过20个字',
-																'class'=>'form-control'
-												 ),//attr end
-												
-										)//name option end
-					 );
+		$evaluationFieldSubscriber = new EvaluationFieldSubscriber();
+		$evaluationFieldSubscriber->setSchoolChoiceOptions($schoolChoiceOptions);
+		$evaluationFieldSubscriber->setPersonChoiceOptions($personChoiceOptions);
+		$builder->addEventSubscriber($evaluationFieldSubscriber);
 		
-		$builder->add('school_id','choice',array(
-												'attr'=>array(
-														'placeholder'=>'请民主评价的名称，长度不要超过20个字',
-														'class'=>'form-control select2me'
-												),//attr end
-												'choices'   => $schoolChoiceOptions,
-		
-					 						)//name option end
+		$builder->add(
+
+				$builder->create('start_time','text',array(
+															'attr'=>array(
+																	'placeholder'=>'请选择民主评价的开始时间',
+																	'class'=>'form-control',
+																	'readonly'=>'readonly'
+															),//attr end
+														 )//start_time option end
+														 
+			                    )->addViewTransformer(new DateTimeToStringTransformer())											 
+				
+				
 		);
 		
-		$builder->add('evaluated_person','choice',array(
-														'attr'=>array(
-																'placeholder'=>'请选择该测评单位的测评对象',
-																'class'=>'form-control select2me',
-																'multiple'=>'multiple'
-														),//attr end
-														'multiple'=>true,
-														'choices'   => $personChoiceOptions,
-											  )//evaluated_person option end
-		);
+		$builder->add(
 		
-		$builder->add('start_time','text',array(
-													'attr'=>array(
-															'placeholder'=>'请选择民主评价的开始时间',
-															'class'=>'form-control',
-															'readonly'=>'readonly'
-													),//attr end
-										)//start_time option end
-		);
+				$builder->create('end_time','text',array(
+																'attr'=>array(
+																		'placeholder'=>'请选择民主评价的结束时间',
+																		'class'=>'form-control',
+																		'readonly'=>'readonly'
+																),//attr end
+														 )//start_time option end
+							
+				)->addViewTransformer(new DateTimeToStringTransformer())
 		
-		$builder->add('end_time','text',array(
-													'attr'=>array(
-															'placeholder'=>'请选择民主评价的结束时间',
-															'class'=>'form-control',
-															'readonly'=>'readonly'
-													),//attr end
-										)//end_time option end
-		);
 		
-		$builder->add('evaluate_user_count','text',array(
-													'attr'=>array(
-															'placeholder'=>'请填写民主评价的参与人数,数值为正整数',
-															'class'=>'form-control'
-													),//attr end
-					 				    )//evaluate_user_count option end
 		);
 		
 		
@@ -104,7 +91,12 @@ class EvaluationType extends AbstractType
 													),//attr end
 										       )//description option end
 					 );
-	
+		
+		
+
+		
+		
+		
 	}//function buildForm() end
 	
 	
