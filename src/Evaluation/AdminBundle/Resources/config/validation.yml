@@ -41,10 +41,10 @@ Evaluation\CommonBundle\Entity\AdminUser:
        username:
            - NotBlank: { message:'登陆账号不能为空'}
            - Length:
-                min: 6
+                min: 4
                 max: 10
-                minMessage: "登陆账号的长度为6到10个字符"
-                maxMessage: "登陆账号的长度为6到10个字符"
+                minMessage: "登陆账号的长度为4到10个字符"
+                maxMessage: "登陆账号的长度为4到10个字符"
        password:
            - NotBlank: { message:'密码不能为空'}
            - Length:
@@ -55,7 +55,7 @@ Evaluation\CommonBundle\Entity\AdminUser:
        realname:
            - NotBlank: { message:'真实姓名不能为空'}
            - Length:
-                min: 4
+                min: 2
                 max: 10
                 minMessage: "真实姓名的长度为2到5个汉字"
                 maxMessage: "真实姓名的长度为2到5个汉字"
