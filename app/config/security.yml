@@ -39,7 +39,7 @@ security:
           evaluation_super_admin:
             memory:
                 users:
-                    admin: { password: admin,roles:ROLE_ADMIN_USER}
+                    admin: { password: dxhjyj@2014#mzpj,roles:ROLE_ADMIN_USER}
                     
           #登录网站后台所使用的用户提供者
           evaluation_admin:
