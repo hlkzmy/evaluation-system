@@ -38,7 +38,7 @@ class NativeRequestHandler implements RequestHandlerInterface
      */
     public function handleRequest(FormInterface $form, $request = null)
     {
-        if (null !== $request) {
+    	if (null !== $request) {
             throw new UnexpectedTypeException($request, 'null');
         }
 

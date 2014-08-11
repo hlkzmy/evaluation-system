@@ -1,12 +1,14 @@
 <?php
 
+
 namespace Evaluation\AdminBundle\Form\EventListener;
+//namespace Acme\DemoBundle\Form\EventListener;
+
 
 //加载表单事件相关的类
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 
 class EvaluationFieldSubscriber implements EventSubscriberInterface {
 	
@@ -25,8 +27,14 @@ class EvaluationFieldSubscriber implements EventSubscriberInterface {
 	public static function getSubscribedEvents() {
 		
 		return array (
+				
+				//1.【形成编辑页面视图】  和【形成新增页面视图】 的时候触发的函数
 				FormEvents::PRE_SET_DATA => 'preSetData',
+				//PRE_SET_DATA绑定的回调函数是preSetData
+				
+				//2.【检测编辑页面数据】  和【 检测新增页面数据】的时候触发的函数
 				FormEvents::PRE_SUBMIT   => 'preSubmit'
+				//PRE_SUBMIT绑定的回调函数是preSubmit
 		);
 	}
 	
@@ -43,12 +51,13 @@ class EvaluationFieldSubscriber implements EventSubscriberInterface {
 		
 	}
 	
+	
 	public function preSetData(FormEvent $event) {
 		
 		$form       = $event->getForm();
 		$evaluation = $event->getData();
 		
-		//表单元素中公共部分的options
+		//第一部分：建立表单元素中公共部分的options
 		$nameOptions = array(
 								'attr'=>array(
 												'placeholder'=>'请民主评价的名称，长度不要超过20个字',

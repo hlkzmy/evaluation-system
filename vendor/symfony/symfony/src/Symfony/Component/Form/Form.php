@@ -296,7 +296,7 @@ class Form implements \IteratorAggregate, FormInterface
      */
     public function setData($modelData)
     {
-        // If the form is submitted while disabled, it is set to submitted, but the data is not
+    	// If the form is submitted while disabled, it is set to submitted, but the data is not
         // changed. In such cases (i.e. when the form is not initialized yet) don't
         // abort this method.
         if ($this->submitted && $this->defaultDataSet) {
@@ -340,7 +340,7 @@ class Form implements \IteratorAggregate, FormInterface
         // Synchronize representations - must not change the content!
         $normData = $this->modelToNorm($modelData);
         $viewData = $this->normToView($normData);
-
+        
         // Validate if view data matches data class (unless empty)
         if (!FormUtil::isEmpty($viewData)) {
             $dataClass = $this->config->getDataClass();
@@ -358,7 +358,8 @@ class Form implements \IteratorAggregate, FormInterface
                     'that transforms '.$actualType.' to '.$expectedType.'.'
                 );
             }
-
+            
+           
             if (null !== $dataClass && !$viewData instanceof $dataClass) {
                 throw new LogicException(
                     'The form\'s view data is expected to be an instance of class ' .
@@ -378,8 +379,8 @@ class Form implements \IteratorAggregate, FormInterface
 
         // It is not necessary to invoke this method if the form doesn't have children,
         // even if the form is compound.
-        if (count($this->children) > 0) {
-            // Update child forms from the data
+        if (count($this->children) > 0) {  
+        	// Update child forms from the data
             $iterator = new InheritDataAwareIterator($this->children);
             $iterator = new \RecursiveIteratorIterator($iterator);
             $this->config->getDataMapper()->mapDataToForms($viewData, $iterator);
@@ -495,7 +496,7 @@ class Form implements \IteratorAggregate, FormInterface
      */
     public function submit($submittedData, $clearMissing = true)
     {
-        if ($this->submitted) {
+    	if ($this->submitted) {
             throw new AlreadySubmittedException('A form can only be submitted once');
         }
 

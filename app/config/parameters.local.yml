@@ -4,7 +4,7 @@ parameters:
     default_database_port:     3306
     default_database_name:     dongxihu_evaluation
     default_database_user:     root
-    default_database_password: zmy@5201314
+    default_database_password: aliyun@zmy#5201314
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1

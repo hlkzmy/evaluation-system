@@ -97,17 +97,40 @@ class EvaluateController extends Controller
 		$em = $doctrine->getManager();
 		
 		
-		//第二步:验证用户是否已经提交过
-		$username     = $this->getUser()->getUsername();//得到用户信息账号
+		//第二步:验证用户所参加的民主评价的时间问题  和  是否提交过
+		//1.得到相关的数据库对象
 		$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+		$evaluationRepository   = $em->getRepository('EvaluationCommonBundle:Evaluation');
+		
+		//2.得到用户的相关信息
+		$username     = $this->getUser()->getUsername();//得到用户信息账号
 		$evaluateUserRecord = $evaluateUserRepository->findOneByUsername($username);
-
+		
+		//3.得到教学评价的相关信息
+		$evaluationId = $evaluateUserRecord->getEvaluationId();
+		$evaluationRecord = $evaluationRepository->find($evaluationId);
+		if(is_null($evaluationRecord)){
+			return new JsonResponse(array('statusCode'=>300,'message'=>'您的账号所属的民主评价已经被删除,账号已经失效!'));
+		}
+		
+		//4.验证开始时间和结束时间
+		$startTimestamp = $evaluationRecord->getStartTime()->getTimestamp();
+		$endTimestamp   = $evaluationRecord->getEndTime()->getTimestamp();
+		
+		if(time()<$startTimestamp){
+			return new JsonResponse(array('statusCode'=>300,'message'=>'民主评价还没有开始，请耐心等待'));
+		}
+		
+		if(time()>$endTimestamp){
+			return new JsonResponse(array('statusCode'=>300,'message'=>'民主评价已经结束，您不能提交'));
+		}
+		
 		if($evaluateUserRecord->getActive()){
 			return new JsonResponse(array('statusCode'=>300,'message'=>'您已经完成评价，不需要重复提交'));
 		}
 		
 		
-		//第三步：验证表单的相关数据
+		//第四步：验证表单的相关数据
 		$form = $this->getEvalutionForm($em);
 		$form->handleRequest($this->getRequest());
 		
@@ -142,7 +165,7 @@ class EvaluateController extends Controller
 			}//form foreach end
 		}
 		
-		//第四步：从表单接受相关相关数据，然后插入到数据库
+		//第五步：从表单接受相关相关数据，然后插入到数据库
 		//1.查询相关数据
 		$evaluateSchoolRepository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
 		

@@ -5,7 +5,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-//加载决定表单元素组成的类
+//加载决定表单元素组成的事件监听器
 use Evaluation\AdminBundle\Form\EventListener\EvaluationFieldSubscriber;
 
 //加载数据类型转换的类
@@ -47,10 +47,16 @@ class EvaluationType extends AbstractType
 			$personChoiceOptions[$person['id']] = sprintf('%s-%s',$person['schoolName'],$person['realname']);
 		}
 		
+		
 		//第三步：设置表单的基本属性,从控制器中中设置变成在这里设置
+		
+		//新建事件监听器对象
 		$evaluationFieldSubscriber = new EvaluationFieldSubscriber();
+		
 		$evaluationFieldSubscriber->setSchoolChoiceOptions($schoolChoiceOptions);
 		$evaluationFieldSubscriber->setPersonChoiceOptions($personChoiceOptions);
+		
+		//使用addEventSubscriber添加事件监听器
 		$builder->addEventSubscriber($evaluationFieldSubscriber);
 		
 		$builder->add(
@@ -80,7 +86,6 @@ class EvaluationType extends AbstractType
 							
 				)->addViewTransformer(new DateTimeToStringTransformer())
 		
-		
 		);
 		
 		
@@ -89,11 +94,11 @@ class EvaluationType extends AbstractType
 															'placeholder'=>'请民主评价的相关描述，长度不要超过100个字',
 															'class'=>'form-control'
 													),//attr end
+													'required' => true
 										       )//description option end
 					 );
 		
 		
-
 	}//function buildForm() end
 	
 	
