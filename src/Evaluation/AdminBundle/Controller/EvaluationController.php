@@ -357,20 +357,20 @@ class EvaluationController extends Controller
     }//function getSchoolResultData() end
     
     
-    public function setPersonSheet(\PHPExcel $phpExcel,$id){
+    private function setPersonSheet(\PHPExcel $phpExcel,$id){
     	
     	
     	//第一步:查询相关的数据信息，然后向模版数组中填入数据
     	$em = $this->getDoctrine()->getManager();
-    	$evaluationRepository = $em->getRepository('EvaluationCommonBundle:Evaluation');
-    	$schoolRepository = $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
-    	$evaluateUserRepository = $em->getRepository('EvaluationCommonBundle:EvaluateUser');
-    	$evaluatedPersonRepository = $em->getRepository('EvaluationCommonBundle:EvaluatedPerson');
+    	$evaluationRepository 		= $em->getRepository('EvaluationCommonBundle:Evaluation');
+    	$schoolRepository 			= $em->getRepository('EvaluationCommonBundle:EvaluateSchool');
+    	$evaluateUserRepository 	= $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+    	$evaluatedPersonRepository 	= $em->getRepository('EvaluationCommonBundle:EvaluatedPerson');
     	
     	//1.查询单位名称
-		$evaluationRecord = $evaluationRepository->find($id);
-    	$schoolRecord = $schoolRepository->find($evaluationRecord->getSchoolId());
-    	$schoolName = $schoolRecord->getName();
+		$evaluationRecord 	= $evaluationRepository->find($id);
+    	$schoolRecord 		= $schoolRepository->find($evaluationRecord->getSchoolId());
+    	$schoolName 		= $schoolRecord->getName();
     	 
     	//2.查询应到和实到人数
     	$shouldUserCount = $evaluationRecord->getEvaluateUserCount();
@@ -419,7 +419,6 @@ class EvaluationController extends Controller
     	}//foreach end
     	
     	 
-    	  
     	/**
     	 因为现在还不知道doctrine里面怎么样实现group by
     	 所以还是使用repository里面定义一个custom method，然后用DQL查询数据的方法
@@ -449,8 +448,37 @@ class EvaluationController extends Controller
     	}
     	 
 	}//function getPersonResultData() end
-    
-    
+	
+	/**
+	 *  学校的领导需要知道哪些账号没有参加民主评价
+	 *  所以要在导出的结果的excel数据表中添加第三个子页
+	 */
+	private function setJoinSheet(\PHPExcel $phpExcel,$id){
+		
+		//第一步:查询相关的数据信息，然后向模版数组中填入数据
+		$em = $this->getDoctrine()->getManager();
+		
+		//得到参与评价的人员的数据库对象
+		$evaluateUserRepository 	= $em->getRepository('EvaluationCommonBundle:EvaluateUser');
+		
+		//当前的民主评价id 和 active=0 作为范围限定条件
+		$notJoinEvaluateUserRecord = $evaluateUserRepository->findBy(array('evaluationId'=>$id,'active'=>0));
+		
+		
+		//第二步:向已经存在的phpexcel对象中添加新的worksheet
+		$joinWorkSheet = new \PHPExcel_Worksheet();
+		$joinWorkSheet->setTitle('sheet3');
+		$phpExcel->addSheet($joinWorkSheet);
+		
+		//第三步：得到添加的对象并且设置数值
+		$joinWorkSheet = $phpExcel->getSheet(2);
+		
+		foreach($notJoinEvaluateUserRecord as $row=>$record){
+			$joinWorkSheet->getCell( 'A' . $row )->setValue($record->getUsername());
+		}//foreach end
+		
+	}//function setJoinSheet() end
+	
     
     public function resultExportAction($id){
     	
@@ -472,6 +500,7 @@ class EvaluationController extends Controller
     	$phpExcel = $phpExcelReader->load('excel-template/result.xls');
     	$this->setSchoolSheet($phpExcel, $id);//设置学校对象的sheet
     	$this->setPersonSheet($phpExcel, $id);//设置测评对象的sheet
+    	$this->setJoinSheet($phpExcel, $id);//设置未参加评价的账号的sheet
     	
     	$phpExcelWriter = new \PHPExcel_Writer_Excel5($phpExcel);
     	
@@ -494,7 +523,6 @@ class EvaluationController extends Controller
         //3.phpExcel将对象保存到缓存之中
     	$phpExcelWriter->save('php://output');
     	 
-    	
     	exit();
     }
     

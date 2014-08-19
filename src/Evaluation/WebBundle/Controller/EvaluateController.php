@@ -117,6 +117,7 @@ class EvaluateController extends Controller
 		$startTimestamp = $evaluationRecord->getStartTime()->getTimestamp();
 		$endTimestamp   = $evaluationRecord->getEndTime()->getTimestamp();
 		
+
 		if(time()<$startTimestamp){
 			return new JsonResponse(array('statusCode'=>300,'message'=>'民主评价还没有开始，请耐心等待'));
 		}
@@ -150,7 +151,6 @@ class EvaluateController extends Controller
 				return new JsonResponse(array('statusCode'=>300,'message'=>$error->getMessage()));
 			}
 		}//form foreach end
-		
 		
 		
 		//3.验证personResult的collection的数据
