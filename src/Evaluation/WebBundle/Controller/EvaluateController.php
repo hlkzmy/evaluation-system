@@ -73,12 +73,14 @@ class EvaluateController extends Controller
 			//通过personId得到person的信息
 			$person = $evaluatedPersonRepository->find($personId);
 			
+			if($person){//添加if的原因是有的时候查不到人了，就直接跳过
 			//然后得到的真实姓名和职位设置给personResult对象
-			$personResult = new EvaluatedPersonResult();
-			$personResult->setRealname($person->getRealname());
-			$personResult->setPosition($person->getPosition());
+				$personResult = new EvaluatedPersonResult();
+				$personResult->setRealname($person->getRealname());
+				$personResult->setPosition($person->getPosition());
+				$evaluationEntity->getPersonResult()->set($personId,$personResult);
+			}
 			
-			$evaluationEntity->getPersonResult()->set($personId,$personResult);
 		}
 		
 		//4.通过已经附加了相关参数的evaluationEntity对象得到表单

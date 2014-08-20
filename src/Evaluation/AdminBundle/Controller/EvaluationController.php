@@ -16,7 +16,7 @@ class EvaluationController extends Controller
 {
     
     public function readAction(){
-    	
+    	 
     	
     	//第二部分:查询数据形成列表
     	$defaultEntityManager = $this->getDoctrine()->getManager ('default');
@@ -473,8 +473,9 @@ class EvaluationController extends Controller
 		//第三步：得到添加的对象并且设置数值
 		$joinWorkSheet = $phpExcel->getSheet(2);
 		
-		foreach($notJoinEvaluateUserRecord as $row=>$record){
-			$joinWorkSheet->getCell( 'A' . $row )->setValue($record->getUsername());
+		foreach($notJoinEvaluateUserRecord as $key=>$record){
+			$row =  intval($key) + 1;
+			$joinWorkSheet->getCell( 'A' . $row )->setValue(' '.$record->getUsername());
 		}//foreach end
 		
 	}//function setJoinSheet() end
