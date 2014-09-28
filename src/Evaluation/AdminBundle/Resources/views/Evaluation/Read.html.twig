@@ -16,39 +16,74 @@
         </ul><!-- END PAGE TITLE & BREADCRUMB-->
     </div><!-- END span12-->
 </div><!-- END PAGE HEADER-->
-<div class="row-fluid"><!-- BEGIN PAGE CONTENT-->
+<!--BEGIN ROW fluid-->
+<div class="row-fluid">
 	<div class="col-md-12">
-		<table class="table table-striped table-bordered table-hover datatable">
-		     <thead>
-		        <tr>
-		            <th>编号</th>
-		            <th>名称</th>
-		            <th>测评单位</th>
-		            <th>开始时间</th>
-		            <th>结束时间</th>
-		            <th>操作</th>
-		        </tr>
-		     </thead>
-		     <tbody>
-		     	{%for item in evaluation%}
-					<tr>
-		                <td>{{item.id}}</td>
-		                <td>{{item.name}}</td>
-		                <td>{{item.schoolName}}</td>
-		                <td>{{item.startTime|date('Y-m-d H:i:s')}}</td>
-		                <td>{{item.endTime|date('Y-m-d H:i:s')}}</td>
-		                <td>
-		                    <a type="button" class="btn red btn-xs ajaxTodo"  operation='delete'  href="{{ path('evaluation_evaluate_delete',{'id':item.id})}}">删除</a>
-		                
-		                    <a type="button" class="btn green btn-xs ajaxify" href="{{ path('evaluation_evaluate_update',{'id':item.id})}}">编辑</a>
-		               
-		                    <a type="button" class="btn green btn-xs" href="{{ path('evaluation_evaluate_user_export',{'id':item.id})}}">导出用户</a>
-		                
-		                    <a type="button" class="btn green btn-xs" href="{{ path('evaluation_evaluate_result_export',{'id':item.id})}}">导出结果</a>
-		                </td>
-		            </tr>
-				{%endfor%}
-		     </tbody>
-		</table>
+		<!-- BEGIN EXAMPLE TABLE PORTLET-->
+		<div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-globe"></i>民主评价列表
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="table-toolbar">
+					<div class="btn-group">
+						<button id="export_selected_data_button" class="btn green">导出数据</button>
+					</div>
+				</div>
+				<form id='export-form' method='post' action="/admin/evaluation/user-export/2"  enctype="application/x-www-form-urlencoded" >
+				<table class="table table-striped table-bordered table-hover datatable">
+				    <thead>
+				     	 <tr>
+				        	<th class="table-checkbox">
+				        		<input type="checkbox" class="group-checkable" data-set="#sample_2 .checkboxes"/>
+				        	</th>
+							<th>编号</th>
+				            <th>名称</th>
+				            <th>测评单位</th>
+				            <th>开始时间</th>
+				            <th>结束时间</th>
+				            <th>操作</th>
+				        </tr>
+				     </thead>
+				     <tbody>
+				     	{%for item in evaluation%}
+							<tr>
+								<td><input type="checkbox" name="id[]" class="checkboxes" value="{{item.id}}" /></td>
+								<td>{{item.id}}</td>
+				                <td>{{item.name}}</td>
+				                <td>{{item.schoolName}}</td>
+				                <td>{{item.startTime|date('Y-m-d H:i:s')}}</td>
+				                <td>{{item.endTime|date('Y-m-d H:i:s')}}</td>
+				                <td>
+				                    <a type="button" class="btn red btn-xs ajaxTodo"  operation='delete'  href="{{ path('evaluation_evaluate_delete',{'id':item.id})}}">删除</a>
+				                
+				                    <a type="button" class="btn green btn-xs ajaxify" href="{{ path('evaluation_evaluate_update',{'id':item.id})}}">编辑</a>
+				               
+				                    <a type="button" class="btn green btn-xs" href="{{ path('evaluation_evaluate_user_export',{'id':item.id})}}">导出用户</a>
+				                
+				                    <a type="button" class="btn green btn-xs" href="{{ path('evaluation_evaluate_result_export',{'id':item.id})}}">导出结果</a>
+				                </td>
+				            </tr>
+						{%endfor%}
+					 </tbody>
+				</table>
+				</form>
+			</div>
+		</div>
 	</div>
-</div><!-- END PAGE CONTENT-->
+</div>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+
+	$("#export_selected_data_button").click(function(){
+	
+		$("#export-form").submit();
+		
+	});
+	
+
+});
+</script>
