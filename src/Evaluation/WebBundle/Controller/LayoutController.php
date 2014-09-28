@@ -7,6 +7,9 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class LayoutController extends Controller
 {
+	
+	
+	
 	public function loginAction()
     {
     	$request = $this->getRequest();
@@ -36,8 +39,8 @@ class LayoutController extends Controller
     					'last_username' => $session->get(SecurityContextInterface::LAST_USERNAME),
     					'error' => $error,
     			));
-    	
-    }
+    
+     }//function loginAction() end
     
     
     public function consoleAction(){
