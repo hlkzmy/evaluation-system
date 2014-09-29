@@ -30,4 +30,26 @@ class EvaluationRepository extends EntityRepository
 		return $result;
 	}
 	
+	/**
+	 * 通过id列表查询相关教学评价的相关信息
+	 */
+	public function findEvaluationById($list){
+		
+		$queryBuilder = $this->getEntityManager()->createQueryBuilder(); 
+		
+		$result = $queryBuilder	->select('e')
+								->from('EvaluationCommonBundle:Evaluation','e')
+								->where($queryBuilder->expr()->in('e.id',$list))
+								->getQuery()
+								->getArrayResult();
+				
+		return $result;
+		
+	}//function findEvaluationById() end
+	
+	
+	
+	
+	
+	
 }

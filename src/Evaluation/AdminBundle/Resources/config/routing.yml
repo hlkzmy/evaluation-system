@@ -55,6 +55,12 @@ evaluation_evaluate_user_export:
     pattern:  /evaluation/user-export/{id}
     defaults: { _controller: EvaluationAdminBundle:Evaluation:userExport}
     
+#民主测评的汇总数据结果导出，选择哪几项数据，导出哪几个评价
+evaluation_data_summary_result_export:
+    pattern:  /evaluation/data/summary-result-export
+    defaults: { _controller: EvaluationAdminBundle:Data:summaryResultExport}  
+    
+    
 
 #民主测评的编辑相关       
 evaluation_evaluate_update:
